@@ -16,7 +16,7 @@
 window.APP_CONFIG = {
   SUPABASE_URL: 'https://sozmshtdllglgvaxmgnv.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf',
-  TELEGRAM_BOT_USERNAME: 'dokon_bot'                   // <-- @ belgisisiz bot username
+  TELEGRAM_BOT_USERNAME: 'lumen_store_bot'                   // <-- @ belgisisiz bot username
 };
 
 window.App = window.App || {};
