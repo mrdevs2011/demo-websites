@@ -6,8 +6,8 @@
 export const SUPABASE_URL = "https://sozmshtdllglgvaxmgnv.supabase.co";
 export const SUPABASE_ANON_KEY = "sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf";
 
-export const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"; // <-- O'ZGARTIRING (BotFather'dan olinadi)
-export const TELEGRAM_CHAT_ID   = "YOUR_TELEGRAM_CHAT_ID";   // <-- O'ZGARTIRING (guruh yoki shaxsiy chat ID)
+export const TELEGRAM_BOT_TOKEN = "8953636269:AAH32_kca-wroPKqxrMhOk2Rug1gQKZxznU";
+export const TELEGRAM_CHAT_ID   = "5327086859";
 
 /*
   Supabase'da kerak bo'ladigan jadval strukturasi (SQL Editor'da bajaring):
