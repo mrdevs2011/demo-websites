@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMEN — Kiyim, Poyabzal & Aksessuarlar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site">
+  <div class="wrap header-row">
+    <div class="brand"><span class="dot"></span>LUMEN</div>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" placeholder="Mahsulot nomini qidiring...">
+    </div>
+    <nav class="main-links">
+      <a href="#" class="active">Katalog</a>
+      <a href="#">Yangi kelganlar</a>
+      <a href="#">Aksiyalar</a>
+      <a href="#">Biz haqimizda</a>
+    </nav>
+    <button class="cart-btn" id="openCartBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= HERO SLIDER ================= -->
+<section class="hero">
+  <div class="hero-slider" id="heroSlider">
+
+    <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1400&auto=format&fit=crop')">
+      <div class="slide-badge">-40%<span>Chegirma</span></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Yozgi kolleksiya</div>
+        <h2>Yangi mavsum,<br>yangi uslub</h2>
+        <p>Kiyim, poyabzal va aksessuarlarning yangi kolleksiyasi — 40% gacha chegirma bilan.</p>
+        <a href="#products" class="slide-cta">Xarid qilish
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1400&auto=format&fit=crop')">
+      <div class="slide-badge">-25%<span>Poyabzal</span></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Limited drop</div>
+        <h2>Sneakers &<br>krossovkalar</h2>
+        <p>Premium brendlardan tanlangan poyabzallar — qulaylik va uslub bir joyda.</p>
+        <a href="#products" class="slide-cta">Ko'rish
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1400&auto=format&fit=crop')">
+      <div class="slide-badge">-15%<span>Aksessuar</span></div>
+      <div class="slide-content">
+        <div class="slide-eyebrow">Detallar muhim</div>
+        <h2>Aksessuarlar<br>kolleksiyasi</h2>
+        <p>Sumka, soat va kamarlar — har qanday obrazni yakunlovchi detallar.</p>
+        <a href="#products" class="slide-cta">Tanlash
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <button class="hero-arrow prev" id="prevSlide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <button class="hero-arrow next" id="nextSlide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+</section>
+
+<!-- ================= PRODUCTS ================= -->
+<main class="wrap" id="products">
+  <div class="section-head">
+    <div>
+      <h3>Barcha mahsulotlar</h3>
+      <p id="resultsCount">Yuklanmoqda...</p>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="cat-tabs" id="catTabs">
+      <button data-cat="all" class="active">Barchasi</button>
+      <button data-cat="kiyim">Kiyim</button>
+      <button data-cat="poyabzal">Poyabzal</button>
+      <button data-cat="aksessuar">Aksessuar</button>
+    </div>
+    <div class="toolbar-right">
+      <select class="sort-select" id="sortSelect">
+        <option value="default">Saralash: Standart</option>
+        <option value="asc">Narxi: Arzonroq</option>
+        <option value="desc">Narxi: Qimmatroq</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid" id="productGrid"></div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="brand"><span class="dot"></span>LUMEN</div>
+      <p>Kiyim, poyabzal va aksessuarlar bo'yicha onlayn do'kon. Sifat va uslubni bir joyda taqdim etamiz.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Katalog</h5>
+      <a href="#">Kiyimlar</a>
+      <a href="#">Poyabzallar</a>
+      <a href="#">Aksessuarlar</a>
+    </div>
+    <div class="footer-col">
+      <h5>Yordam</h5>
+      <a href="#">Yetkazib berish</a>
+      <a href="#">Qaytarish</a>
+      <a href="#">Aloqa</a>
+    </div>
+    <div class="footer-col">
+      <h5>Ijtimoiy tarmoqlar</h5>
+      <a href="https://t.me/dokon_bot" target="_blank">Telegram</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 LUMEN. Barcha huquqlar himoyalangan.</span>
+    <span>Made with care</span>
+  </div>
+</footer>
+
+<!-- ================= CART DRAWER ================= -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h3>Savat</h3>
+    <button class="close-btn" id="closeCartBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-items" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>Jami:</span><span id="cartTotal">0 so'm</span></div>
+    <button class="checkout-btn" id="checkoutBtn" disabled>
+      Buyurtma berish
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</aside>
+
+<!-- ================= CHECKOUT MODAL ================= -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <h3>Buyurtmani rasmiylashtirish</h3>
+    <p class="sub">Ma'lumotlaringizni kiriting — buyurtma tasdiqlash uchun Telegram botga yo'naltirilasiz.</p>
+    <form id="checkoutForm">
+      <div class="field">
+        <label for="custName">Ism-familiya</label>
+        <input type="text" id="custName" required placeholder="Ism Familiya">
+      </div>
+      <div class="field">
+        <label for="custPhone">Telefon raqam</label>
+        <input type="tel" id="custPhone" required placeholder="+998 90 123 45 67">
+      </div>
+      <div class="field">
+        <label for="custAddress">Manzil (ixtiyoriy)</label>
+        <textarea id="custAddress" rows="2" placeholder="Shahar, ko'cha, uy"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancelCheckout">Bekor qilish</button>
+        <button type="submit" class="btn-primary" id="submitOrderBtn">
+          <span id="submitOrderText">Telegramga o'tish</span>
+        </button>
+      </div>
+      <div class="status-msg" id="orderStatus"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= SCRIPTLAR ================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/products-data.js"></script>
+<script src="assets/js/state.js"></script>
+<script src="assets/js/products.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/slider.js"></script>
+<script src="assets/js/checkout.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

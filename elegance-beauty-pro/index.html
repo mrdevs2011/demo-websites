@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELEGANCE BEAUTY — Onlayn Bron</title>
+<meta name="description" content="ELEGANCE BEAUTY — go'zallik saloni. Onlayn navbatga yozilish, xizmatlar va ustalar.">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind config (CDN build talab qiladi: DOM skanerlashdan oldin ishga tushishi kerak) -->
+<script src="js/tailwind.config.js"></script>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Loyihaning o'ziga xos uslublari -->
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Supabase JS client (global "supabase" obyektini beradi) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body class="bg-cream text-emerald-950 antialiased">
+
+<!-- ================= HEADER ================= -->
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-40 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div id="headerInner" class="flex items-center justify-between py-5 transition-all duration-300 border-b border-transparent">
+      <a href="#top" class="flex items-center gap-2.5">
+        <span class="w-9 h-9 rounded-full border border-gold-500 flex items-center justify-center">
+          <i class="fa-solid fa-spa text-gold-500 text-sm"></i>
+        </span>
+        <span class="font-display text-xl tracking-[0.15em] font-semibold" id="brandText">ELEGANCE <span class="text-gold-500">BEAUTY</span></span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9 font-medium text-sm tracking-wide" id="navLinks">
+        <a href="#xizmatlar" class="nav-link hover:text-gold-500 transition-colors">Xizmatlar</a>
+        <a href="#ustalar" class="nav-link hover:text-gold-500 transition-colors">Ustalar</a>
+        <a href="#joylashuv" class="nav-link hover:text-gold-500 transition-colors">Joylashuv</a>
+        <a href="#aloqa" class="nav-link hover:text-gold-500 transition-colors">Aloqa</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button data-open-booking class="hidden sm:inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-emerald-950 font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+          <i class="fa-regular fa-calendar-check"></i> Navbatga yozilish
+        </button>
+        <button id="menuBtn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full border border-emerald-900/20">
+          <i class="fa-solid fa-bars" id="menuIcon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="lg:hidden hidden bg-emerald-950 text-cream px-6 py-6 flex flex-col gap-5 font-medium">
+    <a href="#xizmatlar" class="mobile-link hover:text-gold-400">Xizmatlar</a>
+    <a href="#ustalar" class="mobile-link hover:text-gold-400">Ustalar</a>
+    <a href="#joylashuv" class="mobile-link hover:text-gold-400">Joylashuv</a>
+    <a href="#aloqa" class="mobile-link hover:text-gold-400">Aloqa</a>
+    <button data-open-booking class="mt-2 bg-gold-500 text-emerald-950 font-semibold px-5 py-3 rounded-full">
+      <i class="fa-regular fa-calendar-check"></i> Navbatga yozilish
+    </button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="top" class="relative overflow-hidden bg-emerald-950 text-cream pt-40 pb-28 md:pt-48 md:pb-36">
+  <div class="absolute inset-0 bg-noise opacity-40"></div>
+  <div class="absolute -top-32 -right-32 w-[36rem] h-[36rem] rounded-full bg-emerald-700/30 blur-3xl"></div>
+  <div class="absolute -bottom-40 -left-24 w-[30rem] h-[30rem] rounded-full bg-gold-500/10 blur-3xl"></div>
+
+  <div class="relative max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-12 items-center">
+    <div class="lg:col-span-7">
+      <div class="inline-flex items-center gap-2 border border-gold-500/40 text-gold-400 text-xs tracking-[0.2em] uppercase px-4 py-1.5 rounded-full mb-7 reveal">
+        <i class="fa-solid fa-star text-[10px]"></i> Toshkentdagi premium salon
+      </div>
+      <h1 class="reveal font-display text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.1] mb-6">
+        O'zingizga bo'lgan<br class="hidden sm:block">
+        ishonchni <span class="italic text-gold-400">mutaxassislarimiz</span><br class="hidden sm:block">
+        bilan oshiring
+      </h1>
+      <p class="reveal text-cream/70 text-lg max-w-xl mb-9 leading-relaxed">
+        Soch, tirnoq va makiyaj bo'yicha tajribali ustalar jamoasi — sizga qulay vaqtda, qulay narxda, yuqori sifatli xizmat ko'rsatadi.
+      </p>
+      <div class="reveal flex flex-wrap items-center gap-4">
+        <button data-open-booking class="inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-emerald-950 font-semibold px-7 py-4 rounded-full transition-colors">
+          Vaqtni tanlash <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+        <a href="#xizmatlar" class="inline-flex items-center gap-2 border border-cream/25 hover:border-gold-400 text-cream font-medium px-7 py-4 rounded-full transition-colors">
+          Xizmatlarni ko'rish
+        </a>
+      </div>
+
+      <div class="reveal flex items-center gap-8 mt-12 pt-8 border-t border-cream/10">
+        <div>
+          <div class="font-display text-3xl text-gold-400 font-semibold">12+</div>
+          <div class="text-xs text-cream/60 tracking-wide mt-1">yillik tajriba</div>
+        </div>
+        <div class="w-px h-10 bg-cream/15"></div>
+        <div>
+          <div class="font-display text-3xl text-gold-400 font-semibold">8</div>
+          <div class="text-xs text-cream/60 tracking-wide mt-1">mutaxassis usta</div>
+        </div>
+        <div class="w-px h-10 bg-cream/15"></div>
+        <div>
+          <div class="font-display text-3xl text-gold-400 font-semibold">4.9</div>
+          <div class="text-xs text-cream/60 tracking-wide mt-1">mijozlar bahosi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signature: mini ticket preview -->
+    <div class="lg:col-span-5 reveal">
+      <div class="ticket ticket-perf max-w-sm mx-auto text-cream p-7">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-[11px] tracking-[0.25em] text-gold-400 uppercase">Bron chiptasi</span>
+          <i class="fa-solid fa-scissors text-gold-400"></i>
+        </div>
+        <div class="font-display text-2xl mb-1">Ayollar soch turmagi</div>
+        <div class="text-cream/60 text-sm mb-6">Usta: Madina Yusupova</div>
+        <div class="hairline mb-6"></div>
+        <div class="flex justify-between text-sm mb-2">
+          <span class="text-cream/60">Sana</span>
+          <span class="font-mono">24-iyul, Payshanba</span>
+        </div>
+        <div class="flex justify-between text-sm mb-2">
+          <span class="text-cream/60">Vaqt</span>
+          <span class="font-mono">14:30</span>
+        </div>
+        <div class="flex justify-between text-sm mb-6">
+          <span class="text-cream/60">Davomiyligi</span>
+          <span class="font-mono">60 daqiqa</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-xs text-cream/50">№ 00427</span>
+          <span class="font-display text-xl text-gold-400">250 000 so'm</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= XIZMATLAR ================= -->
+<section id="xizmatlar" class="max-w-7xl mx-auto px-5 md:px-8 py-24 md:py-32">
+  <div class="max-w-2xl mb-16 reveal">
+    <span class="text-gold-600 text-xs tracking-[0.25em] uppercase font-semibold">Narxnoma</span>
+    <h2 class="font-display text-3xl md:text-5xl font-semibold mt-3 mb-5">Xizmatlar va narxlar</h2>
+    <p class="text-emerald-950/60 leading-relaxed">Har bir xizmatni tanlab, to'g'ridan-to'g'ri bron qilish oynasini oching — davomiyligi va narxi oldindan ko'rsatilgan.</p>
+  </div>
+
+  <div id="servicesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- ================= USTALAR ================= -->
+<section id="ustalar" class="bg-emerald-900 text-cream py-24 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="max-w-2xl mb-16 reveal">
+      <span class="text-gold-400 text-xs tracking-[0.25em] uppercase font-semibold">Jamoamiz</span>
+      <h2 class="font-display text-3xl md:text-5xl font-semibold mt-3 mb-5">Mutaxassis ustalar</h2>
+      <p class="text-cream/60 leading-relaxed">Har biri o'z sohasida yillar davomida tajriba orttirgan, mijozlar tomonidan sevib tanlangan ustalar.</p>
+    </div>
+    <div id="mastersGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-7"></div>
+  </div>
+</section>
+
+<!-- ================= NIMA UCHUN BIZ ================= -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 py-24 md:py-28">
+  <div class="grid md:grid-cols-3 gap-10">
+    <div class="reveal">
+      <i class="fa-solid fa-leaf text-gold-500 text-2xl mb-4"></i>
+      <h3 class="font-display text-xl font-semibold mb-2">Premium mahsulotlar</h3>
+      <p class="text-emerald-950/60 leading-relaxed text-sm">Faqat sertifikatlangan, yuqori sifatli professional kosmetika bilan ishlaymiz.</p>
+    </div>
+    <div class="reveal">
+      <i class="fa-solid fa-user-check text-gold-500 text-2xl mb-4"></i>
+      <h3 class="font-display text-xl font-semibold mb-2">Tajribali ustalar</h3>
+      <p class="text-emerald-950/60 leading-relaxed text-sm">Jamoamiz muntazam malaka oshirish kurslaridan o'tadi va zamonaviy texnikalarni qo'llaydi.</p>
+    </div>
+    <div class="reveal">
+      <i class="fa-solid fa-bolt text-gold-500 text-2xl mb-4"></i>
+      <h3 class="font-display text-xl font-semibold mb-2">Tezkor onlayn bron</h3>
+      <p class="text-emerald-950/60 leading-relaxed text-sm">Bir necha bosishda o'zingizga qulay vaqtni tanlang — navbatda kutish shart emas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA STRIP ================= -->
+<section class="bg-gold-500 text-emerald-950 py-14">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+    <h3 class="font-display text-2xl md:text-3xl font-semibold">Bugunoq o'zingizga vaqt ajrating</h3>
+    <button data-open-booking class="inline-flex items-center gap-2 bg-emerald-950 text-cream font-semibold px-7 py-4 rounded-full hover:bg-emerald-900 transition-colors">
+      Navbatga yozilish <i class="fa-solid fa-arrow-right text-sm"></i>
+    </button>
+  </div>
+</section>
+
+<!-- ================= FOOTER / ALOQA / JOYLASHUV ================= -->
+<footer id="aloqa" class="bg-emerald-950 text-cream pt-20 pb-10">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-4 gap-12 mb-16">
+    <div>
+      <div class="flex items-center gap-2.5 mb-5">
+        <span class="w-9 h-9 rounded-full border border-gold-500 flex items-center justify-center">
+          <i class="fa-solid fa-spa text-gold-500 text-sm"></i>
+        </span>
+        <span class="font-display text-lg tracking-[0.15em] font-semibold">ELEGANCE <span class="text-gold-500">BEAUTY</span></span>
+      </div>
+      <p class="text-cream/60 text-sm leading-relaxed">Sizning go'zalligingiz — bizning ustunligimiz. Premium go'zallik saloni xizmatlari.</p>
+      <div class="flex items-center gap-3 mt-6">
+        <a href="#" class="w-9 h-9 rounded-full border border-cream/20 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="w-9 h-9 rounded-full border border-cream/20 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" class="w-9 h-9 rounded-full border border-cream/20 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="font-display text-lg font-semibold mb-5">Ish vaqti</h4>
+      <ul class="text-cream/60 text-sm space-y-2.5 font-mono">
+        <li class="flex justify-between max-w-[220px]"><span>Dush – Shan</span><span>09:00 – 20:00</span></li>
+        <li class="flex justify-between max-w-[220px]"><span>Yakshanba</span><span>10:00 – 18:00</span></li>
+      </ul>
+      <p class="text-cream/50 text-xs mt-5 leading-relaxed">Bayram kunlari ish jadvali o'zgarishi mumkin, iltimos oldindan qo'ng'iroq qiling.</p>
+    </div>
+
+    <div id="joylashuv">
+      <h4 class="font-display text-lg font-semibold mb-5">Joylashuv</h4>
+      <p class="text-cream/60 text-sm leading-relaxed mb-4">Toshkent sh., Yunusobod tumani,<br>Amir Temur shoh ko'chasi, 45-uy</p>
+      <a href="https://maps.google.com/?q=Toshkent+Amir+Temur+shoh+kochasi+45" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-gold-400 text-sm font-medium hover:text-gold-300 transition-colors">
+        <i class="fa-solid fa-map-location-dot"></i> Xaritada ko'rish
+      </a>
+    </div>
+
+    <div>
+      <h4 class="font-display text-lg font-semibold mb-5">Aloqa</h4>
+      <ul class="text-cream/60 text-sm space-y-3">
+        <li class="flex items-center gap-2.5"><i class="fa-solid fa-phone text-gold-400 w-4"></i> +998 90 123 45 67</li>
+        <li class="flex items-center gap-2.5"><i class="fa-solid fa-envelope text-gold-400 w-4"></i> info@elegancebeauty.uz</li>
+        <li class="flex items-center gap-2.5"><i class="fa-brands fa-telegram text-gold-400 w-4"></i> @elegancebeauty_bot</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-5 md:px-8 pt-8 border-t border-cream/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-cream/40">
+    <span>© 2026 ELEGANCE BEAUTY. Barcha huquqlar himoyalangan.</span>
+    <span>Onlayn bron tizimi bilan ishlab chiqilgan</span>
+  </div>
+</footer>
+
+<!-- floating mobile booking button -->
+<button data-open-booking class="sm:hidden fixed bottom-5 inset-x-5 z-30 bg-gold-500 text-emerald-950 font-semibold py-4 rounded-full shadow-2xl shadow-emerald-950/30 flex items-center justify-center gap-2">
+  <i class="fa-regular fa-calendar-check"></i> Navbatga yozilish
+</button>
+
+<!-- ================= BOOKING MODAL ================= -->
+<div id="bookingModal" class="fixed inset-0 z-50 hidden">
+  <div id="modalBackdrop" class="absolute inset-0 bg-emerald-950/70"></div>
+
+  <div class="relative h-full flex items-end sm:items-center justify-center p-0 sm:p-6">
+    <div class="bg-cream w-full sm:max-w-2xl sm:rounded-3xl rounded-t-3xl max-h-[92vh] overflow-y-auto shadow-2xl">
+
+      <!-- modal header -->
+      <div class="sticky top-0 bg-cream z-10 px-6 sm:px-8 pt-6 pb-4 border-b border-emerald-950/10 flex items-center justify-between">
+        <div>
+          <h3 class="font-display text-2xl font-semibold">Navbatga yozilish</h3>
+          <p class="text-xs text-emerald-950/50 mt-1" id="stepLabel">1-qadam / 4 — Xizmatni tanlang</p>
+        </div>
+        <button id="modalCloseBtn" class="w-9 h-9 rounded-full hover:bg-emerald-950/5 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- progress dots -->
+      <div class="flex items-center gap-2 px-6 sm:px-8 pt-5">
+        <div class="step-dot h-1.5 flex-1 rounded-full bg-gold-500" data-step-dot="1"></div>
+        <div class="step-dot h-1.5 flex-1 rounded-full bg-emerald-950/10" data-step-dot="2"></div>
+        <div class="step-dot h-1.5 flex-1 rounded-full bg-emerald-950/10" data-step-dot="3"></div>
+        <div class="step-dot h-1.5 flex-1 rounded-full bg-emerald-950/10" data-step-dot="4"></div>
+      </div>
+
+      <form id="bookingForm" class="px-6 sm:px-8 py-6">
+
+        <!-- STEP 1: Service & Master -->
+        <div class="booking-step" data-step="1">
+          <label class="block text-sm font-semibold mb-3">Xizmatni tanlang</label>
+          <div id="modalServiceList" class="grid sm:grid-cols-2 gap-3 mb-7"></div>
+
+          <label class="block text-sm font-semibold mb-3">Ustani tanlang</label>
+          <div id="modalMasterList" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+        </div>
+
+        <!-- STEP 2: Date & time -->
+        <div class="booking-step hidden" data-step="2">
+          <label class="block text-sm font-semibold mb-3">Sanani tanlang</label>
+          <input type="date" id="bookingDate" required
+            class="w-full bg-white border border-emerald-950/15 rounded-xl px-4 py-3.5 mb-7 focus-gold text-emerald-950">
+
+          <label class="block text-sm font-semibold mb-3">Bo'sh vaqtni tanlang</label>
+          <div id="timeSlotWrap" class="flex flex-wrap gap-2.5"></div>
+          <p class="text-xs text-emerald-950/40 mt-3">Band vaqtlar kulrang va o'chirilgan holda ko'rsatiladi.</p>
+        </div>
+
+        <!-- STEP 3: Contact info -->
+        <div class="booking-step hidden" data-step="3">
+          <label class="block text-sm font-semibold mb-2">Ismingiz</label>
+          <input type="text" id="clientName" required placeholder="Ism Familiya"
+            class="w-full bg-white border border-emerald-950/15 rounded-xl px-4 py-3.5 mb-6 focus-gold">
+
+          <label class="block text-sm font-semibold mb-2">Telefon raqamingiz</label>
+          <input type="tel" id="clientPhone" required placeholder="+998 90 123 45 67"
+            class="w-full bg-white border border-emerald-950/15 rounded-xl px-4 py-3.5 mb-2 focus-gold">
+          <p class="text-xs text-emerald-950/40">Tasdiqlash uchun operatorimiz shu raqamga qo'ng'iroq qilishi mumkin.</p>
+        </div>
+
+        <!-- STEP 4: Confirm (ticket summary) -->
+        <div class="booking-step hidden" data-step="4">
+          <div class="ticket ticket-perf text-cream p-6 mb-6">
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-[11px] tracking-[0.25em] text-gold-400 uppercase">Bron xulosasi</span>
+              <i class="fa-solid fa-check-circle text-gold-400"></i>
+            </div>
+            <div class="font-display text-xl mb-1" id="sumService">—</div>
+            <div class="text-cream/60 text-sm mb-5" id="sumMaster">—</div>
+            <div class="hairline mb-5"></div>
+            <div class="flex justify-between text-sm mb-2"><span class="text-cream/60">Sana</span><span class="font-mono" id="sumDate">—</span></div>
+            <div class="flex justify-between text-sm mb-2"><span class="text-cream/60">Vaqt</span><span class="font-mono" id="sumTime">—</span></div>
+            <div class="flex justify-between text-sm mb-2"><span class="text-cream/60">Mijoz</span><span class="font-mono" id="sumClient">—</span></div>
+            <div class="flex justify-between text-sm mb-5"><span class="text-cream/60">Telefon</span><span class="font-mono" id="sumPhone">—</span></div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs text-cream/50" id="sumDuration">—</span>
+              <span class="font-display text-xl text-gold-400" id="sumPrice">—</span>
+            </div>
+          </div>
+          <div id="submitStatus" class="text-sm mb-2 hidden"></div>
+        </div>
+
+        <!-- nav buttons -->
+        <div class="flex items-center gap-3 mt-8">
+          <button type="button" id="backBtn" class="hidden flex-1 border border-emerald-950/15 font-semibold py-3.5 rounded-full hover:bg-emerald-950/5 transition-colors">
+            Orqaga
+          </button>
+          <button type="button" id="nextBtn" class="flex-1 bg-emerald-950 text-cream font-semibold py-3.5 rounded-full hover:bg-emerald-900 transition-colors">
+            Davom etish
+          </button>
+          <button type="button" id="confirmBtn" class="hidden flex-1 bg-gold-500 text-emerald-950 font-semibold py-3.5 rounded-full hover:bg-gold-600 transition-colors">
+            <i class="fa-solid fa-check mr-1"></i> Bron qilish
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Loyiha JS modullari (ES modules) -->
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>

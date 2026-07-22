@@ -1,0 +1,9 @@
+{
+  "name": "lumen-store",
+  "version": "1.0.0",
+  "description": "LUMEN — kiyim, poyabzal va aksessuarlar do'koni katalog sayti",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server . -p 8080 -c-1"
+  }
+}

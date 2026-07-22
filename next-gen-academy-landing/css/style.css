@@ -1,0 +1,85 @@
+/* ============================================
+   NEXT GEN ACADEMY — Custom Styles
+   (Tailwind utility classes handle most styling;
+   this file covers what Tailwind CDN can't: custom
+   animations, gradients, and component states)
+   ============================================ */
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #fbfaff;
+  color: #140e2b;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Hero background glow */
+.noise-bg {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(124, 77, 255, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 10%, rgba(100, 37, 240, 0.15), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(155, 127, 255, 0.15), transparent 45%);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(60px);
+  opacity: .5;
+  z-index: 0;
+}
+
+/* Course cards */
+.course-card {
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px -15px rgba(100, 37, 240, .35);
+}
+
+/* Category filter buttons */
+.filter-btn.active {
+  background: linear-gradient(135deg, #7c4dff, #6425f0);
+  color: #fff;
+  box-shadow: 0 10px 25px -8px rgba(100, 37, 240, .6);
+}
+
+/* Advantage cards */
+.adv-card { transition: all .3s ease; }
+.adv-card:hover {
+  background: linear-gradient(160deg, #6425f0, #391284);
+  color: #fff;
+  transform: translateY(-6px);
+}
+.adv-card:hover .adv-icon { background: rgba(255, 255, 255, .15); color: #fff; }
+.adv-card:hover .adv-desc { color: #e4dcff; }
+
+/* FAQ accordion */
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-item.open .faq-answer { max-height: 300px; padding-top: .5rem; }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, padding .35s ease;
+}
+
+/* Mobile menu */
+.mobile-menu { transition: max-height .35s ease; }
+
+::selection { background: #7c4dff; color: #fff; }
+
+/* Hero entrance animation */
+.fade-up { animation: fadeUp .7s ease both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+.delay-1 { animation-delay: .1s }
+.delay-2 { animation-delay: .2s }
+.delay-3 { animation-delay: .3s }
+.delay-4 { animation-delay: .4s }

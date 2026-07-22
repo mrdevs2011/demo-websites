@@ -1,0 +1,89 @@
+/* ==========================================================================
+   ELEGANCE BEAUTY — maxsus uslublar
+   (Tailwind utility klasslari HTML ichida, bu yerda faqat Tailwind qila
+   olmaydigan maxsus effektlar: ticket dizayni, animatsiyalar va h.k.)
+   ========================================================================== */
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: #FAF8F3;
+  color: #14231D;
+}
+
+h1, h2, h3, .font-display { font-family: 'Playfair Display', serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+::selection { background: #C9A227; color: #07211A; }
+
+/* Scroll fade-in animatsiyasi */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.show { opacity: 1; transform: translateY(0); }
+
+/* Oltin rangli ingichka chiziq */
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #C9A227, transparent);
+}
+
+/* Signature element: chipta (boarding-pass) uslubidagi bron kartochkasi */
+.ticket {
+  position: relative;
+  background: #0B3B2E;
+  border-radius: 18px;
+  box-shadow: 0 20px 50px -20px rgba(11, 59, 46, .6);
+}
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  background: #FAF8F3;
+  border-radius: 50%;
+  z-index: 2;
+}
+.ticket::before { left: -13px; }
+.ticket::after { right: -13px; }
+.ticket-perf { border-left: 2px dashed rgba(201, 162, 39, .5); }
+
+/* Vaqt slotlari uchun gorizontal scroll */
+.slot-scroll::-webkit-scrollbar { height: 6px; }
+.slot-scroll::-webkit-scrollbar-thumb { background: #C9A227; border-radius: 999px; }
+
+.slot-btn { transition: all .15s ease; }
+.slot-btn.selected { background: #C9A227; color: #07211A; border-color: #C9A227; }
+.slot-btn:disabled { opacity: .3; text-decoration: line-through; cursor: not-allowed; }
+
+.step-dot { transition: all .3s ease; }
+
+/* Kartochkalar hover effekti */
+.lift { transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease; }
+.lift:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -25px rgba(11, 59, 46, .35); }
+
+/* Modal */
+#bookingModal { backdrop-filter: blur(6px); }
+
+.bg-noise {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .06) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: .7;
+  cursor: pointer;
+}
+
+.focus-gold:focus { outline: 2px solid #C9A227; outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; opacity: 1; transform: none; }
+}
