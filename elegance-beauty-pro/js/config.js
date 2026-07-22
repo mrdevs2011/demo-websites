@@ -1,33 +1,35 @@
-// =============================================================================
-// SOZLAMALAR: Supabase va Telegram
-// Bu yerga o'zingizning haqiqiy ma'lumotlaringizni kiriting.
-// =============================================================================
+/* =========================================================================
+   config.js
+   -------------------------------------------------------------------------
+   Loyihaning barcha sozlamalari shu yerda. Boshqa hech qaysi faylni
+   o'zgartirishga hojat yo'q — faqat shu 3 ta qiymatni to'ldiring.
 
-export const SUPABASE_URL = "https://sozmshtdllglgvaxmgnv.supabase.co";
-export const SUPABASE_ANON_KEY = "sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf";
+   1) Supabase loyihasi yarating: https://supabase.com/dashboard
+      Project Settings -> API bo'limidan URL va anon public key'ni oling.
+   2) Telegram bot yarating: @BotFather orqali /newbot buyrug'i bilan,
+      bot username'ini shu yerga yozing (masalan: dokon_bot).
 
-export const TELEGRAM_BOT_TOKEN = "8953636269:AAH32_kca-wroPKqxrMhOk2Rug1gQKZxznU";
-export const TELEGRAM_CHAT_ID   = "5327086859";
+   Kerakli SQL sxema /supabase/schema.sql faylida.
+   Bot namunasi /telegram-bot papkasida.
+   ========================================================================= */
 
-/*
-  Supabase'da kerak bo'ladigan jadval strukturasi (SQL Editor'da bajaring):
+window.APP_CONFIG = {
+  SUPABASE_URL: 'https://sozmshtdllglgvaxmgnv.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf',
+  TELEGRAM_BOT_USERNAME: 'lumen_store_bot'              // <-- @ belgisisiz bot username
+};
 
-  create table bookings (
-    id bigint generated always as identity primary key,
-    service_id text not null,
-    service_name text not null,
-    master_id text not null,
-    master_name text not null,
-    booking_date date not null,
-    booking_time text not null,
-    client_name text not null,
-    client_phone text not null,
-    price bigint not null,
-    duration int not null,
-    status text default 'new',
-    created_at timestamptz default now()
-  );
+window.App = window.App || {};
 
-  alter table bookings enable row level security;
-  create policy "Allow public insert" on bookings for insert to anon with check (true);
-*/
+App.supabase = null;
+try {
+  const cfg = window.APP_CONFIG;
+  const isConfigured = cfg.SUPABASE_URL.includes('supabase.co') && !cfg.SUPABASE_URL.includes('YOUR-PROJECT');
+  if (window.supabase && isConfigured) {
+    App.supabase = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  } else {
+    console.warn('[LUMEN] Supabase sozlanmagan. config.js faylida SUPABASE_URL / SUPABASE_ANON_KEY ni to\'ldiring.');
+  }
+} catch (e) {
+  console.error('[LUMEN] Supabase init xatosi:', e);
+}
