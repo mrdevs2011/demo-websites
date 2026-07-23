@@ -48,6 +48,20 @@ export const PRODUCTS = [
   { id: 31, cat: 'desserts', name: "Tiramisu",            price: 26000,  icon: "fa-cake-candles", desc: "Klassik italyan deserti, kofe aromati" },
   { id: 32, cat: 'desserts', name: "Muzqaymoq (3 shar)",  price: 16000,  icon: "fa-ice-cream",    desc: "Vanil, shokolad, qulupnay ta'mlari" },
   { id: 33, cat: 'desserts', name: "Belgiya Vaflisi",     price: 20000,  icon: "fa-cookie",       desc: "Shokolad va mevali sous bilan issiq vafli" },
+  { id: 34, cat: 'pizza',  name: "Peperoni Extra Pitsa",  price: 60000,  icon: "fa-pizza-slice",  desc: "Ikki qatlam pepperoni, mozarella, achchiq yog'" },
+  { id: 35, cat: 'pizza',  name: "Truffle Qo'ziqorin Pitsa", price: 68000, icon: "fa-pizza-slice", desc: "Truffle yog'i, qo'ziqorin, parmezan, rayhon" },
+  { id: 36, cat: 'burger', name: "Double Cheese Burger",  price: 40000,  icon: "fa-burger",       desc: "Ikki qavat mol go'shti, ikki xil pishloq" },
+  { id: 37, cat: 'burger', name: "Jalapeno Burger",       price: 34000,  icon: "fa-burger",       desc: "Achchiq jalapeno, mol go'shti, nacho sous" },
+  { id: 38, cat: 'burger', name: "Vegetarian Burger",     price: 27000,  icon: "fa-burger",       desc: "Sabzavotli kotlet, avokado, yashil salat" },
+  { id: 39, cat: 'drinks', name: "Limonad (klassik)",     price: 14000,  icon: "fa-glass-water",  desc: "Uy sharoitida tayyorlangan limonli ichimlik" },
+  { id: 40, cat: 'drinks', name: "Ayran",                 price: 9000,   icon: "fa-glass-water",  desc: "Sovutilgan tabiiy ayran" },
+  { id: 41, cat: 'drinks', name: "Latte (issiq)",         price: 20000,  icon: "fa-mug-hot",      desc: "Espresso va bug'langan sut" },
+  { id: 42, cat: 'salads', name: "Tabuli Salat",          price: 22000,  icon: "fa-bowl-food",    desc: "Petrushka, bulg'ur, pomidor, limon sousi" },
+  { id: 43, cat: 'salads', name: "Krevetkali Salat",      price: 38000,  icon: "fa-shrimp",       desc: "Krevetka, avokado, rukola, sitrus sousi" },
+  { id: 44, cat: 'sets',   name: "Vegetarian Set",        price: 68000,  icon: "fa-box",          desc: "1 vegetarian pitsa + salat + ichimlik" },
+  { id: 45, cat: 'sets',   name: "Do'stlar Kompaniyasi Seti (3 kishi)", price: 165000, icon: "fa-box", desc: "2 pitsa + 3 burger + 3 ichimlik" },
+  { id: 46, cat: 'desserts', name: "Cheesecake",          price: 28000,  icon: "fa-cake-candles", desc: "Nyu-York uslubidagi yumshoq chizkeyk" },
+  { id: 47, cat: 'desserts', name: "Churros (6 dona)",    price: 18000,  icon: "fa-cookie",       desc: "Shokoladli sous bilan qarsildoq churros" },
 ];
 
 export function getProductById(id) {

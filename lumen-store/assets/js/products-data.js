@@ -41,6 +41,24 @@ App.PRODUCTS = [
   { id: 306, cat: 'aksessuar', name: "Sport uslubidagi soat", price: 389000, oldPrice: 469000, img: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop' },
   { id: 307, cat: 'aksessuar', name: "Yupqa charm kamar", price: 89000, oldPrice: null, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop' },
   { id: 308, cat: 'aksessuar', name: "Klassik quyosh ko'zoynagi", price: 149000, oldPrice: null, img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=800&auto=format&fit=crop' },
+  { id: 309, cat: 'aksessuar', name: "Charm hamyon (erkaklar)", price: 119000, oldPrice: 155000, img: 'https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=800&auto=format&fit=crop' },
+  { id: 310, cat: 'aksessuar', name: "Ipak ro'mol", price: 89000, oldPrice: null, img: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?q=80&w=800&auto=format&fit=crop' },
+
+  { id: 401, cat: 'sport', name: "Yugurish uchun sport kostyum", price: 279000, oldPrice: 349000, img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?q=80&w=800&auto=format&fit=crop' },
+  { id: 402, cat: 'sport', name: "Fitnes uchun leggins", price: 145000, oldPrice: null, img: 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=800&auto=format&fit=crop' },
+  { id: 403, cat: 'sport', name: "Sport uchun tank-top", price: 89000, oldPrice: 119000, img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=800&auto=format&fit=crop' },
+  { id: 404, cat: 'sport', name: "Yoga kilimchasi", price: 165000, oldPrice: null, img: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop' },
+  { id: 405, cat: 'sport', name: "Trenirovka uchun krossovka Pro", price: 419000, oldPrice: 520000, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800&auto=format&fit=crop' },
+  { id: 406, cat: 'sport', name: "Sport ryukzagi", price: 199000, oldPrice: 249000, img: 'https://images.unsplash.com/photo-1622260614153-03223fb72052?q=80&w=800&auto=format&fit=crop' },
+  { id: 407, cat: 'sport', name: "Kompression sport shim", price: 135000, oldPrice: null, img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop' },
+  { id: 408, cat: 'sport', name: "Sport bandana va peshonaband", price: 45000, oldPrice: null, img: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?q=80&w=800&auto=format&fit=crop' },
+
+  { id: 501, cat: 'uy-tovarlari', name: "Bambuk choy stakan seti (4 ta)", price: 189000, oldPrice: 230000, img: 'https://images.unsplash.com/photo-1516600164266-f3b8166ae679?q=80&w=800&auto=format&fit=crop' },
+  { id: 502, cat: 'uy-tovarlari', name: "Aromatik shamlar to'plami", price: 99000, oldPrice: null, img: 'https://images.unsplash.com/photo-1602874801007-42942a0c2144?q=80&w=800&auto=format&fit=crop' },
+  { id: 503, cat: 'uy-tovarlari', name: "Yumshoq pled (150x200)", price: 249000, oldPrice: 299000, img: 'https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?q=80&w=800&auto=format&fit=crop' },
+  { id: 504, cat: 'uy-tovarlari', name: "Keramik krujka seti (2 ta)", price: 79000, oldPrice: null, img: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?q=80&w=800&auto=format&fit=crop' },
+  { id: 505, cat: 'uy-tovarlari', name: "Dekorativ yostiq g'ilofi", price: 65000, oldPrice: 89000, img: 'https://images.unsplash.com/photo-1592789705501-f9ae4287c4cb?q=80&w=800&auto=format&fit=crop' },
+  { id: 506, cat: 'uy-tovarlari', name: "Bezakli devor soati", price: 175000, oldPrice: null, img: 'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?q=80&w=800&auto=format&fit=crop' },
 ];
 
 App.SIZES = ['S', 'M', 'L', 'XL'];
