@@ -122,6 +122,8 @@ body{
 .tab-btn .tab-sub{ font-size:11px; color:var(--text-dim); }
 .tab-btn.active{ border-color:var(--tab-accent,#7c4dff); color:var(--text); }
 .tab-btn.active .tab-icon{ background:var(--tab-accent,#7c4dff); }
+.tab-wrap{ position:relative; }
+.tab-wrap .tab-btn{ width:100%; }
 .tab-progress{
  position:absolute; left:0; bottom:0; height:3px; width:100%;
  background:rgba(255,255,255,.08);
@@ -470,6 +472,30 @@ body{
  font-size:12px;
  padding-top:2px;
 }
+
+/* ---- Bottom bar: download the FULL video (all 4 projects, start to end) ---- */
+.full-download-bar{
+ display:flex; flex-direction:column; align-items:center; gap:8px;
+ text-align:center;
+ padding:18px 16px;
+ border-radius:16px;
+ background:linear-gradient(180deg, rgba(124,77,255,.10), rgba(124,77,255,.02));
+ border:1px solid rgba(124,77,255,.35);
+}
+.full-download-btn{
+ display:inline-flex; align-items:center; gap:10px;
+ padding:13px 26px;
+ border-radius:30px;
+ border:none;
+ background:linear-gradient(135deg,#7c4dff,#5b2be0);
+ color:#fff;
+ font-family:inherit; font-weight:800; font-size:14px;
+ cursor:pointer;
+ box-shadow:0 14px 30px -10px rgba(124,77,255,.55);
+ transition:transform .15s, box-shadow .2s;
+}
+.full-download-btn:hover{ transform:translateY(-1px); box-shadow:0 18px 36px -8px rgba(124,77,255,.7); }
+.full-download-bar p{ margin:0; font-size:12px; color:var(--text-dim); max-width:520px; line-height:1.5; }
 
 @media (max-width:720px){
  .tabs{ grid-template-columns:repeat(2,1fr); }
@@ -1723,6 +1749,14 @@ body{
  <button class="ctrl-btn" id="nextBtn">Keyingi loyiha <i class="fa-solid fa-forward-step"></i></button>
  </div>
 
+ <div class="full-download-bar">
+ <button type="button" class="full-download-btn" id="fullDownloadBtn">
+ <i class="fa-solid fa-clapperboard"></i>
+ To'liq videoni yuklab olish — barcha 4 ta loyiha
+ </button>
+ <p>Boshidan oxirigacha, barcha 4 ta loyiha ketma-ket bitta videoda — Desktop yoki Mobil (9:16) formatda, yuqori sifatli (HD) holatda.</p>
+ </div>
+
  <div class="footnote">Istalgan loyiha nomiga bosib, to'g'ridan-to'g'ri o'sha demoga o'tishingiz mumkin.</div>
 
  <div class="viral-footer-banner">
@@ -1785,6 +1819,12 @@ async function sendTelegramNotification(text){
  let playing = false;
  let runToken = 0;
  let currentProjectIdx = 0;
+
+ // ---- Video download / recording state ----
+ let recordStopAtIdx = null; // when playProject(idx) finishes its end-CTA, stop auto-advancing and resolve recordDoneResolve
+ let recordDoneResolve = null;
+ let pendingDownloadCtx = null; // {mode:'single', idx} or {mode:'full'}
+ let activeRecordingAbort = null; // set while a recording is in progress; cancel button calls this
 
  // These are overlays (modals, drawers, toasts, success screens) that must
  // always appear positioned relative to the fixed-size demo frame
@@ -2398,6 +2438,7 @@ async function sendTelegramNotification(text){
 
  /* ===================== TABS ===================== */
  tabsEl.innerHTML = projects.map((p,i)=>`
+ <div class="tab-wrap">
  <button class="tab-btn" data-idx="${i}" style="--tab-accent:${p.accent}">
  <span class="tab-icon">${p.icon}</span>
  <span>
@@ -2406,6 +2447,8 @@ async function sendTelegramNotification(text){
  </span>
  <div class="tab-progress"><div class="tab-progress-fill" id="progress-${p.key}"></div></div>
  </button>
+ <button type="button" class="tab-dots-btn" data-idx="${i}" title="Video yuklab olish"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+ </div>
  `).join('');
 
  tabsEl.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -2486,6 +2529,11 @@ async function sendTelegramNotification(text){
  }
  await showEndCta();
  if(myToken !== runToken) return;
+ if(recordStopAtIdx === idx){
+ recordStopAtIdx = null;
+ if(recordDoneResolve){ const _r = recordDoneResolve; recordDoneResolve = null; _r(); }
+ return;
+ }
  playProject((idx+1) % projects.length);
  }
 
@@ -2589,6 +2637,257 @@ async function sendTelegramNotification(text){
  await toggleFs(savedFsMode || 'desktop');
  playProject(0);
  });
+
+ /* ===================== VIDEO DOWNLOAD (3-dot menu + format modal + recording) ===================== */
+ const tabDotsMenu = id('tabDotsMenu');
+ const menuDownloadVideoBtn = id('menuDownloadVideoBtn');
+ const formatModalOverlay = id('formatModalOverlay');
+ const formatModalTitle = id('formatModalTitle');
+ const formatModalCancel = id('formatModalCancel');
+ const recordOverlayEl = id('recordOverlay');
+ const recordTitleEl = id('recordTitle');
+ const recordSubEl = id('recordSub');
+ const recordCancelBtn = id('recordCancelBtn');
+ const fullDownloadBtn = id('fullDownloadBtn');
+
+ function closeDotsMenu(){
+ tabDotsMenu.classList.remove('show');
+ tabsEl.querySelectorAll('.tab-dots-btn').forEach(b=>b.classList.remove('open'));
+ }
+
+ document.addEventListener('click', (e)=>{
+ if(tabDotsMenu.classList.contains('show') && !tabDotsMenu.contains(e.target) && !e.target.closest('.tab-dots-btn')){
+ closeDotsMenu();
+ }
+ });
+
+ tabsEl.addEventListener('click', (e)=>{
+ const dotsBtn = e.target.closest('.tab-dots-btn');
+ if(!dotsBtn) return;
+ e.stopPropagation();
+ const idx = parseInt(dotsBtn.getAttribute('data-idx'),10);
+ const wasOpenForThis = dotsBtn.classList.contains('open');
+ closeDotsMenu();
+ if(wasOpenForThis) return; // ikkinchi bosish — yopish
+ pendingDownloadCtx = { mode:'single', idx };
+ const rect = dotsBtn.getBoundingClientRect();
+ tabDotsMenu.style.top = Math.round(rect.bottom + 6) + 'px';
+ let left = rect.right - 210;
+ left = Math.max(8, Math.min(left, window.innerWidth - 216));
+ tabDotsMenu.style.left = Math.round(left) + 'px';
+ tabDotsMenu.classList.add('show');
+ dotsBtn.classList.add('open');
+ });
+
+ menuDownloadVideoBtn.addEventListener('click', ()=>{
+ closeDotsMenu();
+ openFormatModal();
+ });
+
+ if(fullDownloadBtn){
+ fullDownloadBtn.addEventListener('click', ()=>{
+ pendingDownloadCtx = { mode:'full' };
+ openFormatModal();
+ });
+ }
+
+ function openFormatModal(){
+ if(!pendingDownloadCtx) return;
+ formatModalTitle.textContent = pendingDownloadCtx.mode==='single'
+ ? (projects[pendingDownloadCtx.idx].name + ' — formatni tanlang')
+ : "Barcha 4 ta loyiha — formatni tanlang";
+ formatModalOverlay.classList.add('show');
+ }
+ function closeFormatModal(){ formatModalOverlay.classList.remove('show'); }
+
+ formatModalCancel.addEventListener('click', ()=>{ closeFormatModal(); pendingDownloadCtx = null; });
+ formatModalOverlay.addEventListener('click', (e)=>{
+ if(e.target === formatModalOverlay){ closeFormatModal(); pendingDownloadCtx = null; }
+ });
+
+ formatModalOverlay.querySelectorAll('.format-choice-btn').forEach(btn=>{
+ btn.addEventListener('click', async ()=>{
+ const format = btn.getAttribute('data-format'); // 'desktop' | 'mobile'
+ const ctxInfo = pendingDownloadCtx;
+ pendingDownloadCtx = null;
+ closeFormatModal();
+ if(!ctxInfo) return;
+ if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia){
+ alert("Kechirasiz, brauzeringiz videoni yozib olishni (ekranni/tabni ulashish) qo'llab-quvvatlamaydi. Iltimos, Chrome yoki Edge brauzerida oching.");
+ return;
+ }
+ startVideoRecording(format, ctxInfo);
+ });
+ });
+
+ recordCancelBtn.addEventListener('click', ()=>{
+ if(activeRecordingAbort) activeRecordingAbort();
+ });
+
+ function waitForProjectsDone(stopIdx){
+ return new Promise(resolve=>{
+ recordStopAtIdx = stopIdx;
+ recordDoneResolve = resolve;
+ });
+ }
+
+ function pickSupportedMime(){
+ const candidates = [
+ 'video/mp4;codecs=avc1.42E01E',
+ 'video/mp4',
+ 'video/webm;codecs=vp9',
+ 'video/webm;codecs=vp8',
+ 'video/webm'
+ ];
+ for(const c of candidates){
+ if(window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(c)) return c;
+ }
+ return 'video/webm';
+ }
+
+ function slugify(s){
+ return s.toLowerCase()
+ .replace(/[^a-z0-9]+/g,'-')
+ .replace(/(^-|-$)/g,'') || 'video';
+ }
+
+ function buildFileName(ctxInfo, format, ext){
+ const fmt = format === 'mobile' ? 'mobil-9x16' : 'desktop-16x9';
+ const base = ctxInfo.mode === 'single' ? slugify(projects[ctxInfo.idx].name) : 'barcha-4-loyiha';
+ return base + '-' + fmt + '.' + ext;
+ }
+
+ function triggerDownload(blob, filename){
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = filename;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url), 8000);
+ }
+
+ async function enterRecordingFullscreen(mode){
+ playerEl.classList.remove('mode-desktop','mode-mobile');
+ playerEl.classList.add('mode-'+mode);
+ if(!isFs()) await enterFs();
+ updateFsButtons();
+ }
+
+ async function startVideoRecording(format, ctxInfo){
+ const projLabel = ctxInfo.mode === 'single' ? projects[ctxInfo.idx].name : "Barcha 4 ta loyiha";
+ const fmtLabel = format === 'mobile' ? "Mobil (9:16)" : "Desktop (16:9)";
+
+ let cancelled = false;
+ let displayStream = null;
+ let rafId = null;
+ let recorder = null;
+ const wasPlayingBefore = playing;
+
+ activeRecordingAbort = function(){
+ cancelled = true;
+ if(recordDoneResolve){ const _r = recordDoneResolve; recordDoneResolve = null; _r(); }
+ recordStopAtIdx = null;
+ };
+
+ recordTitleEl.textContent = "Ruxsat so'ralmoqda…";
+ recordSubEl.textContent = "Paydo bo'lgan oynada \"Ushbu tabni ulashish\" (This Tab) variantini tanlang va \"Ulashish\" tugmasini bosing.";
+ recordOverlayEl.classList.add('show');
+
+ try{
+ displayStream = await navigator.mediaDevices.getDisplayMedia({
+ video: { frameRate: 30, width:{ideal:2560}, height:{ideal:1440} },
+ audio: false,
+ preferCurrentTab: true,
+ selfBrowserSurface: 'include',
+ surfaceSwitching: 'exclude'
+ });
+ }catch(err){
+ recordOverlayEl.classList.remove('show');
+ activeRecordingAbort = null;
+ return;
+ }
+
+ if(cancelled){
+ displayStream.getTracks().forEach(t=>t.stop());
+ recordOverlayEl.classList.remove('show');
+ activeRecordingAbort = null;
+ return;
+ }
+
+ displayStream.getVideoTracks()[0].addEventListener('ended', ()=>{
+ if(activeRecordingAbort) activeRecordingAbort();
+ });
+
+ playing = true;
+ recordTitleEl.textContent = "Video yozib olinmoqda…";
+ recordSubEl.textContent = projLabel + " · " + fmtLabel + " — sahifani yopmang.";
+
+ await enterRecordingFullscreen(format);
+ await rawSleep(450);
+
+ const video = document.createElement('video');
+ video.muted = true;
+ video.playsInline = true;
+ video.srcObject = displayStream;
+ try{ await video.play(); }catch(e){}
+ await new Promise(res=>{
+ if(video.readyState >= 1) res();
+ else video.onloadedmetadata = res;
+ });
+
+ const canvas = document.createElement('canvas');
+ const outRect = screenOuter.getBoundingClientRect();
+ const pxScale = Math.min(2, window.devicePixelRatio || 1);
+ canvas.width = Math.max(2, Math.round(outRect.width * pxScale));
+ canvas.height = Math.max(2, Math.round(outRect.height * pxScale));
+ const cctx = canvas.getContext('2d');
+
+ function draw(){
+ if(video.videoWidth){
+ const scaleX = video.videoWidth / window.innerWidth;
+ const scaleY = video.videoHeight / window.innerHeight;
+ const r = screenOuter.getBoundingClientRect();
+ try{
+ cctx.drawImage(video, r.left*scaleX, r.top*scaleY, r.width*scaleX, r.height*scaleY, 0, 0, canvas.width, canvas.height);
+ }catch(e){}
+ }
+ rafId = requestAnimationFrame(draw);
+ }
+ draw();
+
+ const canvasStream = canvas.captureStream(30);
+ const mimeType = pickSupportedMime();
+ const chunks = [];
+ recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 10000000 });
+ recorder.ondataavailable = (e)=>{ if(e.data && e.data.size) chunks.push(e.data); };
+ const recordingFinished = new Promise(resolve=>{ recorder.onstop = resolve; });
+ recorder.start(250);
+
+ const startIdx = ctxInfo.mode === 'single' ? ctxInfo.idx : 0;
+ const stopIdx = ctxInfo.mode === 'single' ? ctxInfo.idx : projects.length - 1;
+
+ playProject(startIdx);
+ await waitForProjectsDone(stopIdx);
+
+ if(rafId) cancelAnimationFrame(rafId);
+ try{ recorder.stop(); }catch(e){}
+ displayStream.getTracks().forEach(t=>t.stop());
+ await recordingFinished;
+
+ if(isFs()) await exitFs();
+ playerEl.classList.remove('mode-desktop','mode-mobile');
+ recordOverlayEl.classList.remove('show');
+ playing = wasPlayingBefore;
+ activeRecordingAbort = null;
+
+ if(cancelled) return;
+
+ const blob = new Blob(chunks, { type: mimeType });
+ const ext = mimeType.indexOf('mp4') !== -1 ? 'mp4' : 'webm';
+ triggerDownload(blob, buildFileName(ctxInfo, format, ext));
+ }
 
  // kick off
  (async()=>{
