@@ -1576,19 +1576,48 @@ body{
  <!-- ============== SCENE 2: LUMEN STORE ============== -->
  <div class="scene lumen" id="scene-lumen">
  <header class="lu-nav">
- <div class="lu-logo">LUMEN</div>
- <nav class="lu-links"><span id="lu-nav-shoes">Poyabzal</span><span>Kiyim</span><span>Aksessuar</span></nav>
+ <div class="lu-logo"><span class="dot"></span>LUMEN</div>
+ <div class="lu-search">
+ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+ <input type="text" placeholder="Mahsulot nomini qidiring..." readonly>
+ </div>
+ <nav class="lu-links"><span class="active">Katalog</span><span>Yangi kelganlar</span><span>Aksiyalar</span><span>Biz haqimizda</span></nav>
  <div class="lu-actions">
- <span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
  <button class="lu-cart-btn" id="lu-cart-btn"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg></span><span class="lu-cart-badge" id="lu-cart-badge">0</span></button>
  </div>
  </header>
+ <div class="lu-hero-wrap">
  <section class="lu-hero">
- <h1>Yangi kolleksiya — <span>30% gacha chegirma</span></h1>
- <p>Minimalistik uslub. Sifatli material. Har kuni uchun.</p>
+ <div class="lu-hero-content">
+ <div class="lu-hero-eyebrow">Yozgi kolleksiya</div>
+ <h1>Yangi mavsum,<br>yangi uslub</h1>
+ <p>Kiyim, poyabzal va aksessuarlarning yangi kolleksiyasi — 40% gacha chegirma bilan.</p>
+ <a class="lu-hero-cta">Xarid qilish
+ <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+ </a>
+ </div>
+ <div class="lu-hero-badge">-40%<span>Chegirma</span></div>
+ <div class="lu-hero-dots"><i class="active"></i><i></i><i></i></div>
  </section>
+ </div>
  <section class="lu-section" id="lu-products">
- <h2>Ommabop mahsulotlar</h2>
+ <div class="lu-section-head">
+ <div>
+ <h2>Barcha mahsulotlar</h2>
+ <p>24 mahsulot topildi</p>
+ </div>
+ </div>
+ <div class="lu-toolbar">
+ <div class="lu-cat-tabs">
+ <span class="active">Barchasi</span>
+ <span>Kiyim</span>
+ <span id="lu-cat-poyabzal">Poyabzal</span>
+ <span>Aksessuar</span>
+ <span>Sport</span>
+ <span>Uy uchun</span>
+ </div>
+ <div class="lu-sort">Saralash: Standart <i class="fa-solid fa-chevron-down"></i></div>
+ </div>
  <div class="lu-grid">
  <div class="lu-card" id="prod-201">
  <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-23%</span><span class="lu-badge-cat">poyabzal</span></div>
@@ -1647,22 +1676,44 @@ body{
  </div>
  </section>
 
+ <footer class="lu-footer">
+ <div class="lu-footer-brand"><span class="dot"></span>LUMEN</div>
+ <p class="lu-footer-desc">Kiyim, poyabzal va aksessuarlar bo'yicha onlayn do'kon. Sifat va uslubni bir joyda taqdim etamiz.</p>
+ <div class="lu-footer-grid">
+ <div><h5>Katalog</h5><a>Kiyimlar</a><a>Poyabzallar</a><a>Aksessuarlar</a></div>
+ <div><h5>Yordam</h5><a>Yetkazib berish</a><a>Qaytarish</a><a>Aloqa</a></div>
+ <div><h5>Ijtimoiy tarmoqlar</h5><a>Telegram</a><a>Instagram</a></div>
+ </div>
+ <div class="lu-footer-bottom"><span>© 2026 LUMEN. Barcha huquqlar himoyalangan.</span><span>Made with care</span></div>
+ </footer>
+
  <div class="lu-drawer-overlay" id="lu-drawer-overlay">
  <div class="lu-drawer">
- <h3>Savatcha</h3>
+ <div class="lu-drawer-head">
+ <h3>Savat</h3>
+ <button class="lu-drawer-close"><i class="fa-solid fa-xmark"></i></button>
+ </div>
+ <div class="lu-drawer-body">
  <div id="lu-drawer-items"></div>
+ </div>
+ <div class="lu-drawer-foot">
  <div class="lu-subtotal"><span>Jami</span><span id="lu-subtotal-val">0 so'm</span></div>
  <button class="lu-checkout-btn" id="lu-checkout-btn">Buyurtma berish</button>
+ </div>
  </div>
  </div>
 
  <div class="lu-modal-overlay" id="lu-modal-overlay">
  <div class="lu-modal">
- <h3>Yetkazib berish ma'lumotlari</h3>
- <div class="lu-field"><label>Ism familiya</label><input type="text" id="lu-name" readonly></div>
- <div class="lu-field"><label>Telefon raqam</label><input type="text" id="lu-phone" readonly></div>
- <div class="lu-field"><label>Manzil</label><textarea id="lu-address" rows="2" readonly></textarea></div>
- <button class="lu-confirm-btn" id="lu-confirm-order">Buyurtmani tasdiqlash</button>
+ <h3>Buyurtmani rasmiylashtirish</h3>
+ <p class="sub">Ma'lumotlaringizni kiriting — buyurtma darhol qabul qilinadi.</p>
+ <div class="lu-field"><label>Ism-familiya</label><input type="text" id="lu-name" placeholder="Ism Familiya" readonly></div>
+ <div class="lu-field"><label>Telefon raqam</label><input type="tel" id="lu-phone" placeholder="+998 90 123 45 67" readonly></div>
+ <div class="lu-field"><label>Manzil (ixtiyoriy)</label><textarea id="lu-address" rows="2" placeholder="Shahar, ko'cha, uy" readonly></textarea></div>
+ <div class="lu-modal-actions">
+ <button class="lu-btn-secondary" type="button">Bekor qilish</button>
+ <button class="lu-confirm-btn" id="lu-confirm-order">Buyurtma berish</button>
+ </div>
  </div>
  </div>
  <div class="lu-success" id="lu-success">
@@ -2416,7 +2467,7 @@ async function sendTelegramNotification(text){
  },
  steps:[
  { caption:"Mijoz katalogni varaqlayapti",
- run: async(scene)=>{ await moveCursorTo(id('lu-nav-shoes'), 500); } },
+ run: async(scene)=>{ await moveCursorTo(id('lu-cat-poyabzal'), 500); } },
  { caption:"Kerakli bo'limga o'tadi",
  run: async(scene)=>{ await scrollSceneTo(scene, id('lu-products')); } },
  { caption:"«Klassik oq krossovka»ga ko'zi tushadi",
