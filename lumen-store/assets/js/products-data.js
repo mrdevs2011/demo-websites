@@ -51,13 +51,13 @@ App.PRODUCTS = [
   { id: 405, cat: 'sport', name: "Trenirovka uchun krossovka Pro", price: 419000, oldPrice: 520000, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800&auto=format&fit=crop' },
   { id: 406, cat: 'sport', name: "Sport ryukzagi", price: 199000, oldPrice: 249000, img: 'https://images.unsplash.com/photo-1622260614153-03223fb72052?q=80&w=800&auto=format&fit=crop' },
   { id: 407, cat: 'sport', name: "Kompression sport shim", price: 135000, oldPrice: null, img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop' },
-  { id: 408, cat: 'sport', name: "Sport bandana va peshonaband", price: 45000, oldPrice: null, img: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?q=80&w=800&auto=format&fit=crop' },
+  { id: 408, cat: 'sport', name: "Sport bandana va peshonaband", price: 45000, oldPrice: null, img: 'https://images.unsplash.com/photo-1457449205106-d0aad138e99b?q=80&w=800&auto=format&fit=crop' },
 
   { id: 501, cat: 'uy-tovarlari', name: "Bambuk choy stakan seti (4 ta)", price: 189000, oldPrice: 230000, img: 'https://images.unsplash.com/photo-1516600164266-f3b8166ae679?q=80&w=800&auto=format&fit=crop' },
-  { id: 502, cat: 'uy-tovarlari', name: "Aromatik shamlar to'plami", price: 99000, oldPrice: null, img: 'https://images.unsplash.com/photo-1602874801007-42942a0c2144?q=80&w=800&auto=format&fit=crop' },
+  { id: 502, cat: 'uy-tovarlari', name: "Aromatik shamlar to'plami", price: 99000, oldPrice: null, img: 'https://images.unsplash.com/photo-1643122966676-29e8597257f7?q=80&w=800&auto=format&fit=crop' },
   { id: 503, cat: 'uy-tovarlari', name: "Yumshoq pled (150x200)", price: 249000, oldPrice: 299000, img: 'https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?q=80&w=800&auto=format&fit=crop' },
   { id: 504, cat: 'uy-tovarlari', name: "Keramik krujka seti (2 ta)", price: 79000, oldPrice: null, img: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?q=80&w=800&auto=format&fit=crop' },
-  { id: 505, cat: 'uy-tovarlari', name: "Dekorativ yostiq g'ilofi", price: 65000, oldPrice: 89000, img: 'https://images.unsplash.com/photo-1592789705501-f9ae4287c4cb?q=80&w=800&auto=format&fit=crop' },
+  { id: 505, cat: 'uy-tovarlari', name: "Dekorativ yostiq g'ilofi", price: 65000, oldPrice: 89000, img: 'https://images.unsplash.com/photo-1570786240066-c0d753711cfe?q=80&w=800&auto=format&fit=crop' },
   { id: 506, cat: 'uy-tovarlari', name: "Bezakli devor soati", price: 175000, oldPrice: null, img: 'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?q=80&w=800&auto=format&fit=crop' },
 ];
 
