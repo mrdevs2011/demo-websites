@@ -1404,23 +1404,23 @@ body{
  </section>
  <section class="fd-section" id="fd-products">
  <div class="fd-grid">
- <div class="fd-card" id="prod-1">
+ <div class="fd-card" data-cat="pizza" id="prod-1">
  <div class="ic"><i class="fa-solid fa-pizza-slice"></i></div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p>
  <div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1">+ Qo'shish</button></div>
  </div>
- <div class="fd-card" id="prod-3">
+ <div class="fd-card" data-cat="pizza" id="prod-3">
  <div class="ic"><i class="fa-solid fa-pizza-slice"></i></div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p>
  <div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3">+ Qo'shish</button></div>
  </div>
- <div class="fd-card" id="prod-6">
+ <div class="fd-card" data-cat="burger" id="prod-6">
  <div class="ic"><i class="fa-solid fa-burger"></i></div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p>
  <div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-6">+ Qo'shish</button></div>
  </div>
- <div class="fd-card" id="prod-9">
+ <div class="fd-card" data-cat="drinks" id="prod-9">
  <div class="ic"><i class="fa-solid fa-bottle-water"></i></div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
  <div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-9">+ Qo'shish</button></div>
  </div>
- <div class="fd-card" id="prod-13">
+ <div class="fd-card" data-cat="sets" id="prod-13">
  <div class="ic"><i class="fa-solid fa-box"></i></div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p>
  <div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-13">+ Qo'shish</button></div>
  </div>
@@ -1585,6 +1585,15 @@ async function sendTelegramNotification(text){
 
  function q(scene, sel){ return scene.querySelector(sel); }
  function id(name){ return document.getElementById(name); }
+
+ // Otabekfood: tab (Pitsa/Burger/Ichimlik/Setlar) bosilganda mos mahsulotlarnigina
+ // ko'rsatadi. Avval bu funksiya yo'q edi — tugma rangi o'zgarardi-yu, lekin
+ // ro'yxat filtrlanmasdi (barcha bo'limda hammasi ko'rinib turaverardi).
+ function fdShowCategory(scene, cat){
+ scene.querySelectorAll('.fd-card').forEach(card=>{
+ card.style.display = (card.dataset.cat === cat) ? '' : 'none';
+ });
+ }
 
  async function moveCursorTo(el, duration){
  duration = duration || 650;
@@ -1981,6 +1990,7 @@ async function sendTelegramNotification(text){
  id('fd-name').value=''; id('fd-phone').value=''; id('fd-address').value='';
  scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
  id('cat-pizza').classList.add('active');
+ fdShowCategory(scene, 'pizza');
  },
  steps:[
  { caption:"Mijoz och qoldi — tez ovqat izlayapti",
@@ -2000,6 +2010,7 @@ async function sendTelegramNotification(text){
  await goAndClick(catDrinks, '#F59E0B');
  scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
  catDrinks.classList.add('active');
+ fdShowCategory(scene, 'drinks');
  await goAndClick(id('fd-add-9'), '#F59E0B');
  id('fd-cart-badge').textContent='2'; id('fd-cart-badge').classList.add('bump');
  id('fd-drawer-items').innerHTML += '<div class="fd-drawer-item"><span>Coca-Cola 0.5L</span><span>10 000 so\'m</span></div>';
@@ -2097,7 +2108,15 @@ async function sendTelegramNotification(text){
  cursor.style.transitionDuration = '0ms';
  cursor.style.left = '50%';
  cursor.style.top = '46%';
+ cursor.style.opacity = '0';
  await sleep(50);
+ // Har bir loyiha (nafaqat birinchisi) boshida qisqa "tanishtiruv" pauzasi —
+ // tomoshabin yangi saytni ko'rib ulgurishi uchun, kursor darhol harakatlanib
+ // ketmasligi kerak. Alohida video-klip sifatida kesilganda ham shu birinchi
+ // kadr aniq va tushunarli bo'lib qoladi. rawSleep — SPEED'dan mustaqil, doim bir xil.
+ await rawSleep(900);
+ if(myToken !== runToken) return;
+ cursor.style.opacity = '1';
  setTimeout(()=>{ if(myToken === runToken) spawnValueChip(); }, 3200);
 
  for(let i=0;i<proj.steps.length;i++){
