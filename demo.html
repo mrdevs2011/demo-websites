@@ -818,16 +818,22 @@ body{
 
 /* ---- SUCCESS CARD (checkout modal ichida, production'dagi kabi) ---- */
 .lu-success{
- position:absolute; inset:0; background:#fff; border-radius:18px; display:flex; flex-direction:column; align-items:center;
- justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:22px; box-sizing:border-box;
+ position:absolute; inset:0; background:rgba(11,11,18,.55); display:flex; align-items:center;
+ justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:18px; box-sizing:border-box;
 }
 .lu-success.show{ opacity:1; pointer-events:auto; }
-.lu-success .ic{
- width:48px; height:48px; border-radius:50%; background:#E9FBF1; color:#1a9e5c; font-size:20px;
- display:flex; align-items:center; justify-content:center; margin-bottom:12px;
+.lu-success-card{
+ background:#fff; border-radius:20px; padding:26px 22px; width:min(300px,100%); box-sizing:border-box;
+ display:flex; flex-direction:column; align-items:center; text-align:center;
+ box-shadow:0 24px 50px -12px rgba(11,11,18,.4); transform:scale(.92); transition:transform .3s;
 }
-.lu-success h3{ margin:0 0 4px; font-size:16px; }
-.lu-success p{ color:#75758A; font-size:11.5px; max-width:260px; margin:0 0 12px; }
+.lu-success.show .lu-success-card{ transform:scale(1); }
+.lu-success .ic{
+ width:52px; height:52px; border-radius:50%; background:#E9FBF1; color:#1a9e5c; font-size:22px;
+ display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+}
+.lu-success h3{ margin:0 0 6px; font-size:16.5px; }
+.lu-success p{ color:#75758A; font-size:11.5px; max-width:240px; margin:0 0 14px; line-height:1.5; }
 .lu-order-chip{
  display:inline-block; background:#1E1B4B; color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700;
  font-size:10.5px; letter-spacing:.4px; padding:5px 12px; border-radius:999px; margin-bottom:12px;
@@ -1717,9 +1723,17 @@ body{
  </div>
  </div>
  <div class="lu-success" id="lu-success">
+ <div class="lu-success-card">
  <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
  <h3>Rahmat, buyurtma qabul qilindi!</h3>
  <p>Tez orada operatorlarimiz siz bilan bog'lanadi va yetkazib berish vaqtini aniqlashtiradi.</p>
+ <div class="lu-order-chip" id="lu-order-chip">№ LU-20394</div>
+ <div class="lu-sc-block">
+ <div class="lu-sc-row"><span>Mahsulot</span><b id="lu-sc-item">Klassik oq krossovka (M)</b></div>
+ <div class="lu-sc-row"><span>Xaridor</span><b id="lu-sc-name">Aziz Karimov</b></div>
+ </div>
+ <div class="lu-sc-total"><span>Jami</span><b id="lu-sc-total-val">399 000 so'm</b></div>
+ </div>
  </div>
  </div>
 
@@ -2503,7 +2517,9 @@ async function sendTelegramNotification(text){
  run: async(scene)=>{
  await goAndClick(id('lu-confirm-order'), '#4F46E5');
  id('lu-modal-overlay').classList.remove('open');
- await sleep(200); id('lu-success').classList.add('show'); await sleep(900); id('lu-success').classList.remove('show');
+ await sleep(200);
+ id('lu-order-chip').textContent = '№ LU-' + Math.floor(20000+Math.random()*9999);
+ id('lu-success').classList.add('show'); await sleep(1700); id('lu-success').classList.remove('show');
  await celebrateSuccess({
  title:'Buyurtma qabul qilindi! <i class="fa-solid fa-bag-shopping"></i>',
  text:"Aziz, «Klassik oq krossovka» (M) siz tomon yo'lda.",
