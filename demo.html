@@ -718,16 +718,16 @@ body{
    keskin "snap-zoom" bilan yaqinlashadi (punch) — hech qachon statik turmaydi.
    ============================================================ */
 #screenScroll{
-  transition: transform .55s cubic-bezier(.22,.9,.32,1);
+  transition: transform .32s cubic-bezier(.22,.9,.32,1);
   will-change: transform;
 }
-#screenScroll.zoom-soft{ transform: scale(1.045); }
-#screenScroll.zoom-punch{ transform: scale(1.12); }
-#screenScroll.punch-kick{ animation: punch-kick-anim .3s cubic-bezier(.3,1.7,.4,1); }
+#screenScroll.zoom-soft{ transform: scale(1.03); }
+#screenScroll.zoom-punch{ transform: scale(1.08); }
+#screenScroll.punch-kick{ animation: punch-kick-anim .22s cubic-bezier(.3,1.6,.4,1); }
 @keyframes punch-kick-anim{
-  0%{ transform: scale(1.045); }
-  45%{ transform: scale(1.17); }
-  100%{ transform: scale(1.12); }
+  0%{ transform: scale(1.03); }
+  45%{ transform: scale(1.1); }
+  100%{ transform: scale(1.08); }
 }
 
 /* ============================================================
@@ -1009,7 +1009,7 @@ body{
   font-size:clamp(10px,3cqi,12.5px); font-weight:800; letter-spacing:1.2px;
   text-transform:uppercase; color:#0b0c10;
   background:linear-gradient(90deg,#7c4dff,#ff5cc6,#7c4dff);
-  background-size:200% auto; animation:neon-flow 3s linear infinite;
+  background-size:200% auto; animation:neon-flow 5.5s linear infinite;
   padding:6px 14px; border-radius:20px;
 }
 .hook-intro-card h2{
@@ -1017,10 +1017,10 @@ body{
   font-weight:800; color:#fff; margin:16px 0 6px; line-height:1.22;
 }
 .hook-intro-arrow{
-  font-size:clamp(24px, 10cqi, 42px);
-  animation:hook-bounce 1s ease-in-out infinite;
+  font-size:clamp(22px, 8.5cqi, 36px);
+  animation:hook-bounce 1.6s ease-in-out infinite;
 }
-@keyframes hook-bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(10px); } }
+@keyframes hook-bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
 
 /* ---- Oxirida katta CTA-ekran ---- */
 .end-cta-overlay{
@@ -1042,12 +1042,12 @@ body{
   background:linear-gradient(135deg,#2fb3ee,#1c86bd);
   display:flex; align-items:center; justify-content:center;
   font-size:clamp(28px,9cqi,38px); color:#fff;
-  box-shadow:0 0 0 0 rgba(47,179,238,.55);
-  animation:end-cta-glow 1.5s ease-in-out infinite;
+  box-shadow:0 0 0 0 rgba(47,179,238,.5);
+  animation:end-cta-glow 2.2s ease-in-out infinite;
 }
 @keyframes end-cta-glow{
-  0%,100%{ box-shadow:0 0 0 0 rgba(47,179,238,.55); }
-  50%{ box-shadow:0 0 34px 10px rgba(47,179,238,.35); }
+  0%,100%{ box-shadow:0 0 0 0 rgba(47,179,238,.5); }
+  50%{ box-shadow:0 0 20px 6px rgba(47,179,238,.28); }
 }
 .end-cta-card h2{
   font-size:clamp(22px, 9.5cqi, 40px); font-weight:800; color:#fff; margin:0 0 12px; line-height:1.18;
@@ -1055,7 +1055,7 @@ body{
 .end-cta-handle{
   display:inline-block; font-size:clamp(16px, 6.5cqi, 25px); font-weight:800; color:#0b0c10;
   background:linear-gradient(90deg,#7c4dff,#ff5cc6,#7c4dff); background-size:200% auto;
-  animation:neon-flow 3s linear infinite;
+  animation:neon-flow 5.5s linear infinite;
   padding:9px 22px; border-radius:30px; margin-bottom:12px;
 }
 .end-cta-card p{
@@ -1770,17 +1770,10 @@ async function sendTelegramNotification(text){
     await rawSleep(200);
   }
 
-  /* ---------- Narx/qiymat chip: vaqti-vaqti bilan chiqib-kiradi ---------- */
+  /* ---------- Narx/qiymat chip: loyiha davomida bir marta, xolisona chiqadi ---------- */
   function spawnValueChip(){
     valueChip.classList.add('show');
-    setTimeout(()=> valueChip.classList.remove('show'), 2300);
-  }
-  function startValueChipLoop(){
-    function loop(){
-      spawnValueChip();
-      setTimeout(loop, 6500 + Math.random()*2500);
-    }
-    setTimeout(loop, 4200);
+    setTimeout(()=> valueChip.classList.remove('show'), 2200);
   }
 
   /* ============================================================
@@ -1824,21 +1817,19 @@ async function sendTelegramNotification(text){
     // 1.1) Admin telefonida Telegram bildirishnomasi "suzib" chiqadi
     setTimeout(()=> showAdminPhoneNotification(telegramMessage), 450);
 
-    // 2) Confetti (agar canvas-confetti kutubxonasi yuklangan bo'lsa)
+    // 1.2) Boshqa mijoz ham hozirgina buyurtma berganini ko'rsatuvchi bitta xolisona bubble
+    setTimeout(()=> spawnLivePopup(), 700);
+
+    // 2) Confetti — bitta, mo''tadil portlash (agar canvas-confetti kutubxonasi yuklangan bo'lsa)
     if(window.confetti){
       const rect = screenOuter.getBoundingClientRect();
       const originX = (rect.left + rect.width/2) / window.innerWidth;
       const originY = (rect.top + rect.height/2) / window.innerHeight;
       window.confetti({
-        particleCount: 90, spread: 75, startVelocity: 38,
+        particleCount: 46, spread: 62, startVelocity: 28,
         origin: { x: originX, y: originY }, zIndex: 9999,
-        colors: ['#7c4dff','#ff5cc6','#22c55e','#ffd166','#4ecdc4']
+        colors: ['#7c4dff','#ffd166','#4ecdc4']
       });
-      setTimeout(()=>window.confetti({
-        particleCount: 50, spread: 100, startVelocity: 28,
-        origin: { x: originX, y: originY }, zIndex: 9999,
-        colors: ['#7c4dff','#ff5cc6','#22c55e','#ffd166']
-      }), 220);
     }
 
     // 3) "Tashakkur" kassa cheki overlay'i
@@ -1875,7 +1866,7 @@ async function sendTelegramNotification(text){
     el.className = 'live-popup ' + popupSide;
     el.innerHTML =
       '<div class="lp-ic">'+pick.icon+'</div>'+
-      '<div class="lp-text"><i class="fa-solid fa-champagne-glasses"></i> <b>'+pick.name+'</b> hozirgina <b>'+pick.project+'</b>\'dan «'+pick.item+'» sotib oldi'+
+      '<div class="lp-text"><b>'+pick.name+'</b> hozirgina <b>'+pick.project+'</b>\'dan «'+pick.item+'» sotib oldi'+
       '<span class="lp-time">'+secondsAgo+' soniya oldin</span></div>';
     livePopupLayer.appendChild(el);
     requestAnimationFrame(()=>{ el.classList.add('show'); });
@@ -1885,15 +1876,8 @@ async function sendTelegramNotification(text){
     }, 4200);
   }
 
-  function startLivePopups(){
-    if(popupTimer) return;
-    function loop(){
-      spawnLivePopup();
-      const nextDelay = 5000 + Math.random()*3000; // 5-8 soniya
-      popupTimer = setTimeout(loop, nextDelay);
-    }
-    popupTimer = setTimeout(loop, 3200);
-  }
+  /* Eslatma: bu bubble endi doimiy fonda takrorlanmaydi — faqat buyurtma
+     muvaffaqiyatli yakunlangan lahzada (celebrateSuccess ichida) bir marta chiqadi. */
 
   /* ===================== PROJECT DEFINITIONS ===================== */
   const projects = [];
@@ -2181,6 +2165,7 @@ async function sendTelegramNotification(text){
     cursor.style.left = '50%';
     cursor.style.top = '46%';
     await sleep(50);
+    setTimeout(()=>{ if(myToken === runToken) spawnValueChip(); }, 3200);
 
     for(let i=0;i<proj.steps.length;i++){
       if(myToken !== runToken) return;
@@ -2265,8 +2250,6 @@ async function sendTelegramNotification(text){
   (async()=>{
     await showHookIntro();
     playProject(0);
-    startLivePopups();
-    startValueChipLoop();
   })();
 })();
 </script>
