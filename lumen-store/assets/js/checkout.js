@@ -18,6 +18,49 @@ App.generateOrderCode = function () {
   return `order_${ts}_${rand}`;
 };
 
+App.formatOrderItems = function (items) {
+  return items
+    .map(i => `▫️ ${i.name} <i>(${i.size})</i> × ${i.qty} — <b>${Number(i.price * i.qty).toLocaleString('uz-UZ')} so'm</b>`)
+    .join('\n');
+};
+
+/**
+ * Telegram bot orqali adminga yangi buyurtma haqida xabar yuboradi.
+ * config.js'da TELEGRAM_BOT_TOKEN / ADMIN_CHAT_ID to'ldirilmagan bo'lsa
+ * jim o'tkazib yuboriladi (xatolik tashlamaydi).
+ */
+App.notifyTelegram = async function ({ orderCode, full_name, phone, address, items, total }) {
+  const cfg = window.APP_CONFIG;
+  if (!cfg.TELEGRAM_BOT_TOKEN || !cfg.ADMIN_CHAT_ID) {
+    console.warn('[LUMEN] Telegram sozlanmagan: bildirishnoma yuborilmadi.');
+    return;
+  }
+
+  const text =
+    `🆕 <b>YANGI BUYURTMA</b>\n` +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `🧾 <b>Raqami:</b> <code>${orderCode}</code>\n` +
+    `👤 <b>Mijoz:</b> ${full_name}\n` +
+    `📞 <b>Telefon:</b> <a href="tel:${phone}">${phone}</a>\n` +
+    (address ? `📍 <b>Manzil:</b> ${address}\n` : '') +
+    `\n🛍 <b>Mahsulotlar:</b>\n${App.formatOrderItems(items)}\n` +
+    `━━━━━━━━━━━━━━━━━━━━\n` +
+    `💰 <b>Jami:</b> ${Number(total).toLocaleString('uz-UZ')} so'm`;
+
+  try {
+    const url = `https://api.telegram.org/bot${cfg.TELEGRAM_BOT_TOKEN}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: cfg.ADMIN_CHAT_ID, text, parse_mode: 'HTML' }),
+    });
+    const result = await res.json();
+    if (!result.ok) console.warn('[LUMEN] Telegram xabari yuborilmadi:', result.description);
+  } catch (err) {
+    console.warn('[LUMEN] Telegram API bilan bog\'lanishda xatolik:', err);
+  }
+};
+
 App.initCheckout = function () {
   document.getElementById('checkoutBtn').addEventListener('click', App.openCheckout);
   document.getElementById('cancelCheckout').addEventListener('click', App.closeCheckout);
@@ -60,7 +103,7 @@ App.initCheckout = function () {
           .insert({ id: customerId, full_name, phone, address: address || null });
         if (customerError) throw customerError;
 
-        // 2) Buyurtmani orders jadvaliga yozamiz (bot shu jadvaldan o'qiydi)
+        // 2) Buyurtmani orders jadvaliga yozamiz
         const { error: orderError } = await App.supabase
           .from('orders')
           .insert({
@@ -75,18 +118,20 @@ App.initCheckout = function () {
         console.warn('[LUMEN] Supabase ulanmagan: config.js faylida sozlamalarni tekshiring.');
       }
 
-      statusEl.textContent = "Buyurtma qabul qilindi! Telegram botga yo'naltirilmoqda...";
+      // Adminga to'g'ridan-to'g'ri saytdan Telegram xabari yuboriladi —
+      // alohida bot-server (node bot.js) ishlab turishi shart emas.
+      await App.notifyTelegram({ orderCode, full_name, phone, address, items, total });
+
+      statusEl.textContent = `✅ Buyurtmangiz qabul qilindi! Buyurtma raqami: ${orderCode}. Operatorimiz tez orada siz bilan bog'lanadi.`;
       statusEl.classList.add('success');
 
-      const telegramLink = `https://t.me/${window.APP_CONFIG.TELEGRAM_BOT_USERNAME}?start=${orderCode}`;
+      App.state.cart = [];
+      App.renderCart();
+      e.target.reset();
       setTimeout(() => {
-        window.open(telegramLink, '_blank');
-        App.state.cart = [];
-        App.renderCart();
         App.closeCheckout();
         App.closeCart();
-        e.target.reset();
-      }, 900);
+      }, 2500);
 
     } catch (err) {
       console.error(err);
@@ -94,7 +139,7 @@ App.initCheckout = function () {
       statusEl.classList.add('error');
     } finally {
       submitBtn.disabled = false;
-      submitText.textContent = "Telegramga o'tish";
+      submitText.textContent = "Buyurtma berish";
     }
   });
 };

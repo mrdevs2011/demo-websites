@@ -6,7 +6,7 @@
 export const SUPABASE_URL = "https://sozmshtdllglgvaxmgnv.supabase.co";
 export const SUPABASE_ANON_KEY = "sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf";
 
-export const TELEGRAM_BOT_TOKEN = "8953636269:AAH32_kca-wroPKqxrMhOk2Rug1gQKZxznU";
+export const TELEGRAM_BOT_TOKEN = "8712396525:AAE1qSBw6T85qXLsJL0rvcLfx-D2YSoHvGc";
 export const TELEGRAM_CHAT_ID   = "5327086859";
 
 /*

@@ -50,6 +50,26 @@ async function notifyTelegram(row) {
 }
 
 /**
+ * Berilgan usta va sana uchun band bo'lgan vaqtlarni Supabase'dan
+ * (xavfsiz `booked_slots` view orqali) o'qib keladi.
+ * @returns {Promise<string[]>} band vaqtlar ro'yxati, masalan ["10:00","14:30"]
+ */
+export async function fetchBookedSlots(masterId, date) {
+  if (!supabaseClient) return [];
+  const { data, error } = await supabaseClient
+    .from('booked_slots')
+    .select('booking_time')
+    .eq('master_id', masterId)
+    .eq('booking_date', date);
+
+  if (error) {
+    console.warn("Band vaqtlarni o'qishda xatolik:", error.message);
+    return [];
+  }
+  return data.map(r => r.booking_time);
+}
+
+/**
  * Bron ma'lumotlarini Supabase 'bookings' jadvaliga saqlaydi
  * (README/config.js'dagi SQL sxema bilan bir xil jadval va ustun nomlari).
  * @param {object} payload - { service, master, date, time, name, phone }
@@ -75,7 +95,14 @@ export async function submitBookingToBackend({ service, master, date, time, name
   }
 
   const { error } = await supabaseClient.from('bookings').insert([row]);
-  if (error) throw new Error('Supabase xatosi: ' + error.message);
+  if (error) {
+    // Postgres unique constraint xatosi (kod 23505) — demak shu vaqtga
+    // ayni damda boshqa kimdir ulgurib bron qilib qo'ygan.
+    if (error.code === '23505') {
+      throw new Error("Kechirasiz, bu vaqt hozirgina band qilindi. Iltimos, boshqa vaqtni tanlang.");
+    }
+    throw new Error('Supabase xatosi: ' + error.message);
+  }
 
   await notifyTelegram(row);
 

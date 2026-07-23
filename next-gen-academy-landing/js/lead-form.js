@@ -8,6 +8,37 @@ try {
   console.warn('Supabase mijozi ishga tushmadi:', e);
 }
 
+/**
+ * Telegram bot orqali adminga yangi ariza haqida xabar yuboradi.
+ * TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID sozlanmagan bo'lsa, jim o'tkazib
+ * yuboriladi (xatolik tashlamaydi, forma yuborilishiga xalaqit bermaydi).
+ */
+async function notifyTelegramLead({ full_name, phone, course }) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    console.warn('Telegram sozlanmagan: bildirishnoma yuborilmadi.');
+    return;
+  }
+
+  const text =
+    `🎓 <b>YANGI ARIZA!</b>\n\n` +
+    `👤 <b>Ism-familiya:</b> ${full_name}\n` +
+    `📞 <b>Telefon:</b> ${phone}\n` +
+    `📚 <b>Kurs:</b> ${course}`;
+
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: 'HTML' }),
+    });
+    const result = await res.json();
+    if (!result.ok) console.warn('Telegram xabari yuborilmadi:', result.description);
+  } catch (err) {
+    console.warn("Telegram API bilan bog'lanishda xatolik:", err);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const leadForm = document.getElementById('leadForm');
   const leadStatus = document.getElementById('leadStatus');
@@ -50,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .insert([{ full_name, phone, course }]);
 
       if (error) throw error;
+
+      await notifyTelegramLead({ full_name, phone, course });
 
       showStatus("Rahmat! Arizangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.", false);
       leadForm.reset();

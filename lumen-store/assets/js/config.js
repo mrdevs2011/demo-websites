@@ -2,21 +2,25 @@
    config.js
    -------------------------------------------------------------------------
    Loyihaning barcha sozlamalari shu yerda. Boshqa hech qaysi faylni
-   o'zgartirishga hojat yo'q — faqat shu 3 ta qiymatni to'ldiring.
+   o'zgartirishga hojat yo'q — faqat shu 4 ta qiymatni to'ldiring.
 
    1) Supabase loyihasi yarating: https://supabase.com/dashboard
       Project Settings -> API bo'limidan URL va anon public key'ni oling.
    2) Telegram bot yarating: @BotFather orqali /newbot buyrug'i bilan,
-      bot username'ini shu yerga yozing (masalan: dokon_bot).
+      sizga bergan tokenni TELEGRAM_BOT_TOKEN'ga qo'ying.
+   3) ADMIN_CHAT_ID — buyurtma xabarlari keladigan Telegram chat ID
+      (@userinfobot orqali bilib olishingiz mumkin).
 
-   Kerakli SQL sxema /supabase/schema.sql faylida.
-   Bot namunasi /telegram-bot papkasida.
+   Buyurtma kelganda sayt to'g'ridan-to'g'ri (serversiz) Telegram'ga
+   xabar yuboradi — alohida bot-server (node bot.js) ishga tushirish
+   SHART EMAS.
    ========================================================================= */
 
 window.APP_CONFIG = {
   SUPABASE_URL: 'https://sozmshtdllglgvaxmgnv.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf',
-  TELEGRAM_BOT_USERNAME: 'lumen_store_bot'                   // <-- @ belgisisiz bot username
+  TELEGRAM_BOT_TOKEN: '8953636269:AAH32_kca-wroPKqxrMhOk2Rug1gQKZxznU', // <-- bot tokeni
+  ADMIN_CHAT_ID: '5327086859'                                          // <-- xabar keladigan chat ID
 };
 
 window.App = window.App || {};

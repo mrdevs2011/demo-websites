@@ -17,12 +17,12 @@
 export const SUPABASE_CONFIG = {
   url: "https://sozmshtdllglgvaxmgnv.supabase.co",
   anonKey: "sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf",
-  ordersTable: "otabekfood_orders",
+  ordersTable: "orders",
 };
 
 export const TELEGRAM_CONFIG = {
-  botToken: "YOUR-TELEGRAM-BOT-TOKEN",
-  adminChatId: "YOUR-ADMIN-CHAT-ID", // masalan: "123456789" yoki guruh uchun "-1001234567890"
+  botToken: "8644681367:AAF5CVlfcIerknSKKRyZ6BBYeU6jsdCZ12g",
+  adminChatId: "5327086859",
 };
 
 export const DELIVERY_CONFIG = {

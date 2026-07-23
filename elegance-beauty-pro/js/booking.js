@@ -3,7 +3,7 @@
 // =============================================================================
 import { SERVICES, MASTERS, money, formatDateUz, generateDaySlots } from './data.js';
 import { state, resetState, bookedSlotsCache } from './state.js';
-import { submitBookingToBackend } from './api.js';
+import { submitBookingToBackend, fetchBookedSlots } from './api.js';
 
 const modal = () => document.getElementById('bookingModal');
 
@@ -139,7 +139,7 @@ function stepNext() {
 /* ---------------------------------------------------------------------------
    2-qadam: Vaqt slotlari
 --------------------------------------------------------------------------- */
-function renderTimeSlots() {
+async function renderTimeSlots() {
   const dateVal = document.getElementById('bookingDate').value;
   const wrap = document.getElementById('timeSlotWrap');
 
@@ -150,6 +150,19 @@ function renderTimeSlots() {
   state.date = dateVal;
 
   const key = `${state.masterId}_${dateVal}`;
+
+  // Yuklanmoqda holati (server javobini kutayotganda)
+  wrap.innerHTML = `<p class="text-sm text-emerald-950/40"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Bo'sh vaqtlar tekshirilmoqda...</p>`;
+
+  // Haqiqiy band vaqtlarni Supabase'dan olib kelamiz va keshni yangilaymiz
+  // (shu orqali boshqa mijozlar qilgan bronlar ham hisobga olinadi).
+  try {
+    const serverBooked = await fetchBookedSlots(state.masterId, dateVal);
+    bookedSlotsCache[key] = serverBooked;
+  } catch (err) {
+    console.warn("Band vaqtlarni olishda xatolik:", err);
+  }
+
   const booked = bookedSlotsCache[key] || [];
   const slots = generateDaySlots();
 
