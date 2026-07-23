@@ -1516,7 +1516,7 @@ body{
 
  <div class="controls">
  <button class="ctrl-btn" id="prevBtn"><i class="fa-solid fa-backward-step"></i> Oldingi loyiha</button>
- <button class="ctrl-btn primary" id="playBtn"><i class="fa-solid fa-pause"></i> Pauza</button>
+ <button class="ctrl-btn primary" id="playBtn"><i class="fa-solid fa-play"></i> Davom ettirish</button>
  <button class="ctrl-btn" id="restartBtn"><i class="fa-solid fa-arrow-rotate-left"></i> Qayta boshlash</button>
  <button class="ctrl-btn" id="nextBtn">Keyingi loyiha <i class="fa-solid fa-forward-step"></i></button>
  </div>
@@ -1580,7 +1580,7 @@ async function sendTelegramNotification(text){
  // ekranlar buning ta'sirida qolmasligi uchun alohida rawSleep() ishlatiladi.
  const SPEED = 0.8;
 
- let playing = true;
+ let playing = false;
  let runToken = 0;
  let currentProjectIdx = 0;
 
@@ -2173,13 +2173,25 @@ async function sendTelegramNotification(text){
  }
 
  /* ===================== CONTROLS ===================== */
- playBtn.addEventListener('click', ()=>{
+ function togglePlay(){
  playing = !playing;
  playBtn.innerHTML = playing ? '<i class="fa-solid fa-pause"></i> Pauza' : '<i class="fa-solid fa-play"></i> Davom ettirish';
- });
+ }
+ playBtn.addEventListener('click', togglePlay);
  restartBtn.addEventListener('click', ()=>{ playProject(currentProjectIdx); });
  prevBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx-1+projects.length)%projects.length); });
  nextBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx+1)%projects.length); });
+
+ // Space tugmasi: play/pause (loop) — inputga yozayotganda ishlamaydi,
+ // sahifa pastga skroll bo'lib ketmasligi uchun default harakat bekor qilinadi.
+ document.addEventListener('keydown', (e)=>{
+ if(e.code !== 'Space') return;
+ const active = document.activeElement;
+ const isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+ if(isTyping) return;
+ e.preventDefault();
+ togglePlay();
+ });
 
  /* ===================== FULLSCREEN (player only) — desktop & mobile (9:16) ===================== */
  const playerEl = document.querySelector('.player');
