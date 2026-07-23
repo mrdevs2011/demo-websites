@@ -711,17 +711,9 @@ body{
 .fd-success p{ color:#78350F; font-size:13px; max-width:300px; }
 
 /* ============================================================
-   WOW-EFFEKT: DYNAMIC ZOOM / CAMERA FOLLOW (Reels uchun)
-   Trend reklama videolaridagi kabi: kamera doim biror narsaga
-   qarab sekin siljib-yaqinlashib turadi (soft), bosish paytida esa
-   keskin "snap-zoom" bilan yaqinlashadi (punch) — hech qachon statik turmaydi.
+   Zoom/kamera effekti olib tashlandi — ekran doim bir xil o'lchamda,
+   hech qachon kattalashmaydi/kichraymaydi.
    ============================================================ */
-#screenScroll{
-  transition: transform .32s cubic-bezier(.22,.9,.32,1);
-  will-change: transform;
-}
-#screenScroll.zoom-soft{ transform: scale(1.03); }
-#screenScroll.zoom-punch{ transform: scale(1.07); }
 
 /* ============================================================
    LIVE ORDER POPUPS (Social Proof)
@@ -1605,24 +1597,7 @@ async function sendTelegramNotification(text){
     cursor.style.transitionDuration = duration + 'ms';
     cursor.style.left = x + 'px';
     cursor.style.top = y + 'px';
-    // Kamera har doim kursor qayerga borsa, o'shanga qarab sekin siljib-yaqinlashadi —
-    // trend reklama videolaridagi kabi hech qachon statik turmaydigan "jonli" effekt.
-    cameraTo(el, 'soft');
     await sleep(duration + 60);
-  }
-
-  /* ---------- DYNAMIC ZOOM / CAMERA FOLLOW (Reels retention effekti) ---------- */
-  function cameraTo(el, level){
-    const outerRect = screenOuter.getBoundingClientRect();
-    const r = el.getBoundingClientRect();
-    const xPct = ((r.left + r.width/2 - outerRect.left) / outerRect.width) * 100;
-    const yPct = ((r.top + r.height/2 - outerRect.top) / outerRect.height) * 100;
-    screenScroll.style.transformOrigin = xPct + '% ' + yPct + '%';
-    screenScroll.classList.remove('zoom-soft','zoom-punch');
-    screenScroll.classList.add(level === 'punch' ? 'zoom-punch' : 'zoom-soft');
-  }
-  function resetZoom(){
-    screenScroll.classList.remove('zoom-soft','zoom-punch');
   }
 
   function ripple(accent){
@@ -1647,15 +1622,9 @@ async function sendTelegramNotification(text){
   }
 
   async function goAndClick(el, accent, duration){
-    // Kamera bosiladigan elementga qarab avval sekin yaqinlashadi (soft),
-    // bosilgan lahzada esa keskin snap-zoom bilan "punch" qiladi — Reels/TikTok'da
-    // 1-soniyadanoq diqqatni ushlab turadigan "camera follow" effekti.
-    cameraTo(el, 'soft');
     await moveCursorTo(el, duration);
-    cameraTo(el, 'punch');
     await clickOn(el, accent);
     await sleep(260);
-    resetZoom();
     await sleep(200);
   }
 
@@ -1666,7 +1635,6 @@ async function sendTelegramNotification(text){
     // it directly did nothing and the cursor math drifted out of view.
     // Use getBoundingClientRect() so this works regardless of sticky headers
     // or offsetParent chains inside the scene.
-    resetZoom(); // kamera zoom holatida bo'lsa, scroll hisob-kitobi buzilmasligi uchun avval asl holatga qaytaramiz
     await sleep(150);
     const elRect = el.getBoundingClientRect();
     const containerRect = screenScroll.getBoundingClientRect();
@@ -2127,7 +2095,6 @@ async function sendTelegramNotification(text){
     showScene(proj.key);
     const scene = document.getElementById('scene-'+proj.key);
     screenScroll.scrollTop = 0;
-    resetZoom();
     proj.reset(scene);
     cursor.style.transitionDuration = '0ms';
     cursor.style.left = '50%';
