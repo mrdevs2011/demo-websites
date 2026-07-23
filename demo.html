@@ -936,7 +936,7 @@ body{
 
   <div class="neon-header-banner">
     <div class="nb-text"><i class="fa-solid fa-fire"></i> <span>Siz ham</span> o'z biznesingiz uchun shunday sayt va bot xohlaysizmi?</div>
-    <a class="neon-cta-btn" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Telegram'da buyurtma bering</a>
+    <a class="neon-cta-btn" href="https://t.me/+998916055310" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Telegram'da buyurtma bering</a>
   </div>
 
   <div class="tabs" id="tabs"></div>
@@ -1335,43 +1335,17 @@ body{
       <h3>Siz ham <span>shunday sayt va bot</span> xohlaysizmi?</h3>
       <p>Bron sayti, onlayn do'kon, landing page yoki yetkazib berish tizimi — Telegram bot integratsiyasi bilan birga, aynan shu darajada tayyorlab beramiz.</p>
     </div>
-    <a class="neon-cta-btn" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Buyurtma berish uchun yozing</a>
+    <a class="neon-cta-btn" href="https://t.me/+998916055310" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Buyurtma berish uchun yozing</a>
   </div>
 </div>
 
 <script>
-/* ============================================================
-   TELEGRAM BOT SOZLAMALARI — shu yerni o'zgartiring
-   ============================================================
-   1) @BotFather orqali bot yarating -> BOT_TOKEN oling
-   2) Botni guruhga/kanalga qo'shing yoki shaxsiy chatga /start yozing
-   3) CHAT_ID ni oling: https://api.telegram.org/bot<TOKEN>/getUpdates
-      manzilidan "chat":{"id": ...} qiymatini oling
-
-   MUHIM XAVFSIZLIK ESLATMASI:
-   Bu — statik HTML/JS fayl, ya'ni BOT_TOKEN shu yerda yozilsa,
-   sahifa manba kodini ko'rgan har qanday kishi uni ko'ra oladi va
-   sizning bot nomingizdan xabar yubora oladi. Bu DEMO/NAMOYISH uchun
-   maqbul (chunki bu — Reels video uchun namoyish, umumiy foydalanuvchi
-   ochiq internetga qo'ymaydi), lekin buni HAQIQIY ishlab chiqarish
-   (production) saytiga qo'yishdan oldin BOT_TOKEN'ni albatta backend
-   (server) tomonga — masalan kichik Node.js/PHP endpoint yoki Supabase
-   Edge Function ichiga — ko'chiring va frontend faqat o'sha endpointga
-   fetch yuborsin. Token hech qachon client-side kodda qolmasligi kerak.
-   ============================================================ */
-window.TELEGRAM_CONFIG = {
-  BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',   // masalan: '7123456789:AAHk3f...'
-  CHAT_ID:   'YOUR_CHAT_ID_HERE',     // masalan: '-1001234567890' yoki '123456789'
-  ENABLED:   false                     // true qilib qo'yganda haqiqiy Telegramga yuboradi
-};
+/* Demo rejimida Telegramga haqiqiy xabar yuborilmaydi — faqat simulyatsiya (konsolga chiqadi). */
+window.TELEGRAM_CONFIG = { ENABLED: false };
 
 async function sendTelegramNotification(text){
   const cfg = window.TELEGRAM_CONFIG;
   if(!cfg || !cfg.ENABLED) { console.info('[Telegram demo] (o\'chirilgan, faqat simulyatsiya):\n' + text); return { ok:false, simulated:true }; }
-  if(!cfg.BOT_TOKEN || cfg.BOT_TOKEN.indexOf('YOUR_') === 0 || !cfg.CHAT_ID || cfg.CHAT_ID.indexOf('YOUR_') === 0){
-    console.warn('[Telegram] BOT_TOKEN / CHAT_ID sozlanmagan — faqat konsolga chiqarildi:\n' + text);
-    return { ok:false, simulated:true };
-  }
   try{
     const res = await fetch(`https://api.telegram.org/bot${cfg.BOT_TOKEN}/sendMessage`, {
       method:'POST',
@@ -1661,7 +1635,7 @@ async function sendTelegramNotification(text){
       { caption:"Bronni tasdiqlaydi.",
         run: async(scene)=>{ await goAndClick(id('eb-confirm-booking'), '#C9A227'); id('eb-modal-overlay').classList.remove('open');
           await sleep(200); id('eb-toast').classList.add('show'); } },
-      { caption:"Bron ma'lumotlari darhol salon administratoriga <b>Telegram</b> orqali yuboriladi <i class="fa-brands fa-telegram"></i>",
+      { caption:"Bron ma'lumotlari darhol salon administratoriga <b>Telegram</b> orqali yuboriladi <i class='fa-brands fa-telegram'></i>",
         run: async(scene)=>{
           id('eb-toast').classList.remove('show');
           await celebrateSuccess({
@@ -1767,7 +1741,7 @@ async function sendTelegramNotification(text){
         run: async(scene)=>{ await moveCursorTo(id('ac-phone'),400); await typeInto(id('ac-phone'), '+998 91 234 56 78'); } },
       { caption:"Arizani yuboradi.",
         run: async(scene)=>{ await goAndClick(id('ac-submit-lead'), '#7c4dff'); id('ac-lead-success').classList.add('show'); } },
-      { caption:"Ma'lumotlar avtomatik ravishda <b>Supabase</b> bazasiga saqlanadi <i class="fa-solid fa-database"></i>",
+      { caption:"Ma'lumotlar avtomatik ravishda <b>Supabase</b> bazasiga saqlanadi <i class='fa-solid fa-database'></i>",
         run: async(scene)=>{ await sleep(900); id('ac-lead-success').classList.remove('show');
           await celebrateSuccess({
             title:'Ariza qabul qilindi! <i class="fa-solid fa-graduation-cap"></i>',
@@ -1838,7 +1812,7 @@ async function sendTelegramNotification(text){
       { caption:"Buyurtmani yakuniy tasdiqlaydi.",
         run: async(scene)=>{ await goAndClick(id('fd-confirm'), '#F59E0B'); id('fd-modal-overlay').classList.remove('open');
           await sleep(200); id('fd-success').classList.add('show'); } },
-      { caption:"Buyurtma tafsilotlari zudlik bilan oshxonaga <b>Telegram bot</b> orqali yuboriladi <i class="fa-solid fa-robot"></i>",
+      { caption:"Buyurtma tafsilotlari zudlik bilan oshxonaga <b>Telegram bot</b> orqali yuboriladi <i class='fa-solid fa-robot'></i>",
         run: async(scene)=>{ await sleep(900); id('fd-success').classList.remove('show');
           await celebrateSuccess({
             title:'Buyurtma qabul qilindi! <i class="fa-solid fa-circle-check"></i>',
