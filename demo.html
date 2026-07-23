@@ -1578,7 +1578,7 @@ async function sendTelegramNotification(text){
  // Reels tezligi: barcha animatsiya/pauza vaqtlari shu koeffitsientga ko'paytiriladi
  // (1 = asl tezlik, kichikroq son = tezroq sur'at). Hook/CTA/chip kabi"to'xtab turadigan"
  // ekranlar buning ta'sirida qolmasligi uchun alohida rawSleep() ishlatiladi.
- const SPEED = 0.8;
+ const SPEED = 1.15;
 
  let playing = false;
  let runToken = 0;
@@ -1725,7 +1725,7 @@ async function sendTelegramNotification(text){
  cursor.style.opacity = '0';
  kineticCaption.innerHTML = buildKineticWords(html);
  kineticCaptionWrap.classList.add('show');
- await rawSleep(1250);
+ await rawSleep(1750);
  kineticCaptionWrap.classList.remove('show');
  cursor.style.opacity = '1';
  await rawSleep(200);
@@ -1745,7 +1745,7 @@ async function sendTelegramNotification(text){
  async function showEndCta(){
  cursor.style.opacity = '0';
  endCtaOverlay.classList.add('show');
- await rawSleep(1700);
+ await rawSleep(2400);
  endCtaOverlay.classList.remove('show');
  cursor.style.opacity = '1';
  await rawSleep(200);
@@ -1865,9 +1865,24 @@ async function sendTelegramNotification(text){
  run: async(scene)=>{ await moveCursorTo(id('eb-nav-services'), 500); } },
  { caption:"<b>Xizmatlar</b> bo'limiga o'tadi",
  run: async(scene)=>{ await scrollSceneTo(scene, id('eb-services')); await moveCursorTo(q(scene,'.eb-services h2'),450); } },
+ { caption:"Boshqa xizmatlarni ham ko'rib chiqadi — <b>bo'yash, manikur, makiyaj</b>",
+ run: async(scene)=>{
+ await moveCursorTo(id('card-color'), 450);
+ await moveCursorTo(id('card-manicure'), 400);
+ await moveCursorTo(id('card-makeup'), 400);
+ } },
+ { caption:"Ustalar jamoasi bilan tanishadi <i class=\"fa-solid fa-users\"></i>",
+ run: async(scene)=>{
+ await scrollSceneTo(scene, id('eb-masters'));
+ await moveCursorTo(id('master-madina'), 450);
+ await moveCursorTo(id('master-dilnoza'), 400);
+ } },
  { caption:"«Ayollar soch kesish»ni tanlab, <b>Bron qilish</b>ga bosadi",
  splash:true, splashCaption:"Bron qiling — <b>bir bosishda</b>",
- run: async(scene)=>{ await goAndClick(id('eb-book-haircut'), '#C9A227'); id('eb-modal-overlay').classList.add('open'); await sleep(250); } },
+ run: async(scene)=>{
+ await scrollSceneTo(scene, id('eb-services'));
+ await goAndClick(id('eb-book-haircut'), '#C9A227'); id('eb-modal-overlay').classList.add('open'); await sleep(250);
+ } },
  { caption:"Sevimli ustasini tanlaydi — <b>Madina Yusupova</b>",
  run: async(scene)=>{ await goAndClick(id('pick-madina'), '#C9A227'); id('pick-madina').classList.add('selected'); } },
  { caption:"Qulay vaqtni belgilaydi — <b>11:30</b>",
@@ -1914,6 +1929,12 @@ async function sendTelegramNotification(text){
  run: async(scene)=>{ await scrollSceneTo(scene, id('lu-products')); } },
  { caption:"«Klassik oq krossovka»ga ko'zi tushadi",
  run: async(scene)=>{ await moveCursorTo(q(scene,'#prod-201 h3'), 500); } },
+ { caption:"Chegirmadagi boshqa mahsulotlarni ham ko'zdan kechiradi",
+ run: async(scene)=>{
+ await moveCursorTo(id('prod-302'), 450);
+ await moveCursorTo(id('prod-101'), 400);
+ await moveCursorTo(id('prod-201'), 400);
+ } },
  { caption:"O'lchamni belgilaydi — <b>M</b>",
  run: async(scene)=>{ const el=id('size-m-201'); await goAndClick(el,'#4338CA'); el.classList.add('selected'); } },
  { caption:"Bir bosish — <b>savatga qo'shildi</b>",
@@ -1969,6 +1990,12 @@ async function sendTelegramNotification(text){
  run: async(scene)=>{ await moveCursorTo(id('ac-nav-courses'), 500); } },
  { caption:"Kurslar katalogiga o'tadi",
  run: async(scene)=>{ await scrollSceneTo(scene, id('ac-courses')); } },
+ { caption:"Boshqa yo'nalishlarni ham ko'zdan kechiradi — <b>Python, Dizayn, IELTS</b>",
+ run: async(scene)=>{
+ await moveCursorTo(id('course-python'), 450);
+ await moveCursorTo(id('course-design'), 400);
+ await moveCursorTo(id('course-ielts'), 400);
+ } },
  { caption:"«Frontend Development» kursi ko'ziga yoqadi",
  run: async(scene)=>{ await moveCursorTo(q(scene,'#course-frontend h3'), 500); } },
  { caption:"<b>Yozilish</b>ga bosadi",
@@ -2021,6 +2048,8 @@ async function sendTelegramNotification(text){
  steps:[
  { caption:"Mijoz och qoldi — tez ovqat izlayapti",
  run: async(scene)=>{ await goAndClick(id('cat-pizza'), '#F59E0B'); } },
+ { caption:"Boshqa pitsa turlarini ham ko'rib chiqadi",
+ run: async(scene)=>{ await moveCursorTo(id('prod-3'), 450); } },
  { caption:"«Margarita Pitsa»ni savatga tashlaydi",
  splash:true, splashCaption:"Pitsa buyurtma qiling",
  run: async(scene)=>{
@@ -2029,6 +2058,15 @@ async function sendTelegramNotification(text){
  id('fd-drawer-items').innerHTML = '<div class="fd-drawer-item"><span>Margarita Pitsa</span><span>45 000 so\'m</span></div>';
  id('fd-subtotal-val').textContent ="45 000 so'm";
  await sleep(300); id('fd-cart-badge').classList.remove('bump');
+ } },
+ { caption:"Burger menyusiga ham ko'z tashlaydi",
+ run: async(scene)=>{
+ const catBurger = id('cat-burger');
+ await goAndClick(catBurger, '#F59E0B');
+ scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
+ catBurger.classList.add('active');
+ fdShowCategory(scene, 'burger');
+ await moveCursorTo(id('prod-6'), 450);
  } },
  { caption:"Ichimlik ham kerak — <b>Coca-Cola</b> qo'shildi",
  run: async(scene)=>{
@@ -2156,7 +2194,7 @@ async function sendTelegramNotification(text){
  }
  // Captionni o'qishga ulgurish uchun minimal ko'rsatilish vaqti — animatsiya
  // (masalan yolg'iz kursor siljishi) tez tugasa ham, matn kamida shu qadar turadi.
- const MIN_CAPTION_MS = 900;
+ const MIN_CAPTION_MS = 1500;
  const stepStart = performance.now();
  await step.run(scene);
  if(myToken !== runToken) return;
