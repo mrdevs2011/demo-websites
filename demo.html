@@ -2010,11 +2010,22 @@ async function sendTelegramNotification(text){
  await sleep(150);
  const elRect = el.getBoundingClientRect();
  const containerRect = screenScroll.getBoundingClientRect();
- const delta = elRect.top - containerRect.top - (offset === undefined ? 40 : offset);
+ // Har bir sahifada tepada sticky header bor (eb-nav/lu-nav/ac-nav/fd-nav).
+ // Agar offset shu headerning balandligidan kichik bo'lsa, nishon element
+ // scroll qilingandan keyin ham header ostida qolib qoladi — natijada
+ // kursor ko'zga ko'ринmas holda header ustiga "bosgandek" chiqadi.
+ // Shuning uchun minimal offsetni header balandligi + bo'sh joy qilib belgilaymiz.
+ const stickyHeader = scene.querySelector('.eb-nav, .lu-nav, .ac-nav, .fd-nav');
+ const headerH = stickyHeader ? stickyHeader.getBoundingClientRect().height : 0;
+ const minOffset = headerH > 0 ? headerH + 16 : 0;
+ const wantedOffset = offset === undefined ? 40 : offset;
+ const safeOffset = Math.max(wantedOffset, minOffset);
+ const delta = elRect.top - containerRect.top - safeOffset;
  const targetTop = screenScroll.scrollTop + delta;
  screenScroll.scrollTo({ top: Math.max(targetTop, 0), behavior:'smooth' });
  await sleep(750);
  }
+
 
  async function typeInto(el, text, speed){
  speed = speed || 42;
