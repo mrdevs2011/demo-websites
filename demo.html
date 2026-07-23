@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 i.fa-solid, i.fa-regular, i.fa-brands{ line-height:1; }
@@ -576,14 +576,18 @@ body{
  transition:transform .2s, box-shadow .2s;
 }
 .eb-card.press, .eb-master.press, .eb-picker-item.press, .eb-slot.press{ transform:scale(.95); }
-.eb-card-icon{ font-size:26px; margin-bottom:10px; }
+.eb-card-icon{
+ width:44px; height:44px; border-radius:50%; background:#0B3B2E; color:#D9BB5C;
+ display:flex; align-items:center; justify-content:center; font-size:17px; margin-bottom:14px;
+}
 .eb-card h3{ font-size:15px; margin:0 0 6px; font-weight:600; }
 .eb-card p{ font-size:12.5px; color:#6b6558; margin:0 0 14px; }
-.eb-card-foot{ display:flex; align-items:center; justify-content:space-between; }
+.eb-card-foot{ display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid #eee6d3; }
+.eb-card-foot .eb-duration{ font-size:11px; color:#6b6558; }
 .eb-card-foot span{ font-weight:700; font-size:13px; color:#145C43; }
 .eb-card-btn{
- background:#0B3B2E; color:#fff; border:none; padding:8px 13px; border-radius:20px;
- font-size:11.5px; font-weight:700; font-family:inherit; cursor:default;
+ background:#0B3B2E; color:#fff; border:none; padding:9px 13px; border-radius:20px;
+ font-size:11.5px; font-weight:700; font-family:inherit; cursor:default; margin-top:12px; width:100%;
 }
 .eb-masters-grid{
  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; max-width:800px; margin:0 auto;
@@ -634,11 +638,12 @@ body{
 /* ============================================================
  SCENE 2 — LUMEN STORE
  ============================================================ */
-.scene.lumen{ font-family:'Manrope',sans-serif; background:#fff; color:#111; }
+.scene.lumen{ font-family:'Inter',sans-serif; background:#fff; color:#111; }
+.scene.lumen h1,.scene.lumen h2,.scene.lumen h3,.lu-logo{ font-family:'Space Grotesk',sans-serif; }
 .lu-nav{
  position:sticky; top:0; z-index:20;
  display:flex; align-items:center; justify-content:space-between;
- padding:16px 26px; background:#111; color:#fff;
+ padding:16px 26px; background:#0B0B12; color:#fff;
 }
 .lu-logo{ font-weight:800; letter-spacing:2px; font-size:16px; }
 .lu-links{ display:flex; gap:20px; font-size:12.5px; opacity:.85; }
@@ -663,7 +668,16 @@ body{
 .lu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; max-width:960px; margin:0 auto; }
 .lu-card{ transition:transform .2s; }
 .lu-card.press{ transform:scale(.96); }
-.lu-card-img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; margin-bottom:10px; background:#f2f2f2; }
+.lu-card-media{ position:relative; margin-bottom:10px; }
+.lu-card-img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; background:#f2f2f2; display:block; }
+.lu-badge-sale{
+ position:absolute; top:8px; left:8px; background:#FF5A5F; color:#fff; font-size:10px; font-weight:800;
+ padding:3px 8px; border-radius:6px;
+}
+.lu-badge-cat{
+ position:absolute; top:8px; right:8px; background:rgba(0,0,0,.55); color:#fff; font-size:9.5px; font-weight:700;
+ padding:3px 8px; border-radius:6px; text-transform:capitalize;
+}
 .lu-card h3{ font-size:13.5px; margin:0 0 6px; font-weight:700; }
 .lu-price{ font-size:13.5px; font-weight:800; }
 .lu-old-price{ font-size:11.5px; color:#75758A; text-decoration:line-through; margin-left:6px; font-weight:500; }
@@ -676,8 +690,9 @@ body{
 .lu-size-chip.press{ transform:scale(.9); }
 .lu-add-btn{
  width:100%; padding:10px; border:none; border-radius:8px; background:#111; color:#fff; font-weight:700;
- font-size:12px; font-family:inherit; cursor:default;
+ font-size:12px; font-family:inherit; cursor:default; display:flex; align-items:center; justify-content:center; gap:6px;
 }
+.lu-add-btn svg{ width:14px; height:14px; }
 .lu-add-btn.press{ transform:scale(.96); }
 
 .lu-drawer-overlay{
@@ -753,7 +768,15 @@ body{
 .ac-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; max-width:980px; margin:0 auto; }
 .ac-card{ background:#fff; border:1px solid #ece8ff; border-radius:14px; overflow:hidden; transition:transform .2s; }
 .ac-card.press{ transform:scale(.96); }
-.ac-card img{ width:100%; height:110px; object-fit:cover; }
+.ac-card-media{ position:relative; }
+.ac-card img{ width:100%; height:110px; object-fit:cover; display:block; }
+.ac-badge{
+ position:absolute; top:10px; left:10px; background:#6425f0; color:#fff; font-size:10px; font-weight:700;
+ padding:3px 10px; border-radius:20px;
+}
+.ac-badge.design{ background:#9b7fff; }
+.ac-badge.lang{ background:#7c3aed; }
+.ac-badge.business{ background:#059669; }
 .ac-card-body{ padding:15px; }
 .ac-card h3{ font-size:13.5px; margin:0 0 6px; font-weight:700; }
 .ac-card p{ font-size:11.5px; color:#6f6989; margin:0 0 12px; }
@@ -814,17 +837,21 @@ body{
 .fd-hero p{ font-size:12.5px; color:#78350F; margin:0; }
 .fd-section{ padding:26px 22px 40px; }
 .fd-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; max-width:960px; margin:0 auto; }
-.fd-card{ background:#fff; border-radius:14px; padding:16px; box-shadow:0 10px 24px -12px rgba(0,0,0,.15); transition:transform .2s; }
+.fd-card{ background:#fff; border-radius:14px; padding:20px; box-shadow:0 10px 24px -12px rgba(0,0,0,.15); transition:transform .2s; border:1px solid rgba(28,25,23,.05); }
 .fd-card.press{ transform:scale(.96); }
-.fd-card-img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; margin-bottom:8px; background:#f2ede0; }
+.fd-card-icon{
+ width:56px; height:56px; border-radius:14px; margin-bottom:14px;
+ background:linear-gradient(135deg,#FBBF24,#B91C1C); color:#fff; font-size:22px;
+ display:flex; align-items:center; justify-content:center;
+}
 .fd-card .ic{ font-size:26px; margin-bottom:8px; }
-.fd-card h3{ font-size:13.5px; margin:0 0 4px; }
-.fd-card p{ font-size:11px; color:#78350F; margin:0 0 12px; opacity:.8; }
+.fd-card h3{ font-size:14.5px; margin:0 0 4px; }
+.fd-card p{ font-size:11.5px; color:#78350F; margin:0 0 14px; opacity:.75; min-height:2.2em; }
 .fd-card-foot{ display:flex; align-items:center; justify-content:space-between; }
-.fd-card-foot span{ font-weight:800; font-size:12.5px; color:#B45309; }
+.fd-card-foot span{ font-weight:800; font-size:14px; color:#B91C1C; font-family:'Baloo 2',cursive; }
 .fd-add-btn{
- background:#F59E0B; color:#1C1917; border:none; padding:7px 12px; border-radius:20px; font-size:11px; font-weight:800;
- font-family:inherit; cursor:default;
+ background:#1C1917; color:#fff; border:none; width:36px; height:36px; border-radius:50%; font-size:13px;
+ font-family:inherit; cursor:default; display:flex; align-items:center; justify-content:center;
 }
 
 .fd-drawer-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50; }
@@ -1387,37 +1414,43 @@ body{
  <div class="eb-card-icon"><i class="fa-solid fa-scissors"></i></div>
  <h3>Ayollar soch kesish</h3>
  <p>Konsultatsiya + yuvish + kesish + ukladka</p>
- <div class="eb-card-foot"><span>120 000 so'm</span><button class="eb-card-btn" id="eb-book-haircut">Bron qilish</button></div>
+ <div class="eb-card-foot"><span class="eb-duration"><i class="fa-regular fa-clock"></i> 45 daqiqa</span><span>120 000 so'm</span></div>
+ <button class="eb-card-btn" id="eb-book-haircut">Bron qilish</button>
  </div>
  <div class="eb-card" id="card-color">
  <div class="eb-card-icon"><i class="fa-solid fa-palette"></i></div>
  <h3>Soch bo'yash</h3>
  <p>To'liq bo'yash, professional bo'yoqlar bilan</p>
- <div class="eb-card-foot"><span>350 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+ <div class="eb-card-foot"><span class="eb-duration"><i class="fa-regular fa-clock"></i> 120 daqiqa</span><span>350 000 so'm</span></div>
+ <button class="eb-card-btn">Bron qilish</button>
  </div>
  <div class="eb-card" id="card-manicure">
  <div class="eb-card-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
  <h3>Manikur</h3>
  <p>Gigienik manikur + gel lak qoplash</p>
- <div class="eb-card-foot"><span>100 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+ <div class="eb-card-foot"><span class="eb-duration"><i class="fa-regular fa-clock"></i> 60 daqiqa</span><span>100 000 so'm</span></div>
+ <button class="eb-card-btn">Bron qilish</button>
  </div>
  <div class="eb-card" id="card-makeup">
  <div class="eb-card-icon"><i class="fa-solid fa-paintbrush"></i></div>
  <h3>Kechki makiyaj</h3>
  <p>Tadbirlar uchun murakkab kechki makiyaj</p>
- <div class="eb-card-foot"><span>220 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+ <div class="eb-card-foot"><span class="eb-duration"><i class="fa-regular fa-clock"></i> 60 daqiqa</span><span>220 000 so'm</span></div>
+ <button class="eb-card-btn">Bron qilish</button>
  </div>
  <div class="eb-card">
  <div class="eb-card-icon"><i class="fa-solid fa-spa"></i></div>
  <h3>Yuz uchun SPA parvarish</h3>
  <p>Tozalash, massaj va namlantiruvchi niqob</p>
- <div class="eb-card-foot"><span>210 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+ <div class="eb-card-foot"><span class="eb-duration"><i class="fa-regular fa-clock"></i> 60 daqiqa</span><span>210 000 so'm</span></div>
+ <button class="eb-card-btn">Bron qilish</button>
  </div>
  <div class="eb-card">
  <div class="eb-card-icon"><i class="fa-solid fa-gem"></i></div>
  <h3>Nail art dizayni</h3>
  <p>Individual dizayn bilan tirnoq bezash</p>
- <div class="eb-card-foot"><span>130 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+ <div class="eb-card-foot"><span class="eb-duration"><i class="fa-regular fa-clock"></i> 45 daqiqa</span><span>130 000 so'm</span></div>
+ <button class="eb-card-btn">Bron qilish</button>
  </div>
  </div>
  </section>
@@ -1496,58 +1529,58 @@ body{
  <h2>Ommabop mahsulotlar</h2>
  <div class="lu-grid">
  <div class="lu-card" id="prod-201">
- <img class="lu-card-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-23%</span><span class="lu-badge-cat">poyabzal</span></div>
  <h3>Klassik oq krossovka</h3>
  <div><span class="lu-price">399 000 so'm</span><span class="lu-old-price">520 000</span></div>
  <div class="lu-sizes">
  <div class="lu-size-chip">S</div><div class="lu-size-chip" id="size-m-201">M</div>
  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
  </div>
- <button class="lu-add-btn" id="add-201">Savatga qo'shish</button>
+ <button class="lu-add-btn" id="add-201"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
  </div>
  <div class="lu-card" id="prod-202">
- <img class="lu-card-img" src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-cat">poyabzal</span></div>
  <h3>Charm boot poyabzal</h3>
  <div><span class="lu-price">459 000 so'm</span></div>
  <div class="lu-sizes">
  <div class="lu-size-chip">S</div><div class="lu-size-chip">M</div>
  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
  </div>
- <button class="lu-add-btn" id="add-202">Savatga qo'shish</button>
+ <button class="lu-add-btn" id="add-202"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
  </div>
  <div class="lu-card" id="prod-101">
- <img class="lu-card-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-32%</span><span class="lu-badge-cat">kiyim</span></div>
  <h3>Oversize xlopok futbolka</h3>
  <div><span class="lu-price">129 000 so'm</span><span class="lu-old-price">189 000</span></div>
  <div class="lu-sizes">
  <div class="lu-size-chip">S</div><div class="lu-size-chip">M</div>
  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
  </div>
- <button class="lu-add-btn" id="add-101">Savatga qo'shish</button>
+ <button class="lu-add-btn" id="add-101"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
  </div>
  <div class="lu-card" id="prod-302">
- <img class="lu-card-img" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-25%</span><span class="lu-badge-cat">aksessuar</span></div>
  <h3>Klassik uniseks soat</h3>
  <div><span class="lu-price">449 000 so'm</span><span class="lu-old-price">599 000</span></div>
  <div class="lu-sizes">&nbsp;</div>
- <button class="lu-add-btn" id="add-302">Savatga qo'shish</button>
+ <button class="lu-add-btn" id="add-302"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
  </div>
  <div class="lu-card">
- <img class="lu-card-img" src="https://images.unsplash.com/photo-1483721310020-03333e577078?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1483721310020-03333e577078?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-20%</span><span class="lu-badge-cat">sport</span></div>
  <h3>Yugurish uchun sport kostyum</h3>
  <div><span class="lu-price">279 000 so'm</span><span class="lu-old-price">349 000</span></div>
  <div class="lu-sizes">
  <div class="lu-size-chip">S</div><div class="lu-size-chip">M</div>
  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
  </div>
- <button class="lu-add-btn">Savatga qo'shish</button>
+ <button class="lu-add-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
  </div>
  <div class="lu-card">
- <img class="lu-card-img" src="https://images.unsplash.com/photo-1516600164266-f3b8166ae679?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1516600164266-f3b8166ae679?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-18%</span><span class="lu-badge-cat">uy-tovarlari</span></div>
  <h3>Bambuk choy stakan seti</h3>
  <div><span class="lu-price">189 000 so'm</span><span class="lu-old-price">230 000</span></div>
  <div class="lu-sizes">&nbsp;</div>
- <button class="lu-add-btn">Savatga qo'shish</button>
+ <button class="lu-add-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
  </div>
  </div>
  </section>
@@ -1593,7 +1626,7 @@ body{
  <h2>O'zingizga mos yo'nalishni tanlang</h2>
  <div class="ac-grid">
  <div class="ac-card" id="course-python">
- <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="ac-card-media"><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="ac-badge">IT</span></div>
  <div class="ac-card-body">
  <h3>Python Backend Dasturlash</h3>
  <p>Django/FastAPI bilan real loyihalar</p>
@@ -1601,7 +1634,7 @@ body{
  </div>
  </div>
  <div class="ac-card" id="course-frontend">
- <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="ac-card-media"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="ac-badge">IT</span></div>
  <div class="ac-card-body">
  <h3>Frontend Development</h3>
  <p>HTML, CSS, JS va React asosida</p>
@@ -1609,7 +1642,7 @@ body{
  </div>
  </div>
  <div class="ac-card" id="course-design">
- <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="ac-card-media"><img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="ac-badge design">Dizayn</span></div>
  <div class="ac-card-body">
  <h3>Grafik Dizayn</h3>
  <p>Figma va Illustrator bilan brend dizayni</p>
@@ -1617,7 +1650,7 @@ body{
  </div>
  </div>
  <div class="ac-card" id="course-ielts">
- <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="ac-card-media"><img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="ac-badge lang">Til</span></div>
  <div class="ac-card-body">
  <h3>Ingliz tili (IELTS)</h3>
  <p>A1 dan IELTS 7.0 darajasigacha</p>
@@ -1625,7 +1658,7 @@ body{
  </div>
  </div>
  <div class="ac-card">
- <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="ac-card-media"><img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="ac-badge">IT</span></div>
  <div class="ac-card-body">
  <h3>Data Analitika & Excel</h3>
  <p>Excel, SQL va Power BI asosida tahlil</p>
@@ -1633,7 +1666,7 @@ body{
  </div>
  </div>
  <div class="ac-card">
- <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
+ <div class="ac-card-media"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="ac-badge design">Dizayn</span></div>
  <div class="ac-card-body">
  <h3>UX/UI Dizayn</h3>
  <p>Figma asosida interfeys loyihalash</p>
@@ -1690,113 +1723,35 @@ body{
  <section class="fd-section" id="fd-products">
  <div class="fd-grid">
  <!-- ---- PITSA (6) ---- -->
- <div class="fd-card" data-cat="pizza" id="prod-1">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p>
- <div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="pizza" id="prod-2">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Pepperoni Pitsa</h3><p>Achchiq pepperoni, mozarella, sous</p>
- <div class="fd-card-foot"><span>52 000 so'm</span><button class="fd-add-btn" id="fd-add-2">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="pizza" id="prod-3">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p>
- <div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="pizza" id="prod-4">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>To'rt Pishloq Pitsa</h3><p>Mozarella, chеddar, parmezan, gorgonzola</p>
- <div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-4">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="pizza" id="prod-5">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Sabzavotli Pitsa</h3><p>Bulg'or qalampiri, zaytun, pomidor</p>
- <div class="fd-card-foot"><span>48 000 so'm</span><button class="fd-add-btn" id="fd-add-5">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="pizza" id="prod-6">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1571066811602-716837d681de?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Mol Go'shtli Pitsa</h3><p>Qiyma mol go'shti, piyoz, pishloq</p>
- <div class="fd-card-foot"><span>62 000 so'm</span><button class="fd-add-btn" id="fd-add-6">+ Qo'shish</button></div>
- </div>
+ <div class="fd-card" data-cat="pizza" id="prod-1"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p><div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="pizza" id="prod-2"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Pepperoni Pitsa</h3><p>Achchiq pepperoni, mozarella, sous</p><div class="fd-card-foot"><span>52 000 so'm</span><button class="fd-add-btn" id="fd-add-2"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="pizza" id="prod-3"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p><div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="pizza" id="prod-4"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>To'rt Pishloq Pitsa</h3><p>Mozarella, chеddar, parmezan, gorgonzola</p><div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-4"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="pizza" id="prod-5"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Sabzavotli Pitsa</h3><p>Bulg'or qalampiri, zaytun, pomidor</p><div class="fd-card-foot"><span>48 000 so'm</span><button class="fd-add-btn" id="fd-add-5"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="pizza" id="prod-6"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Mol Go'shtli Pitsa</h3><p>Qiyma mol go'shti, piyoz, pishloq</p><div class="fd-card-foot"><span>62 000 so'm</span><button class="fd-add-btn" id="fd-add-6"><i class="fa-solid fa-plus"></i></button></div></div>
  <!-- ---- BURGER (6) ---- -->
- <div class="fd-card" data-cat="burger" id="prod-7">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p>
- <div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-7">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="burger" id="prod-8">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Chizburger</h3><p>Mol go'shti, erigan cheddar, tursho</p>
- <div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-8">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="burger" id="prod-9">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1637710847214-f91d99669e18?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Tovuq Burger</h3><p>Qarsildoq tovuq filesi, salat, sous</p>
- <div class="fd-card-foot"><span>30 000 so'm</span><button class="fd-add-btn" id="fd-add-9">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="burger" id="prod-10">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1589983295844-c846e51fe2ea?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Fish Burger</h3><p>Panirovkali baliq file, tartar sous</p>
- <div class="fd-card-foot"><span>32 000 so'm</span><button class="fd-add-btn" id="fd-add-10">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="burger" id="prod-11">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1561758033-f8ff74d6494a?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Bekon Burger</h3><p>Mol go'shti, qarsildoq bekon, BBQ sous</p>
- <div class="fd-card-foot"><span>38 000 so'm</span><button class="fd-add-btn" id="fd-add-11">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="burger" id="prod-12">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1542554762515-82be5d8f0bfa?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Veggie Burger</h3><p>Sabzavotli kotlet, avokado, salat</p>
- <div class="fd-card-foot"><span>27 000 so'm</span><button class="fd-add-btn" id="fd-add-12">+ Qo'shish</button></div>
- </div>
+ <div class="fd-card" data-cat="burger" id="prod-7"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p><div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-7"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="burger" id="prod-8"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Chizburger</h3><p>Mol go'shti, erigan cheddar, tursho</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-8"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="burger" id="prod-9"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Tovuq Burger</h3><p>Qarsildoq tovuq filesi, salat, sous</p><div class="fd-card-foot"><span>30 000 so'm</span><button class="fd-add-btn" id="fd-add-9"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="burger" id="prod-10"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Fish Burger</h3><p>Panirovkali baliq file, tartar sous</p><div class="fd-card-foot"><span>32 000 so'm</span><button class="fd-add-btn" id="fd-add-10"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="burger" id="prod-11"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Bekon Burger</h3><p>Mol go'shti, qarsildoq bekon, BBQ sous</p><div class="fd-card-foot"><span>38 000 so'm</span><button class="fd-add-btn" id="fd-add-11"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="burger" id="prod-12"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Veggie Burger</h3><p>Sabzavotli kotlet, avokado, salat</p><div class="fd-card-foot"><span>27 000 so'm</span><button class="fd-add-btn" id="fd-add-12"><i class="fa-solid fa-plus"></i></button></div></div>
  <!-- ---- ICHIMLIK (6) ---- -->
- <div class="fd-card" data-cat="drinks" id="prod-13">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1567103472667-6898f3a79cf2?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
- <div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-13">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="drinks" id="prod-14">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1624517452488-04869289c4ca?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Fanta 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
- <div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-14">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="drinks" id="prod-15">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1628210473497-92b600c4007b?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Sprite 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
- <div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-15">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="drinks" id="prod-16">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1561041695-d2fadf9f318c?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Mineral Suv 0.5L</h3><p>Gazsiz toza ichimlik suvi</p>
- <div class="fd-card-foot"><span>6 000 so'm</span><button class="fd-add-btn" id="fd-add-16">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="drinks" id="prod-17">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1555949366-819808d99159?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Tabiiy Limonad</h3><p>Yangi limon va yalpizdan tayyorlangan</p>
- <div class="fd-card-foot"><span>14 000 so'm</span><button class="fd-add-btn" id="fd-add-17">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="drinks" id="prod-18">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1498604636225-6b87a314baa0?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Issiq Choy</h3><p>Qora yoki ko'k choy, xushbo'y</p>
- <div class="fd-card-foot"><span>8 000 so'm</span><button class="fd-add-btn" id="fd-add-18">+ Qo'shish</button></div>
- </div>
+ <div class="fd-card" data-cat="drinks" id="prod-13"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-13"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="drinks" id="prod-14"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Fanta 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-14"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="drinks" id="prod-15"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Sprite 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-15"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="drinks" id="prod-16"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Mineral Suv 0.5L</h3><p>Gazsiz toza ichimlik suvi</p><div class="fd-card-foot"><span>6 000 so'm</span><button class="fd-add-btn" id="fd-add-16"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="drinks" id="prod-17"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Tabiiy Limonad</h3><p>Yangi limon va yalpizdan tayyorlangan</p><div class="fd-card-foot"><span>14 000 so'm</span><button class="fd-add-btn" id="fd-add-17"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="drinks" id="prod-18"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Issiq Choy</h3><p>Qora yoki ko'k choy, xushbo'y</p><div class="fd-card-foot"><span>8 000 so'm</span><button class="fd-add-btn" id="fd-add-18"><i class="fa-solid fa-plus"></i></button></div></div>
  <!-- ---- SETLAR (6) ---- -->
- <div class="fd-card" data-cat="sets" id="prod-19">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1657137846299-9ce65bd8e1f2?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p>
- <div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-19">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-20">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1555072956-7758afb20e8f?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Yakka Set</h3><p>1 pitsa + 1 ichimlik — bitta kishiga</p>
- <div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-20">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-21">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1660715683691-d1614d1dd361?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Do'stlar Seti</h3><p>2 burger + 2 ichimlik — ikki kishiga</p>
- <div class="fd-card-foot"><span>78 000 so'm</span><button class="fd-add-btn" id="fd-add-21">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-22">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1594179047519-f347310d3322?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Romantik Set</h3><p>1 pitsa + 2 ichimlik + shirinlik</p>
- <div class="fd-card-foot"><span>89 000 so'm</span><button class="fd-add-btn" id="fd-add-22">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-23">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Ofis Lanch Seti</h3><p>1 burger + salat + ichimlik</p>
- <div class="fd-card-foot"><span>42 000 so'm</span><button class="fd-add-btn" id="fd-add-23">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-24">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1517434324-1db605ff03c7?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Balalar Seti</h3><p>Mini burger + kartoshka fri + sharbat</p>
- <div class="fd-card-foot"><span>35 000 so'm</span><button class="fd-add-btn" id="fd-add-24">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-25">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Vegetarian Set</h3><p>1 vegetarian pitsa + salat + ichimlik</p>
- <div class="fd-card-foot"><span>68 000 so'm</span><button class="fd-add-btn" id="fd-add-25">+ Qo'shish</button></div>
- </div>
- <div class="fd-card" data-cat="sets" id="prod-26">
- <img class="fd-card-img" src="https://images.unsplash.com/photo-1567327613485-fbc7bf196198?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><h3>Cheesecake</h3><p>Nyu-York uslubidagi yumshoq chizkeyk</p>
- <div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-26">+ Qo'shish</button></div>
- </div>
+ <div class="fd-card" data-cat="sets" id="prod-19"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p><div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-19"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-20"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Yakka Set</h3><p>1 pitsa + 1 ichimlik — bitta kishiga</p><div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-20"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-21"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Do'stlar Seti</h3><p>2 burger + 2 ichimlik — ikki kishiga</p><div class="fd-card-foot"><span>78 000 so'm</span><button class="fd-add-btn" id="fd-add-21"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-22"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Romantik Set</h3><p>1 pitsa + 2 ichimlik + shirinlik</p><div class="fd-card-foot"><span>89 000 so'm</span><button class="fd-add-btn" id="fd-add-22"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-23"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Ofis Lanch Seti</h3><p>1 burger + salat + ichimlik</p><div class="fd-card-foot"><span>42 000 so'm</span><button class="fd-add-btn" id="fd-add-23"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-24"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Balalar Seti</h3><p>Mini burger + kartoshka fri + sharbat</p><div class="fd-card-foot"><span>35 000 so'm</span><button class="fd-add-btn" id="fd-add-24"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-25"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Vegetarian Set</h3><p>1 vegetarian pitsa + salat + ichimlik</p><div class="fd-card-foot"><span>68 000 so'm</span><button class="fd-add-btn" id="fd-add-25"><i class="fa-solid fa-plus"></i></button></div></div>
+ <div class="fd-card" data-cat="sets" id="prod-26"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Cheesecake</h3><p>Nyu-York uslubidagi yumshoq chizkeyk</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-26"><i class="fa-solid fa-plus"></i></button></div></div>
  </div>
  </section>
 
