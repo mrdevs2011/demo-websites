@@ -1144,39 +1144,11 @@ body{
 .player:-webkit-full-screen .admin-phone-pop{ bottom:22px; }
 
 /* ============================================================
- CONFETTI SUCCESS RECEIPT OVERLAY
+ CONFETTI SUCCESS RECEIPT OVERLAY — olib tashlandi (gray "ghost" splash
+ buyurtma/ariza yuborilganda endi umuman ko'rsatilmaydi). Har bir loyihaning
+ o'ziga xos "muvaffaqiyat" ekrani (masalan .lu-success, .ac-lead-success,
+ .fd-success, .eb-toast) yetarli — qo'shimcha umumiy overlayga ehtiyoj yo'q.
  ============================================================ */
-.receipt-overlay{
- position:absolute; inset:0; z-index:90;
- display:flex; align-items:center; justify-content:center;
- background:rgba(8,10,14,.55);
- opacity:0; pointer-events:none;
- transition:opacity .35s ease;
-}
-.receipt-overlay.show{ opacity:1; pointer-events:auto; }
-.receipt-card{
- background:#fff; border-radius:20px; padding:30px 26px 24px;
- width:min(300px,84%); text-align:center;
- font-family:'Manrope',sans-serif; color:#111;
- transform:scale(.85) translateY(10px);
- transition:transform .45s cubic-bezier(.34,1.56,.64,1);
- box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
-}
-.receipt-overlay.show .receipt-card{ transform:scale(1) translateY(0); }
-.receipt-check{
- width:64px; height:64px; margin:0 auto 14px; border-radius:50%;
- background:linear-gradient(135deg,#22c55e,#16a34a);
- display:flex; align-items:center; justify-content:center;
- font-size:32px; color:#fff;
- animation:receipt-pop .5s cubic-bezier(.34,1.56,.64,1) .1s both;
-}
-@keyframes receipt-pop{ 0%{ transform:scale(0); } 70%{ transform:scale(1.15); } 100%{ transform:scale(1); } }
-.receipt-card h3{ margin:0 0 6px; font-size:18px; }
-.receipt-card p{ margin:0 0 14px; font-size:12.5px; color:#666; }
-.receipt-tick{
- display:flex; align-items:center; gap:6px; justify-content:center;
- font-size:11px; color:#16a34a; font-weight:700;
-}
 
 /* ============================================================
  VIRAL CTA / NEON BANNER
@@ -1389,14 +1361,6 @@ body{
  <div class="screen-outer" id="screenOuter" data-theme="elegance">
  <div class="live-popup-layer" id="livePopupLayer"></div>
  <div class="value-chip" id="valueChip"><i class="fa-solid fa-bolt"></i> <span>Bu sayt — <b>2 kunda</b> tayyor</span></div>
- <div class="receipt-overlay" id="receiptOverlay">
- <div class="receipt-card">
- <div class="receipt-check"><i class="fa-solid fa-check"></i></div>
- <h3 id="receiptTitle">Buyurtma qabul qilindi!</h3>
- <p id="receiptText">Tafsilotlar Telegram orqali yuborildi.</p>
- <div class="receipt-tick"><i class="fa-solid fa-circle-check"></i> Telegram botga yuborildi</div>
- </div>
- </div>
  <div class="screen-scroll" id="screenScroll">
  <!-- ============== SCENE 1: ELEGANCE BEAUTY ============== -->
  <div class="scene elegance active" id="scene-elegance">
@@ -2028,9 +1992,6 @@ async function sendTelegramNotification(text){
  const prevBtn = document.getElementById('prevBtn');
  const nextBtn = document.getElementById('nextBtn');
  const livePopupLayer = document.getElementById('livePopupLayer');
- const receiptOverlay = document.getElementById('receiptOverlay');
- const receiptTitle = document.getElementById('receiptTitle');
- const receiptText = document.getElementById('receiptText');
  const valueChip = document.getElementById('valueChip');
 
  // Reels tezligi: barcha animatsiya/pauza vaqtlari shu koeffitsientga ko'paytiriladi
@@ -2240,12 +2201,12 @@ async function sendTelegramNotification(text){
  // 1.2) Boshqa mijoz ham hozirgina buyurtma berganini ko'rsatuvchi bitta xolisona bubble
  setTimeout(()=> spawnLivePopup(), 700);
 
- // 2)"Tashakkur" kassa cheki overlay'i — toza yashil , portlashsiz
- receiptTitle.innerHTML = title;
- receiptText.textContent = text;
- receiptOverlay.classList.add('show');
+ // NOTE: bu yerda ilgari kulrang "ghost" splash overlay (Tashakkur kartasi)
+ // ko'rsatilgan edi — endi butunlay olib tashlandi. Har bir sahnaning o'ziga
+ // xos muvaffaqiyat holati (lu-success / ac-lead-success / fd-success / eb-toast)
+ // buyurtma qabul qilinganini allaqachon ko'rsatib turadi, shuning uchun bu
+ // qo'shimcha umumiy overlayga ehtiyoj qolmaydi. Pauza sahna ritmini saqlab qolish uchun qoldirilgan.
  await sleep(1300);
- receiptOverlay.classList.remove('show');
  }
 
  /* ============================================================
