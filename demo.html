@@ -937,45 +937,51 @@ body{
    ============================================================ */
 .screen-outer{ container-type:inline-size; container-name:stage; }
 
-/* ---- Kinetik (harakatlanuvchi) katta caption — ekran ustida ---- */
+/* ---- Caption "splash": video to'xtab, xira/blur fon ustida qisqa matn chiqadi ----
+   Faqat belgilangan muhim qadamlarda ishlaydi (har loyihaga ~2 marta), doim emas. */
 .kinetic-caption-wrap{
   position:absolute;
-  left:0; right:0;
-  bottom:6%;
-  z-index:150;
+  inset:0;
+  z-index:200;
   display:flex;
+  align-items:center;
   justify-content:center;
-  padding:0 6%;
+  padding:0 10%;
+  background:rgba(8,7,14,0);
+  backdrop-filter:blur(0px);
+  -webkit-backdrop-filter:blur(0px);
+  opacity:0;
   pointer-events:none;
+  transition:opacity .35s ease, background .35s ease, backdrop-filter .35s ease, -webkit-backdrop-filter .35s ease;
+}
+.kinetic-caption-wrap.show{
+  opacity:1;
+  background:rgba(8,7,14,.5);
+  backdrop-filter:blur(6px) saturate(1.05);
+  -webkit-backdrop-filter:blur(6px) saturate(1.05);
 }
 .kinetic-caption{
-  max-width:100%;
+  max-width:78%;
   text-align:center;
   font-family:'Manrope', sans-serif;
   font-weight:800;
-  font-size:clamp(19px, 7.4cqi, 34px);
-  line-height:1.85;
+  font-size:clamp(17px, 6.2cqi, 25px);
+  line-height:1.5;
   color:#fff;
 }
 .kinetic-caption .kc-word{
   display:inline-block;
   opacity:0;
-  transform:translateY(16px) scale(.8);
-  animation:kc-pop .4s cubic-bezier(.22,1.1,.32,1) forwards;
-  margin:0 .1em;
-  padding:.08em .28em;
-  border-radius:.22em;
-  background:rgba(9,9,14,.78);
-  box-shadow:0 2px 10px rgba(0,0,0,.35);
-  box-decoration-break:clone;
-  -webkit-box-decoration-break:clone;
+  transform:translateY(12px) scale(.85);
+  animation:kc-pop .38s cubic-bezier(.22,1.1,.32,1) forwards;
+  margin:0 .12em;
   will-change:transform,opacity;
 }
 .kinetic-caption .kc-word.kc-em{ color:#ffd166; }
 .kinetic-caption .kc-word.kc-icon{ color:#a6a9ff; }
 @keyframes kc-pop{
-  0%{ opacity:0; transform:translateY(16px) scale(.78); }
-  55%{ opacity:1; transform:translateY(-3px) scale(1.08); }
+  0%{ opacity:0; transform:translateY(12px) scale(.82); }
+  55%{ opacity:1; transform:translateY(-2px) scale(1.06); }
   100%{ opacity:1; transform:translateY(0) scale(1); }
 }
 
@@ -1086,7 +1092,7 @@ body{
 .screen-scroll.flash{ animation:scene-flash-anim .32s ease; }
 
 @container stage (max-width: 340px){
-  .kinetic-caption{ font-size:clamp(17px, 7.8cqi, 26px); }
+  .kinetic-caption{ font-size:clamp(15px, 6.6cqi, 21px); }
 }
 </style>
 </head>
@@ -1130,7 +1136,7 @@ body{
           <div class="receipt-tick"><i class="fa-solid fa-circle-check"></i> Telegram botga yuborildi</div>
         </div>
       </div>
-      <div class="kinetic-caption-wrap"><div class="kinetic-caption" id="kineticCaption"></div></div>
+      <div class="kinetic-caption-wrap" id="kineticCaptionWrap"><div class="kinetic-caption" id="kineticCaption"></div></div>
       <div class="hook-intro-overlay" id="hookIntroOverlay">
         <div class="hook-intro-card">
           <div class="hook-intro-badge"><i class="fa-solid fa-bolt"></i> 4 ta biznes</div>
@@ -1561,6 +1567,7 @@ async function sendTelegramNotification(text){
   const receiptTitle = document.getElementById('receiptTitle');
   const receiptText = document.getElementById('receiptText');
   const kineticCaption = document.getElementById('kineticCaption');
+  const kineticCaptionWrap = document.getElementById('kineticCaptionWrap');
   const hookIntroOverlay = document.getElementById('hookIntroOverlay');
   const endCtaOverlay = document.getElementById('endCtaOverlay');
   const valueChip = document.getElementById('valueChip');
@@ -1729,7 +1736,18 @@ async function sendTelegramNotification(text){
   function setCaption(html, idx, total){
     captionEl.innerHTML = html;
     stepIndicator.textContent = idx + '/' + total;
+  }
+
+  /* ---------- Caption "splash": video bir zumga to'xtaydi, ekran xiralashadi/blur bo'ladi
+     va o'sha yerda qisqa matn chiqadi. Faqat belgilangan muhim qadamlarda ishlatiladi. ---------- */
+  async function showCaptionSplash(html){
+    cursor.style.opacity = '0';
     kineticCaption.innerHTML = buildKineticWords(html);
+    kineticCaptionWrap.classList.add('show');
+    await rawSleep(1700);
+    kineticCaptionWrap.classList.remove('show');
+    cursor.style.opacity = '1';
+    await rawSleep(250);
   }
 
   /* ---------- Ochilish hook: birinchi 1.5s'da katta "wow" matni ---------- */
@@ -1895,6 +1913,7 @@ async function sendTelegramNotification(text){
       { caption:"<b>Xizmatlar</b> bo'limiga o'tadi 💇‍♀️",
         run: async(scene)=>{ await scrollSceneTo(scene, id('eb-services')); await moveCursorTo(q(scene,'.eb-services h2'),450); } },
       { caption:"«Ayollar soch kesish»ni tanlab, <b>Bron qilish</b>ga bosadi 👇",
+        splash:true, splashCaption:"Bron qiling — <b>bir bosishda</b> ✨",
         run: async(scene)=>{ await goAndClick(id('eb-book-haircut'), '#C9A227'); id('eb-modal-overlay').classList.add('open'); await sleep(250); } },
       { caption:"Sevimli ustasini tanlaydi — <b>Madina Yusupova</b> 💫",
         run: async(scene)=>{ await goAndClick(id('pick-madina'), '#C9A227'); id('pick-madina').classList.add('selected'); } },
@@ -1904,6 +1923,7 @@ async function sendTelegramNotification(text){
         run: async(scene)=>{ await goAndClick(id('eb-confirm-booking'), '#C9A227'); id('eb-modal-overlay').classList.remove('open');
           await sleep(200); id('eb-toast').classList.add('show'); } },
       { caption:"Bron esa administratorga Telegram'da zumda yetib boradi <i class='fa-brands fa-telegram'></i> 🚀",
+        splash:true, splashCaption:"Bron zumda administratorga yetadi <i class='fa-brands fa-telegram'></i>",
         run: async(scene)=>{
           id('eb-toast').classList.remove('show');
           await celebrateSuccess({
@@ -1944,6 +1964,7 @@ async function sendTelegramNotification(text){
       { caption:"O'lchamni belgilaydi — <b>M</b> 👟",
         run: async(scene)=>{ const el=id('size-m-201'); await goAndClick(el,'#4338CA'); el.classList.add('selected'); } },
       { caption:"Bir bosish — <b>savatga qo'shildi</b> 🛒",
+        splash:true, splashCaption:"Savatga qo'shing — <b>1 bosish</b> 🛒",
         run: async(scene)=>{
           await goAndClick(id('add-201'), '#4338CA');
           id('lu-cart-badge').textContent='1'; id('lu-cart-badge').classList.add('bump');
@@ -1963,6 +1984,7 @@ async function sendTelegramNotification(text){
       { caption:"Manzilini yozadi 📍",
         run: async(scene)=>{ await moveCursorTo(id('lu-address'),400); await typeInto(id('lu-address'), 'Toshkent sh., Yunusobod tumani, 14-uy', 30); } },
       { caption:"Bosadi — va tamom! 🎉",
+        splash:true, splashCaption:"Buyurtma qabul qilindi! 🎉",
         run: async(scene)=>{ await goAndClick(id('lu-confirm-order'), '#4338CA'); id('lu-modal-overlay').classList.remove('open');
           await sleep(200); id('lu-success').classList.add('show'); await sleep(900); id('lu-success').classList.remove('show');
           await celebrateSuccess({
@@ -1997,6 +2019,7 @@ async function sendTelegramNotification(text){
       { caption:"«Frontend Development» kursi ko'ziga yoqadi ✨",
         run: async(scene)=>{ await moveCursorTo(q(scene,'#course-frontend h3'), 500); } },
       { caption:"<b>Yozilish</b>ga bosadi 👇",
+        splash:true, splashCaption:"Kursga yoziling — <b>hoziroq</b> ✍️",
         run: async(scene)=>{ await goAndClick(id('enroll-frontend'), '#7c4dff');
           await scrollSceneTo(scene, id('ac-lead-form'), 10);
           id('ac-course-select').value = 'Frontend Development';
@@ -2010,6 +2033,7 @@ async function sendTelegramNotification(text){
       { caption:"Arizani yuboradi — bosildi! 🎉",
         run: async(scene)=>{ await goAndClick(id('ac-submit-lead'), '#7c4dff'); id('ac-lead-success').classList.add('show'); } },
       { caption:"Ma'lumotlar zumda <b>bazaga</b> tushadi — hech narsa qo'ldan boy berilmaydi <i class='fa-solid fa-database'></i> 💾",
+        splash:true, splashCaption:"Ariza zumda <b>bazaga</b> tushadi <i class='fa-solid fa-database'></i>",
         run: async(scene)=>{ await sleep(900); id('ac-lead-success').classList.remove('show');
           await celebrateSuccess({
             title:'Ariza qabul qilindi! <i class="fa-solid fa-graduation-cap"></i>',
@@ -2044,6 +2068,7 @@ async function sendTelegramNotification(text){
       { caption:"Mijoz och qoldi 😩 tez ovqat izlayapti",
         run: async(scene)=>{ await goAndClick(id('cat-pizza'), '#F59E0B'); } },
       { caption:"«Margarita Pitsa»ni savatga tashlaydi 🍕",
+        splash:true, splashCaption:"Pitsa buyurtma qiling 🍕",
         run: async(scene)=>{
           await goAndClick(id('fd-add-1'), '#F59E0B');
           id('fd-cart-badge').textContent='1'; id('fd-cart-badge').classList.add('bump');
@@ -2081,6 +2106,7 @@ async function sendTelegramNotification(text){
         run: async(scene)=>{ await goAndClick(id('fd-confirm'), '#F59E0B'); id('fd-modal-overlay').classList.remove('open');
           await sleep(200); id('fd-success').classList.add('show'); } },
       { caption:"Buyurtma esa oshxonaga <b>Telegram bot</b> orqali zumda yetib boradi <i class='fa-solid fa-robot'></i> 🚀",
+        splash:true, splashCaption:"<b>35 daqiqada</b> yetkaziladi 🚀",
         run: async(scene)=>{ await sleep(900); id('fd-success').classList.remove('show');
           await celebrateSuccess({
             title:'Buyurtma qabul qilindi! <i class="fa-solid fa-circle-check"></i>',
@@ -2160,6 +2186,11 @@ async function sendTelegramNotification(text){
       if(myToken !== runToken) return;
       const step = proj.steps[i];
       setCaption(step.caption, i+1, proj.steps.length);
+      if(step.splash){
+        if(myToken !== runToken) return;
+        await showCaptionSplash(step.splashCaption || step.caption);
+        if(myToken !== runToken) return;
+      }
       await step.run(scene);
       if(myToken !== runToken) return;
       updateProgress(idx, (i+1)/proj.steps.length);
