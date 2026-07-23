@@ -1624,7 +1624,25 @@ async function sendTelegramNotification(text){
  async function moveCursorTo(el, duration){
  duration = duration || 650;
  const outerRect = screenOuter.getBoundingClientRect();
- const r = el.getBoundingClientRect();
+ let r = el.getBoundingClientRect();
+
+ // Agar nishon ekran pastiga tushib ketgan yoki tepasiga chiqib ketgan bo'lsa
+ // (ko'rinadigan hududdan tashqarida), kursor u tomon "sakramasdan" — avval
+ // screenScroll konteynerini SMOOTH tarzda avtomatik aylantiramiz, shundan
+ // keyingina kursor koordinatalarini qayta hisoblab, nishon tomon boradi.
+ const EDGE_MARGIN = 50;
+ const outOfViewTop = r.top < outerRect.top + EDGE_MARGIN;
+ const outOfViewBottom = r.bottom > outerRect.bottom - EDGE_MARGIN;
+ if(outOfViewTop || outOfViewBottom){
+ const elCenter = r.top + r.height/2;
+ const outerCenter = outerRect.top + outerRect.height/2;
+ const delta = elCenter - outerCenter;
+ const targetTop = screenScroll.scrollTop + delta;
+ screenScroll.scrollTo({ top: Math.max(targetTop, 0), behavior:'smooth' });
+ await sleep(550);
+ r = el.getBoundingClientRect(); // scroll tugagach koordinatalarni qayta o'lchaymiz
+ }
+
  const x = r.left + r.width/2 - outerRect.left;
  const y = r.top + r.height/2 - outerRect.top;
  cursor.style.transitionDuration = duration + 'ms';
