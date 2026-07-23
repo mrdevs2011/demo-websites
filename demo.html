@@ -713,12 +713,22 @@ body{
 
 /* ============================================================
    WOW-EFFEKT: DYNAMIC ZOOM / CAMERA FOLLOW (Reels uchun)
+   Trend reklama videolaridagi kabi: kamera doim biror narsaga
+   qarab sekin siljib-yaqinlashib turadi (soft), bosish paytida esa
+   keskin "snap-zoom" bilan yaqinlashadi (punch) — hech qachon statik turmaydi.
    ============================================================ */
 #screenScroll{
-  transition: transform .6s cubic-bezier(.22,.9,.32,1);
+  transition: transform .55s cubic-bezier(.22,.9,.32,1);
   will-change: transform;
 }
-#screenScroll.zoomed{ transform: scale(1.07); }
+#screenScroll.zoom-soft{ transform: scale(1.045); }
+#screenScroll.zoom-punch{ transform: scale(1.12); }
+#screenScroll.punch-kick{ animation: punch-kick-anim .3s cubic-bezier(.3,1.7,.4,1); }
+@keyframes punch-kick-anim{
+  0%{ transform: scale(1.045); }
+  45%{ transform: scale(1.17); }
+  100%{ transform: scale(1.12); }
+}
 
 /* ============================================================
    LIVE ORDER POPUPS (Social Proof)
@@ -1601,20 +1611,30 @@ async function sendTelegramNotification(text){
     cursor.style.transitionDuration = duration + 'ms';
     cursor.style.left = x + 'px';
     cursor.style.top = y + 'px';
+    // Kamera har doim kursor qayerga borsa, o'shanga qarab sekin siljib-yaqinlashadi —
+    // trend reklama videolaridagi kabi hech qachon statik turmaydigan "jonli" effekt.
+    cameraTo(el, 'soft');
     await sleep(duration + 60);
   }
 
   /* ---------- DYNAMIC ZOOM / CAMERA FOLLOW (Reels retention effekti) ---------- */
-  function zoomToElement(el){
+  function cameraTo(el, level){
     const outerRect = screenOuter.getBoundingClientRect();
     const r = el.getBoundingClientRect();
     const xPct = ((r.left + r.width/2 - outerRect.left) / outerRect.width) * 100;
     const yPct = ((r.top + r.height/2 - outerRect.top) / outerRect.height) * 100;
     screenScroll.style.transformOrigin = xPct + '% ' + yPct + '%';
-    screenScroll.classList.add('zoomed');
+    screenScroll.classList.remove('zoom-soft','zoom-punch');
+    screenScroll.classList.add(level === 'punch' ? 'zoom-punch' : 'zoom-soft');
+  }
+  function cameraPunchKick(){
+    // Bosish lahzasida keskin "snap-zoom" pulsi — TikTok/Reels edit uslubidagi urg'u effekti.
+    screenScroll.classList.remove('punch-kick');
+    void screenScroll.offsetWidth;
+    screenScroll.classList.add('punch-kick');
   }
   function resetZoom(){
-    screenScroll.classList.remove('zoomed');
+    screenScroll.classList.remove('zoom-soft','zoom-punch','punch-kick');
   }
 
   function ripple(accent){
@@ -1639,11 +1659,13 @@ async function sendTelegramNotification(text){
   }
 
   async function goAndClick(el, accent, duration){
-    // Kamera (screen-scroll) bosilayotgan elementga qarab 105-110% gacha
-    // yumshoq zoom-in qiladi — Reels/TikTok'da 1-soniyadanoq diqqatni
-    // ushlab turadigan "camera follow" effekti.
-    zoomToElement(el);
+    // Kamera bosiladigan elementga qarab avval sekin yaqinlashadi (soft),
+    // bosilgan lahzada esa keskin snap-zoom bilan "punch" qiladi — Reels/TikTok'da
+    // 1-soniyadanoq diqqatni ushlab turadigan "camera follow" effekti.
+    cameraTo(el, 'soft');
     await moveCursorTo(el, duration);
+    cameraTo(el, 'punch');
+    cameraPunchKick();
     await clickOn(el, accent);
     await sleep(260);
     resetZoom();
@@ -1868,20 +1890,20 @@ async function sendTelegramNotification(text){
       scene.querySelectorAll('.eb-picker-item, .eb-slot').forEach(e=>e.classList.remove('selected'));
     },
     steps:[
-      { caption:"Mijoz saytga birinchi marta kirmoqda va bosh sahifani ko'zdan kechirmoqda.",
+      { caption:"Birinchi taassurot muhim ✨ mijoz saytni ko'zdan kechirmoqda",
         run: async(scene)=>{ await moveCursorTo(id('eb-nav-services'), 500); } },
-      { caption:"<b>Xizmatlar</b> bo'limiga o'tmoqda.",
+      { caption:"<b>Xizmatlar</b> bo'limiga o'tadi 💇‍♀️",
         run: async(scene)=>{ await scrollSceneTo(scene, id('eb-services')); await moveCursorTo(q(scene,'.eb-services h2'),450); } },
-      { caption:"«Ayollar soch kesish» xizmatini tanlab, <b>Bron qilish</b> tugmasini bosadi.",
+      { caption:"«Ayollar soch kesish»ni tanlab, <b>Bron qilish</b>ga bosadi 👇",
         run: async(scene)=>{ await goAndClick(id('eb-book-haircut'), '#C9A227'); id('eb-modal-overlay').classList.add('open'); await sleep(250); } },
-      { caption:"Modal oynada ustani tanlaydi — <b>Madina Yusupova</b>.",
+      { caption:"Sevimli ustasini tanlaydi — <b>Madina Yusupova</b> 💫",
         run: async(scene)=>{ await goAndClick(id('pick-madina'), '#C9A227'); id('pick-madina').classList.add('selected'); } },
-      { caption:"Qulay vaqtni tanlaydi — <b>11:30</b>.",
+      { caption:"Qulay vaqtni belgilaydi — <b>11:30</b> ⏰",
         run: async(scene)=>{ await goAndClick(id('slot-1130'), '#C9A227'); id('slot-1130').classList.add('selected'); } },
-      { caption:"Bronni tasdiqlaydi.",
+      { caption:"Bir bosish — va tayyor! ✅",
         run: async(scene)=>{ await goAndClick(id('eb-confirm-booking'), '#C9A227'); id('eb-modal-overlay').classList.remove('open');
           await sleep(200); id('eb-toast').classList.add('show'); } },
-      { caption:"Bron ma'lumotlari darhol salon administratoriga <b>Telegram</b> orqali yuboriladi <i class='fa-brands fa-telegram'></i>",
+      { caption:"Bron esa administratorga Telegram'da zumda yetib boradi <i class='fa-brands fa-telegram'></i> 🚀",
         run: async(scene)=>{
           id('eb-toast').classList.remove('show');
           await celebrateSuccess({
@@ -1913,15 +1935,15 @@ async function sendTelegramNotification(text){
       scene.querySelectorAll('.lu-size-chip').forEach(e=>e.classList.remove('selected'));
     },
     steps:[
-      { caption:"Mijoz katalogni ko'rib chiqmoqda.",
+      { caption:"Mijoz katalogni varaqlayapti 👀",
         run: async(scene)=>{ await moveCursorTo(id('lu-nav-shoes'), 500); } },
-      { caption:"Mahsulotlar bo'limiga o'tadi.",
+      { caption:"Kerakli bo'limga o'tadi",
         run: async(scene)=>{ await scrollSceneTo(scene, id('lu-products')); } },
-      { caption:"«Klassik oq krossovka» mahsulotiga qiziqadi.",
+      { caption:"«Klassik oq krossovka»ga ko'zi tushadi 😍",
         run: async(scene)=>{ await moveCursorTo(q(scene,'#prod-201 h3'), 500); } },
-      { caption:"O'lchamni tanlaydi — <b>M</b>.",
+      { caption:"O'lchamni belgilaydi — <b>M</b> 👟",
         run: async(scene)=>{ const el=id('size-m-201'); await goAndClick(el,'#4338CA'); el.classList.add('selected'); } },
-      { caption:"<b>Savatga qo'shish</b> tugmasini bosadi.",
+      { caption:"Bir bosish — <b>savatga qo'shildi</b> 🛒",
         run: async(scene)=>{
           await goAndClick(id('add-201'), '#4338CA');
           id('lu-cart-badge').textContent='1'; id('lu-cart-badge').classList.add('bump');
@@ -1929,18 +1951,18 @@ async function sendTelegramNotification(text){
           id('lu-subtotal-val').textContent = '399 000 so\'m';
           await sleep(300); id('lu-cart-badge').classList.remove('bump');
         } },
-      { caption:"Savatchani ochib ko'rib chiqadi.",
+      { caption:"Savatchasini ko'zdan kechiradi",
         run: async(scene)=>{ await goAndClick(id('lu-cart-btn'), '#4338CA'); id('lu-drawer-overlay').classList.add('open'); await sleep(300); } },
-      { caption:"<b>Buyurtma berish</b> tugmasini bosadi.",
+      { caption:"<b>Buyurtma berish</b>ga bosadi 👉",
         run: async(scene)=>{ await goAndClick(id('lu-checkout-btn'), '#4338CA'); id('lu-drawer-overlay').classList.remove('open');
           await sleep(150); id('lu-modal-overlay').classList.add('open'); } },
-      { caption:"Ism-familiyasini kiritadi.",
+      { caption:"Ism-familiyasini yozadi ✍️",
         run: async(scene)=>{ await moveCursorTo(id('lu-name'),450); await typeInto(id('lu-name'), 'Aziz Karimov'); } },
-      { caption:"Telefon raqamini kiritadi.",
+      { caption:"Telefon raqamini kiritadi 📱",
         run: async(scene)=>{ await moveCursorTo(id('lu-phone'),400); await typeInto(id('lu-phone'), '+998 90 123 45 67'); } },
-      { caption:"Yetkazib berish manzilini kiritadi.",
+      { caption:"Manzilini yozadi 📍",
         run: async(scene)=>{ await moveCursorTo(id('lu-address'),400); await typeInto(id('lu-address'), 'Toshkent sh., Yunusobod tumani, 14-uy', 30); } },
-      { caption:"Buyurtmani yakuniy tasdiqlaydi.",
+      { caption:"Bosadi — va tamom! 🎉",
         run: async(scene)=>{ await goAndClick(id('lu-confirm-order'), '#4338CA'); id('lu-modal-overlay').classList.remove('open');
           await sleep(200); id('lu-success').classList.add('show'); await sleep(900); id('lu-success').classList.remove('show');
           await celebrateSuccess({
@@ -1968,26 +1990,26 @@ async function sendTelegramNotification(text){
       id('ac-lead-success').classList.remove('show');
     },
     steps:[
-      { caption:"O'quvchi nomzod bosh sahifani ko'rmoqda.",
+      { caption:"Bo'lajak o'quvchi saytni ko'zdan kechirmoqda 👀",
         run: async(scene)=>{ await moveCursorTo(id('ac-nav-courses'), 500); } },
-      { caption:"Kurslar katalogiga o'tadi.",
+      { caption:"Kurslar katalogiga o'tadi 📚",
         run: async(scene)=>{ await scrollSceneTo(scene, id('ac-courses')); } },
-      { caption:"«Frontend Development» kursi diqqatini tortadi.",
+      { caption:"«Frontend Development» kursi ko'ziga yoqadi ✨",
         run: async(scene)=>{ await moveCursorTo(q(scene,'#course-frontend h3'), 500); } },
-      { caption:"<b>Yozilish</b> tugmasini bosadi.",
+      { caption:"<b>Yozilish</b>ga bosadi 👇",
         run: async(scene)=>{ await goAndClick(id('enroll-frontend'), '#7c4dff');
           await scrollSceneTo(scene, id('ac-lead-form'), 10);
           id('ac-course-select').value = 'Frontend Development';
           id('ac-course-select').classList.add('highlight');
           await sleep(400); id('ac-course-select').classList.remove('highlight');
         } },
-      { caption:"F.I.Sh maydonini to'ldiradi.",
+      { caption:"F.I.Sh maydonini to'ldiradi ✍️",
         run: async(scene)=>{ await moveCursorTo(id('ac-name'),400); await typeInto(id('ac-name'), 'Kamola Yusupova'); } },
-      { caption:"Telefon raqamini kiritadi.",
+      { caption:"Telefon raqamini kiritadi 📱",
         run: async(scene)=>{ await moveCursorTo(id('ac-phone'),400); await typeInto(id('ac-phone'), '+998 91 234 56 78'); } },
-      { caption:"Arizani yuboradi.",
+      { caption:"Arizani yuboradi — bosildi! 🎉",
         run: async(scene)=>{ await goAndClick(id('ac-submit-lead'), '#7c4dff'); id('ac-lead-success').classList.add('show'); } },
-      { caption:"Ma'lumotlar avtomatik ravishda <b>Supabase</b> bazasiga saqlanadi <i class='fa-solid fa-database'></i>",
+      { caption:"Ma'lumotlar zumda <b>bazaga</b> tushadi — hech narsa qo'ldan boy berilmaydi <i class='fa-solid fa-database'></i> 💾",
         run: async(scene)=>{ await sleep(900); id('ac-lead-success').classList.remove('show');
           await celebrateSuccess({
             title:'Ariza qabul qilindi! <i class="fa-solid fa-graduation-cap"></i>',
@@ -2019,9 +2041,9 @@ async function sendTelegramNotification(text){
       id('cat-pizza').classList.add('active');
     },
     steps:[
-      { caption:"Mijoz och qolgan va tez ovqat izlamoqda",
+      { caption:"Mijoz och qoldi 😩 tez ovqat izlayapti",
         run: async(scene)=>{ await goAndClick(id('cat-pizza'), '#F59E0B'); } },
-      { caption:"«Margarita Pitsa»ni savatga qo'shadi.",
+      { caption:"«Margarita Pitsa»ni savatga tashlaydi 🍕",
         run: async(scene)=>{
           await goAndClick(id('fd-add-1'), '#F59E0B');
           id('fd-cart-badge').textContent='1'; id('fd-cart-badge').classList.add('bump');
@@ -2029,7 +2051,7 @@ async function sendTelegramNotification(text){
           id('fd-subtotal-val').textContent = "45 000 so'm";
           await sleep(300); id('fd-cart-badge').classList.remove('bump');
         } },
-      { caption:"Ichimlik bo'limiga o'tib, <b>Coca-Cola</b> qo'shadi.",
+      { caption:"Ichimlik ham kerak — <b>Coca-Cola</b> qo'shildi 🥤",
         run: async(scene)=>{
           const catDrinks = id('cat-drinks');
           await goAndClick(catDrinks, '#F59E0B');
@@ -2041,24 +2063,24 @@ async function sendTelegramNotification(text){
           id('fd-subtotal-val').textContent = "55 000 so'm";
           await sleep(300); id('fd-cart-badge').classList.remove('bump');
         } },
-      { caption:"Savatchani ochib, buyurtma berishga o'tadi.",
+      { caption:"Savatchasini ochib, buyurtmaga o'tadi 🛒",
         run: async(scene)=>{
           await goAndClick(id('fd-cart-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.add('open');
           await sleep(300);
           await goAndClick(id('fd-checkout-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.remove('open');
           await sleep(150); id('fd-modal-overlay').classList.add('open');
         } },
-      { caption:"<i class=\"fa-solid fa-location-dot\"></i> tugmasi orqali joylashuvni avtomatik aniqlaydi.",
+      { caption:"<i class=\"fa-solid fa-location-dot\"></i> bir bosish — manzil o'zi topiladi ⚡",
         run: async(scene)=>{ await goAndClick(id('fd-geo-btn'), '#F59E0B'); await typeInto(id('fd-address'), 'Toshkent sh., Chilonzor tumani, 12-uy', 28); } },
-      { caption:"Ismi va telefon raqamini kiritadi.",
+      { caption:"Ismi va raqamini kiritadi ✍️",
         run: async(scene)=>{
           await moveCursorTo(id('fd-name'),400); await typeInto(id('fd-name'), 'Sardor Aliyev');
           await moveCursorTo(id('fd-phone'),400); await typeInto(id('fd-phone'), '+998 93 456 78 90');
         } },
-      { caption:"Buyurtmani yakuniy tasdiqlaydi.",
+      { caption:"Tasdiqlaydi — va bosh og'rig'i tugadi! 🎉",
         run: async(scene)=>{ await goAndClick(id('fd-confirm'), '#F59E0B'); id('fd-modal-overlay').classList.remove('open');
           await sleep(200); id('fd-success').classList.add('show'); } },
-      { caption:"Buyurtma tafsilotlari zudlik bilan oshxonaga <b>Telegram bot</b> orqali yuboriladi <i class='fa-solid fa-robot'></i>",
+      { caption:"Buyurtma esa oshxonaga <b>Telegram bot</b> orqali zumda yetib boradi <i class='fa-solid fa-robot'></i> 🚀",
         run: async(scene)=>{ await sleep(900); id('fd-success').classList.remove('show');
           await celebrateSuccess({
             title:'Buyurtma qabul qilindi! <i class="fa-solid fa-circle-check"></i>',
