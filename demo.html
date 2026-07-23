@@ -1164,121 +1164,6 @@ body{
  ============================================================ */
 .screen-outer{ container-type:inline-size; container-name:stage; }
 
-/* ---- Caption"splash": video to'xtab, xira/blur fon ustida qisqa matn chiqadi ----
- Faqat belgilangan muhim qadamlarda ishlaydi (har loyihaga ~2 marta), doim emas. */
-.kinetic-caption-wrap{
- position:absolute;
- inset:0;
- z-index:200;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:0 10%;
- background:rgba(8,7,14,0);
- backdrop-filter:blur(0px);
- -webkit-backdrop-filter:blur(0px);
- opacity:0;
- pointer-events:none;
- transition:opacity .35s ease, background .35s ease, backdrop-filter .35s ease, -webkit-backdrop-filter .35s ease;
-}
-.kinetic-caption-wrap.show{
- opacity:1;
- background:rgba(8,7,14,.5);
- backdrop-filter:blur(6px) saturate(1.05);
- -webkit-backdrop-filter:blur(6px) saturate(1.05);
-}
-.kinetic-caption{
- max-width:78%;
- text-align:center;
- font-family:'Manrope', sans-serif;
- font-weight:800;
- font-size:clamp(17px, 6.2cqi, 25px);
- line-height:1.5;
- color:#fff;
-}
-.kinetic-caption .kc-word{
- display:inline-block;
- opacity:0;
- transform:translateY(12px) scale(.85);
- animation:kc-pop .38s cubic-bezier(.22,1.1,.32,1) forwards;
- margin:0 .12em;
- will-change:transform,opacity;
-}
-.kinetic-caption .kc-word.kc-em{ color:#7dd3fc; }
-.kinetic-caption .kc-word.kc-icon{ color:#7dd3fc; }
-@keyframes kc-pop{
- 0%{ opacity:0; transform:translateY(12px) scale(.82); }
- 55%{ opacity:1; transform:translateY(-2px) scale(1.06); }
- 100%{ opacity:1; transform:translateY(0) scale(1); }
-}
-
-/* ---- Ochilish hook (birinchi 1.5s) ---- */
-.hook-intro-overlay{
- position:absolute; inset:0; z-index:320;
- display:flex; align-items:center; justify-content:center;
- background:rgba(8,10,16,.95);
- opacity:0; pointer-events:none;
- transition:opacity .3s ease;
-}
-.hook-intro-overlay.show{ opacity:1; }
-.hook-intro-card{
- text-align:center; padding:0 8%;
-}
-.hook-intro-overlay.show .hook-intro-card{ animation:hook-pop .5s cubic-bezier(.24,1.4,.4,1) both; }
-@keyframes hook-pop{
- 0%{ transform:scale(.72); opacity:0; }
- 100%{ transform:scale(1); opacity:1; }
-}
-.hook-intro-badge{
- display:inline-flex; align-items:center; gap:6px;
- font-size:clamp(10px,3cqi,12.5px); font-weight:800; letter-spacing:1.2px;
- text-transform:uppercase; color:#7dd3fc;
- background:rgba(56,189,248,.12);
- border:1px solid rgba(56,189,248,.35);
- padding:6px 14px; border-radius:20px;
-}
-.hook-intro-card h2{
- font-size:clamp(21px, 9cqi, 40px);
- font-weight:800; color:#fff; margin:16px 0 6px; line-height:1.22;
-}
-.hook-intro-arrow{
- font-size:clamp(22px, 8.5cqi, 36px);
- color:#7dd3fc;
- opacity:.9;
-}
-
-/* ---- Oxirida katta CTA-ekran ---- */
-.end-cta-overlay{
- position:absolute; inset:0; z-index:320;
- display:flex; align-items:center; justify-content:center;
- background:rgba(7,9,14,.96);
- opacity:0; pointer-events:none;
- transition:opacity .3s ease;
-}
-.end-cta-overlay.show{ opacity:1; }
-.end-cta-card{ text-align:center; padding:0 8%; }
-.end-cta-overlay.show .end-cta-card{ animation:hook-pop .48s cubic-bezier(.24,1.4,.4,1) both; }
-.end-cta-tg{
- width:clamp(58px,20cqi,80px); height:clamp(58px,20cqi,80px);
- margin:0 auto 14px; border-radius:50%;
- background:#0ea5e9;
- display:flex; align-items:center; justify-content:center;
- font-size:clamp(28px,9cqi,38px); color:#fff;
-}
-.end-cta-card h2{
- font-size:clamp(22px, 9.5cqi, 40px); font-weight:800; color:#fff; margin:0 0 12px; line-height:1.18;
-}
-.end-cta-handle{
- display:inline-block; font-size:clamp(16px, 6.5cqi, 25px); font-weight:800; color:#7dd3fc;
- background:rgba(56,189,248,.12);
- border:1px solid rgba(56,189,248,.35);
- padding:9px 22px; border-radius:30px; margin-bottom:12px;
-}
-.end-cta-card p{
- font-size:clamp(12px, 4cqi, 15.5px); color:rgba(255,255,255,.78);
- max-width:340px; margin:10px auto 0; line-height:1.4;
-}
-
 /* ---- Narx/qiymat overlay chip ---- */
 .value-chip{
  position:absolute; top:14px; left:50%;
@@ -1307,9 +1192,6 @@ body{
 }
 .screen-scroll.flash{ animation:scene-flash-anim .32s ease; }
 
-@container stage (max-width: 340px){
- .kinetic-caption{ font-size:clamp(15px, 6.6cqi, 21px); }
-}
 </style>
 </head>
 <body>
@@ -1427,21 +1309,6 @@ body{
  <h3 id="receiptTitle">Buyurtma qabul qilindi!</h3>
  <p id="receiptText">Tafsilotlar Telegram orqali yuborildi.</p>
  <div class="receipt-tick"><i class="fa-solid fa-circle-check"></i> Telegram botga yuborildi</div>
- </div>
- </div>
- <div class="hook-intro-overlay" id="hookIntroOverlay">
- <div class="hook-intro-card">
- <div class="hook-intro-badge"><i class="fa-solid fa-bolt"></i> 4 ta biznes</div>
- <h2>4 ta biznes + Telegram bot —<br>shunday ishlaydi</h2>
- <div class="hook-intro-arrow"></div>
- </div>
- </div>
- <div class="end-cta-overlay" id="endCtaOverlay">
- <div class="end-cta-card">
- <div class="end-cta-tg"><i class="fa-brands fa-telegram"></i></div>
- <h2>Telegram orqali yozing</h2>
- <div class="end-cta-handle">+998 91 605 53 10</div>
- <p>Shunday sayt + bot — sizga ham 2 kunda tayyorlab beramiz</p>
  </div>
  </div>
  <div class="screen-scroll" id="screenScroll">
@@ -2021,8 +1888,6 @@ async function sendTelegramNotification(text){
  const receiptOverlay = document.getElementById('receiptOverlay');
  const receiptTitle = document.getElementById('receiptTitle');
  const receiptText = document.getElementById('receiptText');
- const hookIntroOverlay = document.getElementById('hookIntroOverlay');
- const endCtaOverlay = document.getElementById('endCtaOverlay');
  const valueChip = document.getElementById('valueChip');
 
  // Reels tezligi: barcha animatsiya/pauza vaqtlari shu koeffitsientga ko'paytiriladi
@@ -2165,26 +2030,6 @@ async function sendTelegramNotification(text){
  function setCaption(html, idx, total){
  captionEl.innerHTML = html;
  stepIndicator.textContent = idx + '/' + total;
- }
-
- /* ---------- Ochilish hook: birinchi 1.5s'da katta"wow" matni ---------- */
- async function showHookIntro(){
- cursor.style.opacity = '0';
- hookIntroOverlay.classList.add('show');
- await rawSleep(1200);
- hookIntroOverlay.classList.remove('show');
- cursor.style.opacity = '1';
- await rawSleep(250);
- }
-
- /* ---------- Har bir loyiha oxirida to'liq ekranli CTA (screenshot olishga ulguradigan pauza) ---------- */
- async function showEndCta(){
- cursor.style.opacity = '0';
- endCtaOverlay.classList.add('show');
- await rawSleep(2400);
- endCtaOverlay.classList.remove('show');
- cursor.style.opacity = '1';
- await rawSleep(200);
  }
 
  /* ---------- Narx/qiymat chip: loyiha davomida bir marta, xolisona chiqadi ---------- */
@@ -2689,7 +2534,6 @@ async function sendTelegramNotification(text){
  }
  updateProgress(idx, (i+1)/proj.steps.length);
  }
- await showEndCta();
  if(myToken !== runToken) return;
  if(recordStopAtIdx === idx){
  recordStopAtIdx = null;
@@ -3188,9 +3032,6 @@ async function sendTelegramNotification(text){
 
  // kick off
  (async()=>{
- if(!savedFsMode){
- await showHookIntro();
- }
  playProject(0);
  })();
 })();
