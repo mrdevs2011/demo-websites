@@ -17,7 +17,7 @@
 export const SUPABASE_CONFIG = {
   url: "https://sozmshtdllglgvaxmgnv.supabase.co",
   anonKey: "sb_publishable_lqY1Eudg7Nw2uVgoCYaOpQ_FMjuNXZf",
-  ordersTable: "orders",
+  ordersTable: "otabekfood_orders",
 };
 
 export const TELEGRAM_CONFIG = {

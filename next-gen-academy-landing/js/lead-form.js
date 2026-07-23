@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const leadForm = document.getElementById('leadForm');
   const leadStatus = document.getElementById('leadStatus');
   const leadSubmitBtn = document.getElementById('leadSubmitBtn');
+  const leadSuccessCard = document.getElementById('leadSuccessCard');
+  const leadSuccessResetBtn = document.getElementById('leadSuccessResetBtn');
 
   if (!leadForm) return;
 
@@ -51,6 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
     leadStatus.classList.remove('hidden', 'text-emerald-600', 'text-red-600');
     leadStatus.classList.add(isError ? 'text-red-600' : 'text-emerald-600');
   }
+
+  function showSuccessCard({ full_name, phone, course }) {
+    document.getElementById('lsName').textContent = full_name;
+    document.getElementById('lsPhone').textContent = phone;
+    document.getElementById('lsCourse').textContent = course;
+    leadForm.classList.add('hidden');
+    leadSuccessCard.classList.remove('hidden');
+  }
+
+  leadSuccessResetBtn.addEventListener('click', () => {
+    leadSuccessCard.classList.add('hidden');
+    leadForm.classList.remove('hidden');
+    leadStatus.classList.add('hidden');
+  });
 
   leadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -84,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       await notifyTelegramLead({ full_name, phone, course });
 
-      showStatus("Rahmat! Arizangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.", false);
       leadForm.reset();
+      showSuccessCard({ full_name, phone, course });
 
     } catch (err) {
       console.error('Supabase xatosi:', err);

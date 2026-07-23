@@ -256,6 +256,43 @@
         <i class="fa-solid fa-check"></i> Buyurtmani tasdiqlash
       </button>
     </form>
+
+    <!-- ============ MUVAFFAQIYATLI BUYURTMA — CHEK KARTASI ============ -->
+    <div id="orderSuccessCard" class="hidden px-6 py-6">
+      <div class="receipt-edge bg-white rounded-lg shadow-ticket px-5 py-6 mx-1">
+        <div class="flex flex-col items-center text-center mb-4">
+          <div class="w-14 h-14 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-2xl mb-3">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h4 class="font-display text-xl text-char-900">Buyurtma qabul qilindi!</h4>
+          <p class="text-sm text-char-900/60 mt-1">Tez orada siz bilan bog'lanamiz 🎉</p>
+        </div>
+
+        <div class="border-t border-dashed border-char-900/20 my-4"></div>
+
+        <div class="space-y-1.5 text-sm">
+          <div class="flex justify-between"><span class="text-char-900/50">Mijoz</span><span id="scName" class="font-semibold text-char-900"></span></div>
+          <div class="flex justify-between"><span class="text-char-900/50">Telefon</span><span id="scPhone" class="font-semibold text-char-900"></span></div>
+          <div class="flex justify-between"><span class="text-char-900/50">Manzil</span><span id="scAddress" class="font-semibold text-char-900 text-right max-w-[60%]"></span></div>
+        </div>
+
+        <div class="border-t border-dashed border-char-900/20 my-4"></div>
+
+        <div id="scItems" class="space-y-1.5 text-sm mb-3"></div>
+
+        <div class="border-t border-dashed border-char-900/20 my-4"></div>
+
+        <div class="space-y-1 text-sm text-char-900/70">
+          <div class="flex justify-between"><span>Mahsulotlar</span><span id="scSubtotal"></span></div>
+          <div class="flex justify-between"><span>Yetkazib berish</span><span id="scDelivery"></span></div>
+          <div class="flex justify-between font-bold text-char-900 text-base pt-2 border-t border-char-900/10"><span>Jami</span><span id="scTotal"></span></div>
+        </div>
+      </div>
+
+      <button type="button" id="closeSuccessCard" class="w-full mt-5 bg-char-900 hover:bg-char-800 text-white font-bold py-3.5 rounded-xl transition">
+        Yopish
+      </button>
+    </div>
   </div>
 </div>
 

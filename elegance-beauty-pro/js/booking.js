@@ -7,6 +7,67 @@ import { submitBookingToBackend, fetchBookedSlots } from './api.js';
 
 const modal = () => document.getElementById('bookingModal');
 
+const UZ_MONTHS = [
+  'Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun',
+  'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr',
+];
+
+/** Tanlangan oyda necha kun borligini hisoblaydi (joriy yil bo'yicha taxminiy). */
+function daysInMonth(monthIndex1to12) {
+  const now = new Date();
+  return new Date(now.getFullYear(), monthIndex1to12, 0).getDate();
+}
+
+/**
+ * Kun + oy tanlovidan to'liq (yil bilan) ISO sana hosil qiladi.
+ * Yil ko'rsatilmagani uchun avtomatik aniqlanadi: agar tanlangan kun/oy
+ * joriy yilda hali o'tmagan bo'lsa — shu yil, aks holda keyingi yil.
+ */
+function resolveBookingDate(day, month) {
+  if (!day || !month) return '';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let year = today.getFullYear();
+  let candidate = new Date(year, month - 1, day);
+  if (candidate < today) {
+    year += 1;
+    candidate = new Date(year, month - 1, day);
+  }
+  const mm = String(month).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
+  return `${year}-${mm}-${dd}`;
+}
+
+function populateDateSelects() {
+  const daySelect = document.getElementById('bookingDay');
+  const monthSelect = document.getElementById('bookingMonth');
+
+  monthSelect.innerHTML = '<option value="">Oy</option>' +
+    UZ_MONTHS.map((m, i) => `<option value="${i + 1}">${m}</option>`).join('');
+
+  function rebuildDays() {
+    const selectedDay = daySelect.value;
+    const month = Number(monthSelect.value) || 12; // oy tanlanmagan bo'lsa, eng ko'p kunli variant
+    const total = monthSelect.value ? daysInMonth(month) : 31;
+    daySelect.innerHTML = '<option value="">Kun</option>' +
+      Array.from({ length: total }, (_, i) => i + 1)
+        .map(d => `<option value="${d}">${d}</option>`).join('');
+    // Agar oldin tanlangan kun yangi oyda mavjud bo'lsa, saqlab qolamiz
+    if (selectedDay && Number(selectedDay) <= total) daySelect.value = selectedDay;
+  }
+
+  rebuildDays();
+
+  function syncHiddenDate() {
+    const dateVal = resolveBookingDate(Number(daySelect.value), Number(monthSelect.value));
+    document.getElementById('bookingDate').value = dateVal;
+    renderTimeSlots();
+  }
+
+  monthSelect.addEventListener('change', () => { rebuildDays(); syncHiddenDate(); });
+  daySelect.addEventListener('change', syncHiddenDate);
+}
+
 const stepLabels = {
   1: '1-qadam / 4 — Xizmat va usta',
   2: '2-qadam / 4 — Sana va vaqt',
@@ -27,12 +88,27 @@ export function openBooking(preselectServiceId) {
   goToStep(1);
 
   document.getElementById('bookingDate').value = '';
+  document.getElementById('bookingDay').value = '';
+  document.getElementById('bookingMonth').value = '';
   document.getElementById('clientName').value = '';
   document.getElementById('clientPhone').value = '';
 
   const status = document.getElementById('submitStatus');
   status.classList.add('hidden');
   status.textContent = '';
+
+  // Chipta hali tasdiqlanmagan holatga qaytariladi
+  document.getElementById('ticketStamp').classList.add('hidden');
+  document.getElementById('ticketLabel').textContent = 'Bron xulosasi';
+  document.getElementById('sumCodeRow').classList.add('hidden');
+  document.getElementById('closeTicketBtn').classList.add('hidden');
+  const confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.disabled = false;
+  confirmBtn.innerHTML = `<i class="fa-solid fa-check mr-1"></i> Bron qilish`;
+}
+
+function generateBookingCode() {
+  return Math.random().toString(36).slice(2, 8).toUpperCase();
 }
 
 export function closeBooking() {
@@ -147,6 +223,17 @@ async function renderTimeSlots() {
     wrap.innerHTML = `<p class="text-sm text-emerald-950/40">Avval sanani tanlang.</p>`;
     return;
   }
+
+  // Foydalanuvchi sana maydoniga qo'lda yozayotganda tugallanmagan/noto'g'ri
+  // qiymatlar (masalan yil qismi 1-3 ta raqam bo'lganda) ham "change" hodisasi
+  // sifatida kelib qolishi mumkin — bunday holatda serverga so'rov yubormaymiz.
+  const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(dateVal) &&
+    Number(dateVal.slice(0, 4)) >= 2020 && Number(dateVal.slice(0, 4)) <= 2100;
+  if (!isValidDate) {
+    wrap.innerHTML = `<p class="text-sm text-emerald-950/40">Iltimos, to'g'ri sanani tanlang.</p>`;
+    return;
+  }
+
   state.date = dateVal;
 
   const key = `${state.masterId}_${dateVal}`;
@@ -226,13 +313,20 @@ async function submitBooking() {
 
     statusEl.className = 'text-sm mb-2 text-emerald-700 font-semibold';
     statusEl.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> Bron muvaffaqiyatli qabul qilindi! Tez orada siz bilan bog'lanamiz.`;
-    confirmBtn.innerHTML = `<i class="fa-solid fa-check mr-1"></i> Yuborildi`;
+
+    // Chiptani "tasdiqlangan bron kartasi"ga aylantiramiz
+    const code = generateBookingCode();
+    document.getElementById('sumCode').textContent = code;
+    document.getElementById('sumCodeRow').classList.remove('hidden');
+    document.getElementById('ticketLabel').textContent = 'Bron tasdiqlandi';
+    document.getElementById('ticketStamp').classList.remove('hidden');
+
+    confirmBtn.classList.add('hidden');
+    document.getElementById('closeTicketBtn').classList.remove('hidden');
 
     const key = `${state.masterId}_${state.date}`;
     if (!bookedSlotsCache[key]) bookedSlotsCache[key] = [];
     bookedSlotsCache[key].push(state.time);
-
-    setTimeout(closeBooking, 2200);
   } catch (err) {
     console.error(err);
     statusEl.className = 'text-sm mb-2 text-red-600 font-semibold';
@@ -256,10 +350,9 @@ export function initBookingModal() {
   document.getElementById('backBtn').addEventListener('click', stepBack);
   document.getElementById('nextBtn').addEventListener('click', stepNext);
   document.getElementById('confirmBtn').addEventListener('click', submitBooking);
+  document.getElementById('closeTicketBtn').addEventListener('click', closeBooking);
 
-  const dateInput = document.getElementById('bookingDate');
-  dateInput.min = new Date().toISOString().split('T')[0];
-  dateInput.addEventListener('change', renderTimeSlots);
+  populateDateSelects();
 
   // Esc bosilganda modalni yopish
   document.addEventListener('keydown', (e) => {

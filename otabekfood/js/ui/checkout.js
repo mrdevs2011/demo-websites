@@ -23,6 +23,7 @@ const checkoutModal = document.getElementById('checkoutModal');
 const orderForm = document.getElementById('orderForm');
 const submitBtn = document.getElementById('submitOrderBtn');
 const geoStatus = document.getElementById('geoStatus');
+const successCard = document.getElementById('orderSuccessCard');
 
 function openCheckout() {
   if (getCartItemsCount() === 0) {
@@ -40,7 +41,31 @@ function closeCheckout() {
   checkoutModal.classList.add('opacity-0', 'scale-95');
   setTimeout(() => {
     checkoutOverlay.classList.add('opacity-0', 'pointer-events-none');
+    // Keyingi safar ochilganda forma qaytadan ko'rinsin
+    successCard.classList.add('hidden');
+    orderForm.classList.remove('hidden');
   }, 200);
+}
+
+/**
+ * Buyurtma muvaffaqiyatli qabul qilingach, forma o'rniga
+ * "chek" uslubidagi vizual tasdiqlash kartasini ko'rsatadi.
+ */
+function showSuccessCard(order) {
+  document.getElementById('scName').textContent = order.customer_name;
+  document.getElementById('scPhone').textContent = order.customer_phone;
+  document.getElementById('scAddress').textContent = order.address;
+
+  document.getElementById('scItems').innerHTML = order.items.map(i =>
+    `<div class="flex justify-between"><span class="text-char-900/80">${i.name} <span class="text-char-900/40">×${i.qty}</span></span><span class="font-semibold text-char-900">${Number(i.line_total).toLocaleString('uz-UZ')} so'm</span></div>`
+  ).join('');
+
+  document.getElementById('scSubtotal').textContent = `${Number(order.subtotal).toLocaleString('uz-UZ')} so'm`;
+  document.getElementById('scDelivery').textContent = `${Number(order.delivery_fee).toLocaleString('uz-UZ')} so'm`;
+  document.getElementById('scTotal').textContent = `${Number(order.total).toLocaleString('uz-UZ')} so'm`;
+
+  orderForm.classList.add('hidden');
+  successCard.classList.remove('hidden');
 }
 
 function initGeolocation() {
@@ -116,12 +141,11 @@ async function handleSubmit(e) {
     // 2) Telegram botga bildirishnoma yuborish
     await sendTelegramNotification(savedOrder);
 
-    // 3) UI'ni tozalash
+    // 3) UI'ni tozalash va vizual tasdiqlash kartasini ko'rsatish
     clearCart();
     orderForm.reset();
     geoStatus.textContent = '';
-    closeCheckout();
-    showToast("Buyurtmangiz qabul qilindi! Tez orada bog'lanamiz 🎉");
+    showSuccessCard(savedOrder);
   } catch (err) {
     console.error("Buyurtmani saqlashda xatolik:", err);
     showToast("Xatolik yuz berdi. Qaytadan urinib ko'ring", 'error');
@@ -134,6 +158,7 @@ async function handleSubmit(e) {
 export function initCheckout() {
   document.getElementById('checkoutBtn').addEventListener('click', openCheckout);
   document.getElementById('checkoutCloseBtn').addEventListener('click', closeCheckout);
+  document.getElementById('closeSuccessCard').addEventListener('click', closeCheckout);
   checkoutOverlay.addEventListener('click', (e) => {
     if (e.target === checkoutOverlay) closeCheckout();
   });

@@ -164,7 +164,7 @@
 <div class="modal-overlay" id="checkoutModal">
   <div class="modal">
     <h3>Buyurtmani rasmiylashtirish</h3>
-    <p class="sub">Ma'lumotlaringizni kiriting — buyurtma tasdiqlash uchun Telegram botga yo'naltirilasiz.</p>
+    <p class="sub">Ma'lumotlaringizni kiriting — buyurtma darhol qabul qilinadi.</p>
     <form id="checkoutForm">
       <div class="field">
         <label for="custName">Ism-familiya</label>
@@ -186,6 +186,29 @@
       </div>
       <div class="status-msg" id="orderStatus"></div>
     </form>
+
+    <!-- ============ MUVAFFAQIYATLI BUYURTMA KARTASI ============ -->
+    <div class="success-card" id="orderSuccessCard" style="display:none">
+      <div class="success-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h3>Buyurtma qabul qilindi!</h3>
+      <p class="sub">Operatorimiz tez orada siz bilan bog'lanadi.</p>
+
+      <div class="order-code-chip">№ <span id="scOrderCode"></span></div>
+
+      <div class="sc-block">
+        <div class="sc-row"><span>Xaridor</span><b id="scName"></b></div>
+        <div class="sc-row"><span>Telefon</span><b id="scPhone"></b></div>
+        <div class="sc-row" id="scAddressRow"><span>Manzil</span><b id="scAddress"></b></div>
+      </div>
+
+      <div class="sc-block sc-items" id="scItems"></div>
+
+      <div class="sc-total"><span>Jami</span><b id="scTotal"></b></div>
+
+      <button type="button" class="btn-primary" id="closeSuccessCard" style="width:100%;margin-top:18px;">Yopish</button>
+    </div>
   </div>
 </div>
 

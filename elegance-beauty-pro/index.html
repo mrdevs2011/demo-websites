@@ -294,8 +294,17 @@
         <!-- STEP 2: Date & time -->
         <div class="booking-step hidden" data-step="2">
           <label class="block text-sm font-semibold mb-3">Sanani tanlang</label>
-          <input type="date" id="bookingDate" required
-            class="w-full bg-white border border-emerald-950/15 rounded-xl px-4 py-3.5 mb-7 focus-gold text-emerald-950">
+          <div class="grid grid-cols-2 gap-3 mb-7">
+            <select id="bookingDay" required
+              class="w-full bg-white border border-emerald-950/15 rounded-xl px-4 py-3.5 focus-gold text-emerald-950">
+              <option value="">Kun</option>
+            </select>
+            <select id="bookingMonth" required
+              class="w-full bg-white border border-emerald-950/15 rounded-xl px-4 py-3.5 focus-gold text-emerald-950">
+              <option value="">Oy</option>
+            </select>
+          </div>
+          <input type="hidden" id="bookingDate">
 
           <label class="block text-sm font-semibold mb-3">Bo'sh vaqtni tanlang</label>
           <div id="timeSlotWrap" class="flex flex-wrap gap-2.5"></div>
@@ -317,13 +326,15 @@
         <!-- STEP 4: Confirm (ticket summary) -->
         <div class="booking-step hidden" data-step="4">
           <div class="ticket ticket-perf text-cream p-6 mb-6">
+            <div id="ticketStamp" class="ticket-stamp hidden">Tasdiqlandi</div>
             <div class="flex items-center justify-between mb-5">
-              <span class="text-[11px] tracking-[0.25em] text-gold-400 uppercase">Bron xulosasi</span>
+              <span class="text-[11px] tracking-[0.25em] text-gold-400 uppercase" id="ticketLabel">Bron xulosasi</span>
               <i class="fa-solid fa-check-circle text-gold-400"></i>
             </div>
             <div class="font-display text-xl mb-1" id="sumService">—</div>
             <div class="text-cream/60 text-sm mb-5" id="sumMaster">—</div>
             <div class="hairline mb-5"></div>
+            <div class="flex justify-between text-sm mb-2 hidden" id="sumCodeRow"><span class="text-cream/60">Bron kodi</span><span class="font-mono" id="sumCode">—</span></div>
             <div class="flex justify-between text-sm mb-2"><span class="text-cream/60">Sana</span><span class="font-mono" id="sumDate">—</span></div>
             <div class="flex justify-between text-sm mb-2"><span class="text-cream/60">Vaqt</span><span class="font-mono" id="sumTime">—</span></div>
             <div class="flex justify-between text-sm mb-2"><span class="text-cream/60">Mijoz</span><span class="font-mono" id="sumClient">—</span></div>
@@ -346,6 +357,9 @@
           </button>
           <button type="button" id="confirmBtn" class="hidden flex-1 bg-gold-500 text-emerald-950 font-semibold py-3.5 rounded-full hover:bg-gold-600 transition-colors">
             <i class="fa-solid fa-check mr-1"></i> Bron qilish
+          </button>
+          <button type="button" id="closeTicketBtn" class="hidden flex-1 bg-emerald-950 text-cream font-semibold py-3.5 rounded-full hover:bg-emerald-900 transition-colors">
+            Yopish
           </button>
         </div>
       </form>

@@ -10,6 +10,36 @@ App.closeCheckout = function () {
   const statusEl = document.getElementById('orderStatus');
   statusEl.textContent = '';
   statusEl.className = 'status-msg';
+  // Karta ko'rsatilgan bo'lsa, formani qaytadan ko'rsatamiz (keyingi ochilishga tayyorlab)
+  document.getElementById('orderSuccessCard').style.display = 'none';
+  document.getElementById('checkoutForm').style.display = '';
+};
+
+/**
+ * Buyurtma muvaffaqiyatli qabul qilingach, forma o'rniga vizual
+ * tasdiqlash kartasini to'ldirib ko'rsatadi.
+ */
+App.showSuccessCard = function ({ orderCode, full_name, phone, address, items, total }) {
+  document.getElementById('scOrderCode').textContent = orderCode;
+  document.getElementById('scName').textContent = full_name;
+  document.getElementById('scPhone').textContent = phone;
+
+  const addressRow = document.getElementById('scAddressRow');
+  if (address) {
+    document.getElementById('scAddress').textContent = address;
+    addressRow.style.display = '';
+  } else {
+    addressRow.style.display = 'none';
+  }
+
+  document.getElementById('scItems').innerHTML = items.map(i =>
+    `<div class="sc-item"><span class="name">${i.name} <span style="color:var(--muted)">(${i.size}) ×${i.qty}</span></span><span class="price">${Number(i.price * i.qty).toLocaleString('uz-UZ')} so'm</span></div>`
+  ).join('');
+
+  document.getElementById('scTotal').textContent = `${Number(total).toLocaleString('uz-UZ')} so'm`;
+
+  document.getElementById('checkoutForm').style.display = 'none';
+  document.getElementById('orderSuccessCard').style.display = 'block';
 };
 
 App.generateOrderCode = function () {
@@ -64,6 +94,7 @@ App.notifyTelegram = async function ({ orderCode, full_name, phone, address, ite
 App.initCheckout = function () {
   document.getElementById('checkoutBtn').addEventListener('click', App.openCheckout);
   document.getElementById('cancelCheckout').addEventListener('click', App.closeCheckout);
+  document.getElementById('closeSuccessCard').addEventListener('click', App.closeCheckout);
 
   document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -122,16 +153,12 @@ App.initCheckout = function () {
       // alohida bot-server (node bot.js) ishlab turishi shart emas.
       await App.notifyTelegram({ orderCode, full_name, phone, address, items, total });
 
-      statusEl.textContent = `✅ Buyurtmangiz qabul qilindi! Buyurtma raqami: ${orderCode}. Operatorimiz tez orada siz bilan bog'lanadi.`;
-      statusEl.classList.add('success');
+      App.showSuccessCard({ orderCode, full_name, phone, address, items, total });
 
       App.state.cart = [];
       App.renderCart();
       e.target.reset();
-      setTimeout(() => {
-        App.closeCheckout();
-        App.closeCart();
-      }, 2500);
+      App.closeCart();
 
     } catch (err) {
       console.error(err);

@@ -1,9 +1,12 @@
 import { supabaseClient } from './supabaseClient.js';
+import { SUPABASE_CONFIG } from '../config/app.config.js';
 
-// supabase/schema.sql da yaratilgan haqiqiy jadval nomi — "orders"
-// ("fastfood_orders" jadvali mavjud emas edi, shuning uchun checkout doim
-// "relation does not exist" xatosi bilan yiqilardi).
-const TABLE = 'orders';
+// E'TIBOR: agar bitta Supabase loyihasi bir nechta demo-sayt orasida
+// bo'lishilsa (masalan _supabase_setup/combined_schema.sql orqali),
+// "orders" nomi lumen-store'ning o'z jadvali bilan to'qnashadi — shu
+// sababli jadval nomi endi config.js (SUPABASE_CONFIG.ordersTable) dan
+// olinadi, hardcoded emas.
+const TABLE = SUPABASE_CONFIG.ordersTable;
 
 /**
  * Buyurtmani Supabase "orders" jadvaliga saqlaydi.
