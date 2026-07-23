@@ -189,6 +189,30 @@ body{
  cursor:pointer; font-family:inherit; text-decoration:underline;
 }
 
+/* ---- Musiqa tanlash oynasi ---- */
+.music-modal{ text-align:left; }
+.music-modal h3, .music-modal > p{ text-align:center; }
+.music-choice-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+.music-choice-btn.active{ border-color:#7c4dff; background:rgba(124,77,255,.16); }
+.music-file-info{
+ display:flex; align-items:center; gap:10px; margin-bottom:14px;
+ background:rgba(255,255,255,.04); border:1px solid var(--panel-border);
+ border-radius:12px; padding:10px 12px; font-size:12.5px; color:var(--text);
+}
+.music-file-info i.fa-file-audio{ color:#9aa0ff; }
+.music-file-info span{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.music-file-info button{
+ background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:13px;
+ width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+}
+.music-file-info button:hover{ background:rgba(255,255,255,.1); color:#fff; }
+.music-volume-row{ display:flex; flex-direction:column; gap:6px; margin-bottom:6px; }
+.music-volume-row label{ font-size:12px; color:var(--text-dim); display:flex; align-items:center; gap:6px; }
+.music-volume-row input[type="range"]{ width:100%; accent-color:#7c4dff; }
+.music-modal-actions{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+.music-continue-btn{ width:100%; justify-content:center; }
+.music-modal-actions .format-modal-cancel{ margin-top:0; }
+
 /* ---- Recording progress overlay ---- */
 .record-overlay{
  position:fixed; inset:0; z-index:800;
@@ -1247,6 +1271,42 @@ body{
  </button>
  </div>
  <button type="button" class="format-modal-cancel" id="formatModalCancel">Bekor qilish</button>
+ </div>
+ </div>
+
+ <!-- Musiqa tanlash oynasi: video uchun orqa fon musiqasi (ixtiyoriy) -->
+ <div class="format-modal-overlay" id="musicModalOverlay">
+ <div class="format-modal music-modal">
+ <h3>Musiqa qo'shilsinmi?</h3>
+ <p>Video uchun orqa fon musiqasi tanlashingiz mumkin (ixtiyoriy). Musiqa video davomida takrorlanib turadi.</p>
+ <div class="music-choice-grid">
+ <button type="button" class="format-choice-btn music-choice-btn active" data-music="none">
+ <i class="fa-solid fa-volume-xmark"></i>
+ <b>Musiqasiz</b>
+ <span>Faqat asl video</span>
+ </button>
+ <button type="button" class="format-choice-btn music-choice-btn" data-music="file">
+ <i class="fa-solid fa-music"></i>
+ <b>Musiqa tanlash</b>
+ <span>Kompyuterdan fayl</span>
+ </button>
+ </div>
+ <input type="file" id="musicFileInput" accept="audio/*" style="display:none;">
+ <div class="music-file-info" id="musicFileInfo" style="display:none;">
+ <i class="fa-solid fa-file-audio"></i>
+ <span id="musicFileName"></span>
+ <button type="button" id="musicFileClear" title="O'chirish"><i class="fa-solid fa-xmark"></i></button>
+ </div>
+ <div class="music-volume-row" id="musicVolumeRow" style="display:none;">
+ <label for="musicVolumeSlider"><i class="fa-solid fa-volume-high"></i> Musiqa balandligi</label>
+ <input type="range" id="musicVolumeSlider" min="0" max="100" value="65">
+ </div>
+ <div class="music-modal-actions">
+ <button type="button" class="full-download-btn music-continue-btn" id="musicContinueBtn">
+ <i class="fa-solid fa-circle-play"></i> Yozib olishni boshlash
+ </button>
+ <button type="button" class="format-modal-cancel" id="musicModalCancel">Bekor qilish</button>
+ </div>
  </div>
  </div>
 
@@ -2651,6 +2711,85 @@ async function sendTelegramNotification(text){
  const recordCancelBtn = id('recordCancelBtn');
  const fullDownloadBtn = id('fullDownloadBtn');
 
+ // ---- Musiqa tanlash oynasi ----
+ const musicModalOverlay = id('musicModalOverlay');
+ const musicModalCancel = id('musicModalCancel');
+ const musicContinueBtn = id('musicContinueBtn');
+ const musicFileInput = id('musicFileInput');
+ const musicFileInfo = id('musicFileInfo');
+ const musicFileName = id('musicFileName');
+ const musicFileClear = id('musicFileClear');
+ const musicVolumeRow = id('musicVolumeRow');
+ const musicVolumeSlider = id('musicVolumeSlider');
+ let pendingMusicCtx = null; // {ctxInfo, format}
+ let selectedMusicFile = null;
+
+ function openMusicModal(ctxInfo, format){
+ pendingMusicCtx = { ctxInfo, format };
+ selectedMusicFile = null;
+ musicFileInput.value = '';
+ musicFileInfo.style.display = 'none';
+ musicVolumeRow.style.display = 'none';
+ musicModalOverlay.querySelectorAll('.music-choice-btn').forEach(b=>b.classList.remove('active'));
+ musicModalOverlay.querySelector('.music-choice-btn[data-music="none"]').classList.add('active');
+ musicModalOverlay.classList.add('show');
+ }
+ function closeMusicModal(){ musicModalOverlay.classList.remove('show'); }
+
+ musicModalOverlay.querySelectorAll('.music-choice-btn').forEach(btn=>{
+ btn.addEventListener('click', ()=>{
+ const choice = btn.getAttribute('data-music');
+ if(choice === 'file'){
+ musicFileInput.click();
+ return; // faqat fayl muvaffaqiyatli tanlangandan keyin "active" bo'ladi
+ }
+ selectedMusicFile = null;
+ musicFileInput.value = '';
+ musicFileInfo.style.display = 'none';
+ musicVolumeRow.style.display = 'none';
+ musicModalOverlay.querySelectorAll('.music-choice-btn').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ });
+ });
+
+ musicFileInput.addEventListener('change', ()=>{
+ const f = musicFileInput.files && musicFileInput.files[0];
+ if(!f) return;
+ selectedMusicFile = f;
+ musicFileName.textContent = f.name;
+ musicFileInfo.style.display = 'flex';
+ musicVolumeRow.style.display = 'flex';
+ musicModalOverlay.querySelectorAll('.music-choice-btn').forEach(b=>b.classList.remove('active'));
+ musicModalOverlay.querySelector('.music-choice-btn[data-music="file"]').classList.add('active');
+ });
+
+ musicFileClear.addEventListener('click', ()=>{
+ selectedMusicFile = null;
+ musicFileInput.value = '';
+ musicFileInfo.style.display = 'none';
+ musicVolumeRow.style.display = 'none';
+ musicModalOverlay.querySelectorAll('.music-choice-btn').forEach(b=>b.classList.remove('active'));
+ musicModalOverlay.querySelector('.music-choice-btn[data-music="none"]').classList.add('active');
+ });
+
+ musicModalCancel.addEventListener('click', ()=>{ closeMusicModal(); pendingMusicCtx = null; });
+ musicModalOverlay.addEventListener('click', (e)=>{
+ if(e.target === musicModalOverlay){ closeMusicModal(); pendingMusicCtx = null; }
+ });
+
+ musicContinueBtn.addEventListener('click', ()=>{
+ if(!pendingMusicCtx) return;
+ const { ctxInfo, format } = pendingMusicCtx;
+ const musicOpts = selectedMusicFile ? { file: selectedMusicFile, volume: (parseInt(musicVolumeSlider.value,10)||65)/100 } : null;
+ pendingMusicCtx = null;
+ closeMusicModal();
+ if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia){
+ alert("Kechirasiz, brauzeringiz videoni yozib olishni (ekranni/tabni ulashish) qo'llab-quvvatlamaydi. Iltimos, Chrome yoki Edge brauzerida oching.");
+ return;
+ }
+ startVideoRecording(format, ctxInfo, musicOpts);
+ });
+
  function closeDotsMenu(){
  tabDotsMenu.classList.remove('show');
  tabsEl.querySelectorAll('.tab-dots-btn').forEach(b=>b.classList.remove('open'));
@@ -2707,17 +2846,13 @@ async function sendTelegramNotification(text){
  });
 
  formatModalOverlay.querySelectorAll('.format-choice-btn').forEach(btn=>{
- btn.addEventListener('click', async ()=>{
+ btn.addEventListener('click', ()=>{
  const format = btn.getAttribute('data-format'); // 'desktop' | 'mobile'
  const ctxInfo = pendingDownloadCtx;
  pendingDownloadCtx = null;
  closeFormatModal();
  if(!ctxInfo) return;
- if(!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia){
- alert("Kechirasiz, brauzeringiz videoni yozib olishni (ekranni/tabni ulashish) qo'llab-quvvatlamaydi. Iltimos, Chrome yoki Edge brauzerida oching.");
- return;
- }
- startVideoRecording(format, ctxInfo);
+ openMusicModal(ctxInfo, format);
  });
  });
 
@@ -2732,8 +2867,12 @@ async function sendTelegramNotification(text){
  });
  }
 
- function pickSupportedMime(){
- const candidates = [
+ function pickSupportedMime(withAudio){
+ const candidates = withAudio ? [
+ 'video/webm;codecs=vp9,opus',
+ 'video/webm;codecs=vp8,opus',
+ 'video/webm'
+ ] : [
  'video/mp4;codecs=avc1.42E01E',
  'video/mp4',
  'video/webm;codecs=vp9',
@@ -2769,6 +2908,50 @@ async function sendTelegramNotification(text){
  setTimeout(()=>URL.revokeObjectURL(url), 8000);
  }
 
+ // Tanlangan musiqa faylini audio-stream'ga aylantiradi (video bilan birga yozib olish uchun)
+ async function setupMusicAudio(musicOpts){
+ if(!musicOpts || !musicOpts.file) return null;
+ const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+ if(!AudioCtxClass) return null;
+ let objectUrl = null;
+ try{
+ const audioCtx = new AudioCtxClass();
+ objectUrl = URL.createObjectURL(musicOpts.file);
+ const audioEl = new Audio();
+ audioEl.src = objectUrl;
+ audioEl.loop = true;
+ audioEl.preload = 'auto';
+ await new Promise((resolve)=>{
+ let done = false;
+ const finish = ()=>{ if(!done){ done = true; resolve(); } };
+ audioEl.addEventListener('canplaythrough', finish, { once:true });
+ audioEl.addEventListener('error', finish, { once:true });
+ setTimeout(finish, 4000); // fayl juda katta bo'lsa ham cheksiz kutmasin
+ audioEl.load();
+ });
+ if(audioCtx.state === 'suspended'){ try{ await audioCtx.resume(); }catch(e){} }
+ const source = audioCtx.createMediaElementSource(audioEl);
+ const gainNode = audioCtx.createGain();
+ gainNode.gain.value = Math.max(0, Math.min(1, musicOpts.volume ?? 0.65));
+ const dest = audioCtx.createMediaStreamDestination();
+ source.connect(gainNode);
+ gainNode.connect(dest);
+ gainNode.connect(audioCtx.destination); // yozib olish jarayonida eshitilib tursin
+ try{ await audioEl.play(); }catch(e){}
+ return {
+ stream: dest.stream,
+ cleanup(){
+ try{ audioEl.pause(); }catch(e){}
+ if(objectUrl) try{ URL.revokeObjectURL(objectUrl); }catch(e){}
+ try{ audioCtx.close(); }catch(e){}
+ }
+ };
+ }catch(err){
+ if(objectUrl) try{ URL.revokeObjectURL(objectUrl); }catch(e){}
+ return null;
+ }
+ }
+
  async function enterRecordingFullscreen(mode){
  playerEl.classList.remove('mode-desktop','mode-mobile');
  playerEl.classList.add('mode-'+mode);
@@ -2776,7 +2959,7 @@ async function sendTelegramNotification(text){
  updateFsButtons();
  }
 
- async function startVideoRecording(format, ctxInfo){
+ async function startVideoRecording(format, ctxInfo, musicOpts){
  const projLabel = ctxInfo.mode === 'single' ? projects[ctxInfo.idx].name : "Barcha 4 ta loyiha";
  const fmtLabel = format === 'mobile' ? "Mobil (9:16)" : "Desktop (16:9)";
 
@@ -2784,6 +2967,7 @@ async function sendTelegramNotification(text){
  let displayStream = null;
  let rafId = null;
  let recorder = null;
+ let musicAudio = null;
  const wasPlayingBefore = playing;
 
  activeRecordingAbort = function(){
@@ -2858,10 +3042,20 @@ async function sendTelegramNotification(text){
  }
  draw();
 
+ musicAudio = await setupMusicAudio(musicOpts);
+ if(cancelled){
+ if(musicAudio) musicAudio.cleanup();
+ musicAudio = null;
+ }
+
  const canvasStream = canvas.captureStream(30);
- const mimeType = pickSupportedMime();
+ const audioTracks = musicAudio ? musicAudio.stream.getAudioTracks() : [];
+ const recordStream = audioTracks.length
+ ? new MediaStream([...canvasStream.getVideoTracks(), ...audioTracks])
+ : canvasStream;
+ const mimeType = pickSupportedMime(audioTracks.length > 0);
  const chunks = [];
- recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 10000000 });
+ recorder = new MediaRecorder(recordStream, { mimeType, videoBitsPerSecond: 10000000 });
  recorder.ondataavailable = (e)=>{ if(e.data && e.data.size) chunks.push(e.data); };
  const recordingFinished = new Promise(resolve=>{ recorder.onstop = resolve; });
  recorder.start(250);
@@ -2876,6 +3070,7 @@ async function sendTelegramNotification(text){
  try{ recorder.stop(); }catch(e){}
  displayStream.getTracks().forEach(t=>t.stop());
  await recordingFinished;
+ if(musicAudio){ musicAudio.cleanup(); musicAudio = null; }
 
  if(isFs()) await exitFs();
  playerEl.classList.remove('mode-desktop','mode-mobile');
