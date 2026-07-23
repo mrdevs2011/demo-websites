@@ -6,8 +6,12 @@
 <title>4 ta loyiha — Jonli namoyish</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
 <style>
+i.fa-solid, i.fa-regular, i.fa-brands{ line-height:1; }
+.icon-svg{ display:inline-flex; vertical-align:middle; }
+.icon-svg svg{ display:block; width:1em; height:1em; }
 /* ============================================================
    GLOBAL / STAGE
    ============================================================ */
@@ -931,8 +935,8 @@ body{
   </div>
 
   <div class="neon-header-banner">
-    <div class="nb-text">🔥 <span>Siz ham</span> o'z biznesingiz uchun shunday sayt va bot xohlaysizmi?</div>
-    <a class="neon-cta-btn" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener">✈️ Telegram'da buyurtma bering</a>
+    <div class="nb-text"><i class="fa-solid fa-fire"></i> <span>Siz ham</span> o'z biznesingiz uchun shunday sayt va bot xohlaysizmi?</div>
+    <a class="neon-cta-btn" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Telegram'da buyurtma bering</a>
   </div>
 
   <div class="tabs" id="tabs"></div>
@@ -940,11 +944,11 @@ body{
   <div class="player">
     <div class="browser-chrome">
       <div class="chrome-dots"><span></span><span></span><span></span></div>
-      <div class="chrome-url"><span class="lock">🔒</span><span id="urlText">elegancebeauty.uz</span></div>
-      <div class="chrome-live">● LIVE DEMO</div>
+      <div class="chrome-url"><span class="lock"><i class="fa-solid fa-lock"></i></span><span id="urlText">elegancebeauty.uz</span></div>
+      <div class="chrome-live"><i class="fa-solid fa-circle"></i> LIVE DEMO</div>
       <div class="chrome-fs-group">
-        <button class="chrome-fs-btn" id="fsBtnDesktop" type="button" title="Desktop — to'liq ekran">🖥️</button>
-        <button class="chrome-fs-btn" id="fsBtnMobile" type="button" title="Mobil — to'liq ekran (9:16)">📱</button>
+        <button class="chrome-fs-btn" id="fsBtnDesktop" type="button" title="Desktop — to'liq ekran"><i class="fa-solid fa-desktop"></i></button>
+        <button class="chrome-fs-btn" id="fsBtnMobile" type="button" title="Mobil — to'liq ekran (9:16)"><i class="fa-solid fa-mobile-screen-button"></i></button>
       </div>
     </div>
 
@@ -952,10 +956,10 @@ body{
       <div class="live-popup-layer" id="livePopupLayer"></div>
       <div class="receipt-overlay" id="receiptOverlay">
         <div class="receipt-card">
-          <div class="receipt-check">✓</div>
+          <div class="receipt-check"><i class="fa-solid fa-check"></i></div>
           <h3 id="receiptTitle">Buyurtma qabul qilindi!</h3>
           <p id="receiptText">Tafsilotlar Telegram orqali yuborildi.</p>
-          <div class="receipt-tick">✅ Telegram botga yuborildi</div>
+          <div class="receipt-tick"><i class="fa-solid fa-circle-check"></i> Telegram botga yuborildi</div>
         </div>
       </div>
       <div class="screen-scroll" id="screenScroll">
@@ -979,25 +983,25 @@ body{
             <h2>Xizmatlarimiz</h2>
             <div class="eb-grid">
               <div class="eb-card" id="card-haircut">
-                <div class="eb-card-icon">✂️</div>
+                <div class="eb-card-icon"><i class="fa-solid fa-scissors"></i></div>
                 <h3>Ayollar soch kesish</h3>
                 <p>Konsultatsiya + yuvish + kesish + ukladka</p>
                 <div class="eb-card-foot"><span>120 000 so'm</span><button class="eb-card-btn" id="eb-book-haircut">Bron qilish</button></div>
               </div>
               <div class="eb-card" id="card-color">
-                <div class="eb-card-icon">🎨</div>
+                <div class="eb-card-icon"><i class="fa-solid fa-palette"></i></div>
                 <h3>Soch bo'yash</h3>
                 <p>To'liq bo'yash, professional bo'yoqlar bilan</p>
                 <div class="eb-card-foot"><span>350 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
               </div>
               <div class="eb-card" id="card-manicure">
-                <div class="eb-card-icon">💅</div>
+                <div class="eb-card-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
                 <h3>Manikur</h3>
                 <p>Gigienik manikur + gel lak qoplash</p>
                 <div class="eb-card-foot"><span>100 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
               </div>
               <div class="eb-card" id="card-makeup">
-                <div class="eb-card-icon">💄</div>
+                <div class="eb-card-icon"><i class="fa-solid fa-paintbrush"></i></div>
                 <h3>Kechki makiyaj</h3>
                 <p>Tadbirlar uchun murakkab kechki makiyaj</p>
                 <div class="eb-card-foot"><span>220 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
@@ -1008,19 +1012,19 @@ body{
             <h2>Bizning ustalarimiz</h2>
             <div class="eb-masters-grid">
               <div class="eb-master" id="master-madina">
-                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h4>Madina Yusupova</h4><span>Bosh usta / Soch • 12 yil</span>
               </div>
               <div class="eb-master" id="master-dilnoza">
-                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h4>Dilnoza Karimova</h4><span>Manikur ustasi • 8 yil</span>
               </div>
               <div class="eb-master" id="master-zarina">
-                <img src="https://images.unsplash.com/photo-1521146764736-56c929d59c83?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1521146764736-56c929d59c83?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h4>Zarina Aliyeva</h4><span>Vizajist • 6 yil</span>
               </div>
               <div class="eb-master" id="master-jasur">
-                <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h4>Jasur Rahimov</h4><span>Barber • 10 yil</span>
               </div>
             </div>
@@ -1028,7 +1032,7 @@ body{
 
           <div class="eb-modal-overlay" id="eb-modal-overlay">
             <div class="eb-modal">
-              <button class="eb-modal-close">✕</button>
+              <button class="eb-modal-close"><i class="fa-solid fa-xmark"></i></button>
               <h3>Bronni tasdiqlash</h3>
               <div class="eb-modal-step">
                 <label>Tanlangan xizmat</label>
@@ -1054,7 +1058,7 @@ body{
               <button class="eb-btn-primary eb-modal-confirm" id="eb-confirm-booking">Bronni tasdiqlash</button>
             </div>
           </div>
-          <div class="eb-toast" id="eb-toast">✅ Bron muvaffaqiyatli qabul qilindi!</div>
+          <div class="eb-toast" id="eb-toast"><i class="fa-solid fa-circle-check"></i> Bron muvaffaqiyatli qabul qilindi!</div>
         </div>
 
         <!-- ============== SCENE 2: LUMEN STORE ============== -->
@@ -1063,8 +1067,8 @@ body{
             <div class="lu-logo">LUMEN</div>
             <nav class="lu-links"><span id="lu-nav-shoes">Poyabzal</span><span>Kiyim</span><span>Aksessuar</span></nav>
             <div class="lu-actions">
-              <span>🔍</span>
-              <button class="lu-cart-btn" id="lu-cart-btn">🛍️<span class="lu-cart-badge" id="lu-cart-badge">0</span></button>
+              <span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+              <button class="lu-cart-btn" id="lu-cart-btn"><span class="icon-svg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg></span><span class="lu-cart-badge" id="lu-cart-badge">0</span></button>
             </div>
           </header>
           <section class="lu-hero">
@@ -1075,7 +1079,7 @@ body{
             <h2>Ommabop mahsulotlar</h2>
             <div class="lu-grid">
               <div class="lu-card" id="prod-201">
-                <img class="lu-card-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h3>Klassik oq krossovka</h3>
                 <div><span class="lu-price">399 000 so'm</span><span class="lu-old-price">520 000</span></div>
                 <div class="lu-sizes">
@@ -1085,7 +1089,7 @@ body{
                 <button class="lu-add-btn" id="add-201">Savatga qo'shish</button>
               </div>
               <div class="lu-card" id="prod-202">
-                <img class="lu-card-img" src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h3>Charm boot poyabzal</h3>
                 <div><span class="lu-price">459 000 so'm</span></div>
                 <div class="lu-sizes">
@@ -1095,7 +1099,7 @@ body{
                 <button class="lu-add-btn" id="add-202">Savatga qo'shish</button>
               </div>
               <div class="lu-card" id="prod-101">
-                <img class="lu-card-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h3>Oversize xlopok futbolka</h3>
                 <div><span class="lu-price">129 000 so'm</span><span class="lu-old-price">189 000</span></div>
                 <div class="lu-sizes">
@@ -1105,7 +1109,7 @@ body{
                 <button class="lu-add-btn" id="add-101">Savatga qo'shish</button>
               </div>
               <div class="lu-card" id="prod-302">
-                <img class="lu-card-img" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <h3>Klassik uniseks soat</h3>
                 <div><span class="lu-price">449 000 so'm</span><span class="lu-old-price">599 000</span></div>
                 <div class="lu-sizes">&nbsp;</div>
@@ -1133,7 +1137,7 @@ body{
             </div>
           </div>
           <div class="lu-success" id="lu-success">
-            <div class="ic">✅</div>
+            <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
             <h3>Rahmat, buyurtma qabul qilindi!</h3>
             <p>Tez orada operatorlarimiz siz bilan bog'lanadi va yetkazib berish vaqtini aniqlashtiradi.</p>
           </div>
@@ -1155,7 +1159,7 @@ body{
             <h2>O'zingizga mos yo'nalishni tanlang</h2>
             <div class="ac-grid">
               <div class="ac-card" id="course-python">
-                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <div class="ac-card-body">
                   <h3>Python Backend Dasturlash</h3>
                   <p>Django/FastAPI bilan real loyihalar</p>
@@ -1163,7 +1167,7 @@ body{
                 </div>
               </div>
               <div class="ac-card" id="course-frontend">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <div class="ac-card-body">
                   <h3>Frontend Development</h3>
                   <p>HTML, CSS, JS va React asosida</p>
@@ -1171,7 +1175,7 @@ body{
                 </div>
               </div>
               <div class="ac-card" id="course-design">
-                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <div class="ac-card-body">
                   <h3>Grafik Dizayn</h3>
                   <p>Figma va Illustrator bilan brend dizayni</p>
@@ -1179,7 +1183,7 @@ body{
                 </div>
               </div>
               <div class="ac-card" id="course-ielts">
-                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);">
                 <div class="ac-card-body">
                   <h3>Ingliz tili (IELTS)</h3>
                   <p>A1 dan IELTS 7.0 darajasigacha</p>
@@ -1205,7 +1209,7 @@ body{
               </div>
               <button class="ac-submit-btn" id="ac-submit-lead">Yuborish</button>
               <div class="ac-lead-success" id="ac-lead-success">
-                <div class="ic">🎓</div>
+                <div class="ic"><i class="fa-solid fa-graduation-cap"></i></div>
                 <h4>Rahmat, arizangiz qabul qilindi!</h4>
                 <p>Tez orada o'quv markazi operatorlari siz bilan bog'lanishadi.</p>
               </div>
@@ -1216,41 +1220,41 @@ body{
         <!-- ============== SCENE 4: OTABEKFOOD ============== -->
         <div class="scene food" id="scene-food">
           <header class="fd-nav">
-            <div class="fd-logo">🍕 OtabekFood</div>
+            <div class="fd-logo"><i class="fa-solid fa-pizza-slice"></i> OtabekFood</div>
             <div class="fd-actions">
-              <button class="fd-cart-btn" id="fd-cart-btn">🛒<span class="fd-cart-badge" id="fd-cart-badge">0</span></button>
+              <button class="fd-cart-btn" id="fd-cart-btn"><i class="fa-solid fa-cart-shopping"></i><span class="fd-cart-badge" id="fd-cart-badge">0</span></button>
             </div>
           </header>
           <div class="fd-cats">
-            <div class="fd-cat active" id="cat-pizza">🍕 Pitsa</div>
-            <div class="fd-cat" id="cat-burger">🍔 Burger</div>
-            <div class="fd-cat" id="cat-drinks">🥤 Ichimlik</div>
-            <div class="fd-cat" id="cat-sets">📦 Setlar</div>
+            <div class="fd-cat active" id="cat-pizza"><i class="fa-solid fa-pizza-slice"></i> Pitsa</div>
+            <div class="fd-cat" id="cat-burger"><i class="fa-solid fa-burger"></i> Burger</div>
+            <div class="fd-cat" id="cat-drinks"><i class="fa-solid fa-glass-water"></i> Ichimlik</div>
+            <div class="fd-cat" id="cat-sets"><i class="fa-solid fa-box"></i> Setlar</div>
           </div>
           <section class="fd-hero">
-            <h1>30 daqiqada yetkazib beramiz! 🛵</h1>
+            <h1>30 daqiqada yetkazib beramiz! <i class="fa-solid fa-motorcycle"></i></h1>
             <p>Issiq, mazali va vaqtida — har safar.</p>
           </section>
           <section class="fd-section" id="fd-products">
             <div class="fd-grid">
               <div class="fd-card" id="prod-1">
-                <div class="ic">🍕</div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p>
+                <div class="ic"><i class="fa-solid fa-pizza-slice"></i></div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p>
                 <div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1">+ Qo'shish</button></div>
               </div>
               <div class="fd-card" id="prod-3">
-                <div class="ic">🍕</div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p>
+                <div class="ic"><i class="fa-solid fa-pizza-slice"></i></div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p>
                 <div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3">+ Qo'shish</button></div>
               </div>
               <div class="fd-card" id="prod-6">
-                <div class="ic">🍔</div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p>
+                <div class="ic"><i class="fa-solid fa-burger"></i></div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p>
                 <div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-6">+ Qo'shish</button></div>
               </div>
               <div class="fd-card" id="prod-9">
-                <div class="ic">🥤</div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
+                <div class="ic"><i class="fa-solid fa-bottle-water"></i></div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
                 <div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-9">+ Qo'shish</button></div>
               </div>
               <div class="fd-card" id="prod-13">
-                <div class="ic">📦</div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p>
+                <div class="ic"><i class="fa-solid fa-box"></i></div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p>
                 <div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-13">+ Qo'shish</button></div>
               </div>
             </div>
@@ -1272,14 +1276,14 @@ body{
               <div class="fd-field">
                 <label>Manzil</label>
                 <textarea id="fd-address" rows="2" readonly></textarea>
-                <button class="fd-geo-btn" id="fd-geo-btn">📍 Joylashuvni aniqlash</button>
+                <button class="fd-geo-btn" id="fd-geo-btn"><i class="fa-solid fa-location-dot"></i> Joylashuvni aniqlash</button>
               </div>
               <div class="fd-field"><label>Telefon raqam</label><input type="text" id="fd-phone" readonly></div>
               <button class="fd-confirm-btn" id="fd-confirm">Buyurtmani tasdiqlash</button>
             </div>
           </div>
           <div class="fd-success" id="fd-success">
-            <div class="ic">🎉</div>
+            <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
             <h3>Buyurtmangiz qabul qilindi!</h3>
             <p>Taxminiy yetkazib berish vaqti: 35 daqiqa. Kuryer: Sardor (+998 90 111 22 33)</p>
           </div>
@@ -1294,13 +1298,13 @@ body{
     </div>
 
     <div class="admin-phone-pop" id="adminPhonePop">
-      <div class="apw-label">📲 Admin telefonida</div>
+      <div class="apw-label"><i class="fa-solid fa-mobile-screen-button"></i> Admin telefonida</div>
       <div class="apw-phone">
         <div class="apw-screen">
           <div class="apw-notch"></div>
           <div class="apw-clock" id="apwClock">09:41</div>
           <div class="apw-noti">
-            <div class="apw-noti-ic">✈️</div>
+            <div class="apw-noti-ic"><i class="fa-brands fa-telegram"></i></div>
             <div class="apw-noti-body">
               <div class="apw-noti-top"><b>Telegram</b><span>hozir</span></div>
               <div class="apw-noti-title" id="apwTitle">Yangi buyurtma!</div>
@@ -1318,10 +1322,10 @@ body{
   </div>
 
   <div class="controls">
-    <button class="ctrl-btn" id="prevBtn">⏮ Oldingi loyiha</button>
-    <button class="ctrl-btn primary" id="playBtn">⏸ Pauza</button>
-    <button class="ctrl-btn" id="restartBtn">↺ Qayta boshlash</button>
-    <button class="ctrl-btn" id="nextBtn">Keyingi loyiha ⏭</button>
+    <button class="ctrl-btn" id="prevBtn"><i class="fa-solid fa-backward-step"></i> Oldingi loyiha</button>
+    <button class="ctrl-btn primary" id="playBtn"><i class="fa-solid fa-pause"></i> Pauza</button>
+    <button class="ctrl-btn" id="restartBtn"><i class="fa-solid fa-arrow-rotate-left"></i> Qayta boshlash</button>
+    <button class="ctrl-btn" id="nextBtn">Keyingi loyiha <i class="fa-solid fa-forward-step"></i></button>
   </div>
 
   <div class="footnote">Istalgan loyiha nomiga bosib, to'g'ridan-to'g'ri o'sha demoga o'tishingiz mumkin.</div>
@@ -1331,20 +1335,20 @@ body{
       <h3>Siz ham <span>shunday sayt va bot</span> xohlaysizmi?</h3>
       <p>Bron sayti, onlayn do'kon, landing page yoki yetkazib berish tizimi — Telegram bot integratsiyasi bilan birga, aynan shu darajada tayyorlab beramiz.</p>
     </div>
-    <a class="neon-cta-btn" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener">✈️ Buyurtma berish uchun yozing</a>
+    <a class="neon-cta-btn" href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Buyurtma berish uchun yozing</a>
   </div>
 </div>
 
 <script>
 /* ============================================================
-   ⚙️ TELEGRAM BOT SOZLAMALARI — shu yerni o'zgartiring
+   TELEGRAM BOT SOZLAMALARI — shu yerni o'zgartiring
    ============================================================
    1) @BotFather orqali bot yarating -> BOT_TOKEN oling
    2) Botni guruhga/kanalga qo'shing yoki shaxsiy chatga /start yozing
    3) CHAT_ID ni oling: https://api.telegram.org/bot<TOKEN>/getUpdates
       manzilidan "chat":{"id": ...} qiymatini oling
 
-   ⚠️ MUHIM XAVFSIZLIK ESLATMASI:
+   MUHIM XAVFSIZLIK ESLATMASI:
    Bu — statik HTML/JS fayl, ya'ni BOT_TOKEN shu yerda yozilsa,
    sahifa manba kodini ko'rgan har qanday kishi uni ko'ra oladi va
    sizning bot nomingizdan xabar yubora oladi. Bu DEMO/NAMOYISH uchun
@@ -1578,7 +1582,7 @@ async function sendTelegramNotification(text){
     }
 
     // 3) "Tashakkur" kassa cheki overlay'i
-    receiptTitle.textContent = title;
+    receiptTitle.innerHTML = title;
     receiptText.textContent = text;
     receiptOverlay.classList.add('show');
     await sleep(2200);
@@ -1589,16 +1593,16 @@ async function sendTelegramNotification(text){
      LIVE ORDER POPUPS — ijtimoiy isbot (Social Proof)
      ============================================================ */
   const LIVE_POPUP_POOL = [
-    { name:'Jasur', project:'Lumen Store', item:"Klassik denim kurtka", icon:'🛍️' },
-    { name:'Madina', project:'Elegance Beauty', item:"Kechki makiyaj bronini", icon:'💅' },
-    { name:'Aziz', project:'OtabekFood', item:"Oilaviy Set", icon:'🍕' },
-    { name:'Kamola', project:'Next Gen Academy', item:"Frontend Development kursiga yozildi", icon:'🎓' },
-    { name:'Sardor', project:'Lumen Store', item:"Klassik oq krossovka", icon:'👟' },
-    { name:'Dilnoza', project:'Elegance Beauty', item:"Manikur bronini", icon:'💆' },
-    { name:'Otabek', project:'OtabekFood', item:"BBQ Tovuq Pitsa", icon:'🍗' },
-    { name:'Zarina', project:'Next Gen Academy', item:"Grafik Dizayn kursiga yozildi", icon:'🎨' },
-    { name:'Sherzod', project:'Lumen Store', item:"Coca-Cola va burger", icon:'🥤' },
-    { name:'Nodira', project:'OtabekFood', item:"Margarita Pitsa", icon:'🍕' },
+    { name:'Jasur', project:'Lumen Store', item:"Klassik denim kurtka", icon:'<i class="fa-solid fa-bag-shopping"></i>' },
+    { name:'Madina', project:'Elegance Beauty', item:"Kechki makiyaj bronini", icon:'<i class="fa-solid fa-hand-sparkles"></i>' },
+    { name:'Aziz', project:'OtabekFood', item:"Oilaviy Set", icon:'<i class="fa-solid fa-pizza-slice"></i>' },
+    { name:'Kamola', project:'Next Gen Academy', item:"Frontend Development kursiga yozildi", icon:'<i class="fa-solid fa-graduation-cap"></i>' },
+    { name:'Sardor', project:'Lumen Store', item:"Klassik oq krossovka", icon:'<i class="fa-solid fa-shoe-prints"></i>' },
+    { name:'Dilnoza', project:'Elegance Beauty', item:"Manikur bronini", icon:'<i class="fa-solid fa-spa"></i>' },
+    { name:'Otabek', project:'OtabekFood', item:"BBQ Tovuq Pitsa", icon:'<i class="fa-solid fa-drumstick-bite"></i>' },
+    { name:'Zarina', project:'Next Gen Academy', item:"Grafik Dizayn kursiga yozildi", icon:'<i class="fa-solid fa-palette"></i>' },
+    { name:'Sherzod', project:'Lumen Store', item:"Coca-Cola va burger", icon:'<i class="fa-solid fa-bottle-water"></i>' },
+    { name:'Nodira', project:'OtabekFood', item:"Margarita Pitsa", icon:'<i class="fa-solid fa-pizza-slice"></i>' },
   ];
   let popupSide = 'left';
   let popupTimer = null;
@@ -1611,7 +1615,7 @@ async function sendTelegramNotification(text){
     el.className = 'live-popup ' + popupSide;
     el.innerHTML =
       '<div class="lp-ic">'+pick.icon+'</div>'+
-      '<div class="lp-text">🎉 <b>'+pick.name+'</b> hozirgina <b>'+pick.project+'</b>\'dan «'+pick.item+'» sotib oldi'+
+      '<div class="lp-text"><i class="fa-solid fa-champagne-glasses"></i> <b>'+pick.name+'</b> hozirgina <b>'+pick.project+'</b>\'dan «'+pick.item+'» sotib oldi'+
       '<span class="lp-time">'+secondsAgo+' soniya oldin</span></div>';
     livePopupLayer.appendChild(el);
     requestAnimationFrame(()=>{ el.classList.add('show'); });
@@ -1636,7 +1640,7 @@ async function sendTelegramNotification(text){
 
   // ---------- 1. ELEGANCE BEAUTY ----------
   projects.push({
-    key:'elegance', name:'Elegance Beauty', sub:'Bron sayti', icon:'💅',
+    key:'elegance', name:'Elegance Beauty', sub:'Bron sayti', icon:'<i class="fa-solid fa-spa"></i>',
     url:'elegancebeauty.uz', accent:'#C9A227',
     reset(scene){
       id('eb-modal-overlay').classList.remove('open');
@@ -1657,14 +1661,14 @@ async function sendTelegramNotification(text){
       { caption:"Bronni tasdiqlaydi.",
         run: async(scene)=>{ await goAndClick(id('eb-confirm-booking'), '#C9A227'); id('eb-modal-overlay').classList.remove('open');
           await sleep(200); id('eb-toast').classList.add('show'); } },
-      { caption:"Bron ma'lumotlari darhol salon administratoriga <b>Telegram</b> orqali yuboriladi 📩",
+      { caption:"Bron ma'lumotlari darhol salon administratoriga <b>Telegram</b> orqali yuboriladi <i class="fa-brands fa-telegram"></i>",
         run: async(scene)=>{
           id('eb-toast').classList.remove('show');
           await celebrateSuccess({
-            title:'Bron qabul qilindi! 💅',
+            title:'Bron qabul qilindi! <i class="fa-solid fa-spa"></i>',
             text:"Madina Yusupova sizni 24-iyul, 11:30 da kutadi.",
             telegramMessage:
-              '🔔 <b>Yangi bron — Elegance Beauty</b>\n'+
+              '<b>Yangi bron — Elegance Beauty</b>\n'+
               'Xizmat: Ayollar soch kesish (120 000 so\'m)\n'+
               'Usta: Madina Yusupova\n'+
               'Sana/vaqt: 24-iyul, Payshanba, 11:30\n'+
@@ -1676,7 +1680,7 @@ async function sendTelegramNotification(text){
 
   // ---------- 2. LUMEN STORE ----------
   projects.push({
-    key:'lumen', name:'Lumen Store', sub:'Onlayn do\'kon', icon:'👟',
+    key:'lumen', name:'Lumen Store', sub:'Onlayn do\'kon', icon:'<i class="fa-solid fa-bag-shopping"></i>',
     url:'lumenstore.uz', accent:'#4338CA',
     reset(scene){
       id('lu-drawer-overlay').classList.remove('open');
@@ -1701,7 +1705,7 @@ async function sendTelegramNotification(text){
         run: async(scene)=>{
           await goAndClick(id('add-201'), '#4338CA');
           id('lu-cart-badge').textContent='1'; id('lu-cart-badge').classList.add('bump');
-          id('lu-drawer-items').innerHTML = `<div class="lu-drawer-item"><img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);"><div class="info"><b>Klassik oq krossovka</b>O'lcham: M</div><div>399 000 so'm</div></div>`;
+          id('lu-drawer-items').innerHTML = `<div class="lu-drawer-item"><img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.innerHTML='<i class="fa-solid fa-image"></i>';this.replaceWith(d);"><div class="info"><b>Klassik oq krossovka</b>O'lcham: M</div><div>399 000 so'm</div></div>`;
           id('lu-subtotal-val').textContent = '399 000 so\'m';
           await sleep(300); id('lu-cart-badge').classList.remove('bump');
         } },
@@ -1720,10 +1724,10 @@ async function sendTelegramNotification(text){
         run: async(scene)=>{ await goAndClick(id('lu-confirm-order'), '#4338CA'); id('lu-modal-overlay').classList.remove('open');
           await sleep(200); id('lu-success').classList.add('show'); await sleep(900); id('lu-success').classList.remove('show');
           await celebrateSuccess({
-            title:'Buyurtma qabul qilindi! 🛍️',
+            title:'Buyurtma qabul qilindi! <i class="fa-solid fa-bag-shopping"></i>',
             text:"Aziz, «Klassik oq krossovka» (M) siz tomon yo'lda.",
             telegramMessage:
-              '🔔 <b>Yangi buyurtma — Lumen Store</b>\n'+
+              '<b>Yangi buyurtma — Lumen Store</b>\n'+
               'Mahsulot: Klassik oq krossovka, o\'lcham M — 399 000 so\'m\n'+
               'Mijoz: Aziz Karimov\n'+
               'Telefon: +998 90 123 45 67\n'+
@@ -1736,7 +1740,7 @@ async function sendTelegramNotification(text){
 
   // ---------- 3. NEXT GEN ACADEMY ----------
   projects.push({
-    key:'academy', name:'Next Gen Academy', sub:'Landing page', icon:'🎓',
+    key:'academy', name:'Next Gen Academy', sub:'Landing page', icon:'<i class="fa-solid fa-graduation-cap"></i>',
     url:'nextgenacademy.uz', accent:'#7c4dff',
     reset(scene){
       id('ac-name').value=''; id('ac-phone').value='';
@@ -1763,13 +1767,13 @@ async function sendTelegramNotification(text){
         run: async(scene)=>{ await moveCursorTo(id('ac-phone'),400); await typeInto(id('ac-phone'), '+998 91 234 56 78'); } },
       { caption:"Arizani yuboradi.",
         run: async(scene)=>{ await goAndClick(id('ac-submit-lead'), '#7c4dff'); id('ac-lead-success').classList.add('show'); } },
-      { caption:"Ma'lumotlar avtomatik ravishda <b>Supabase</b> bazasiga saqlanadi 💾",
+      { caption:"Ma'lumotlar avtomatik ravishda <b>Supabase</b> bazasiga saqlanadi <i class="fa-solid fa-database"></i>",
         run: async(scene)=>{ await sleep(900); id('ac-lead-success').classList.remove('show');
           await celebrateSuccess({
-            title:'Ariza qabul qilindi! 🎓',
+            title:'Ariza qabul qilindi! <i class="fa-solid fa-graduation-cap"></i>',
             text:"Kamola, operatorlarimiz tez orada siz bilan bog'lanishadi.",
             telegramMessage:
-              '🔔 <b>Yangi ariza — Next Gen Academy</b>\n'+
+              '<b>Yangi ariza — Next Gen Academy</b>\n'+
               'Kurs: Frontend Development (400 000 so\'m/oy)\n'+
               'F.I.Sh: Kamola Yusupova\n'+
               'Telefon: +998 91 234 56 78\n'+
@@ -1781,7 +1785,7 @@ async function sendTelegramNotification(text){
 
   // ---------- 4. OTABEKFOOD ----------
   projects.push({
-    key:'food', name:'OtabekFood', sub:'Onlayn buyurtma', icon:'🍕',
+    key:'food', name:'OtabekFood', sub:'Onlayn buyurtma', icon:'<i class="fa-solid fa-pizza-slice"></i>',
     url:'otabekfood.uz', accent:'#F59E0B',
     reset(scene){
       id('fd-drawer-overlay').classList.remove('open');
@@ -1795,7 +1799,7 @@ async function sendTelegramNotification(text){
       id('cat-pizza').classList.add('active');
     },
     steps:[
-      { caption:"Mijoz och qolgan va tez ovqat izlamoqda 😄",
+      { caption:"Mijoz och qolgan va tez ovqat izlamoqda",
         run: async(scene)=>{ await goAndClick(id('cat-pizza'), '#F59E0B'); } },
       { caption:"«Margarita Pitsa»ni savatga qo'shadi.",
         run: async(scene)=>{
@@ -1824,7 +1828,7 @@ async function sendTelegramNotification(text){
           await goAndClick(id('fd-checkout-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.remove('open');
           await sleep(150); id('fd-modal-overlay').classList.add('open');
         } },
-      { caption:"📍 tugmasi orqali joylashuvni avtomatik aniqlaydi.",
+      { caption:"<i class=\"fa-solid fa-location-dot\"></i> tugmasi orqali joylashuvni avtomatik aniqlaydi.",
         run: async(scene)=>{ await goAndClick(id('fd-geo-btn'), '#F59E0B'); await typeInto(id('fd-address'), 'Toshkent sh., Chilonzor tumani, 12-uy', 28); } },
       { caption:"Ismi va telefon raqamini kiritadi.",
         run: async(scene)=>{
@@ -1834,13 +1838,13 @@ async function sendTelegramNotification(text){
       { caption:"Buyurtmani yakuniy tasdiqlaydi.",
         run: async(scene)=>{ await goAndClick(id('fd-confirm'), '#F59E0B'); id('fd-modal-overlay').classList.remove('open');
           await sleep(200); id('fd-success').classList.add('show'); } },
-      { caption:"Buyurtma tafsilotlari zudlik bilan oshxonaga <b>Telegram bot</b> orqali yuboriladi 🤖",
+      { caption:"Buyurtma tafsilotlari zudlik bilan oshxonaga <b>Telegram bot</b> orqali yuboriladi <i class="fa-solid fa-robot"></i>",
         run: async(scene)=>{ await sleep(900); id('fd-success').classList.remove('show');
           await celebrateSuccess({
-            title:'Buyurtma qabul qilindi! 🎉',
+            title:'Buyurtma qabul qilindi! <i class="fa-solid fa-circle-check"></i>',
             text:"Taxminiy yetkazib berish: 35 daqiqa. Kuryer: Sardor.",
             telegramMessage:
-              '🔔 <b>Yangi buyurtma — OtabekFood</b>\n'+
+              '<b>Yangi buyurtma — OtabekFood</b>\n'+
               'Mahsulotlar: Margarita Pitsa, Coca-Cola 0.5L\n'+
               'Jami: 55 000 so\'m\n'+
               'Mijoz: Sardor Aliyev\n'+
@@ -1922,7 +1926,7 @@ async function sendTelegramNotification(text){
   /* ===================== CONTROLS ===================== */
   playBtn.addEventListener('click', ()=>{
     playing = !playing;
-    playBtn.textContent = playing ? '⏸ Pauza' : '▶ Davom ettirish';
+    playBtn.innerHTML = playing ? '<i class="fa-solid fa-pause"></i> Pauza' : '<i class="fa-solid fa-play"></i> Davom ettirish';
   });
   restartBtn.addEventListener('click', ()=>{ playProject(currentProjectIdx); });
   prevBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx-1+projects.length)%projects.length); });
@@ -1964,8 +1968,8 @@ async function sendTelegramNotification(text){
     const desktopOn = active && playerEl.classList.contains('mode-desktop');
     fsBtnDesktop.classList.toggle('is-active', desktopOn);
     fsBtnMobile.classList.toggle('is-active', mobileOn);
-    fsBtnDesktop.textContent = desktopOn ? '⤡' : '🖥️';
-    fsBtnMobile.textContent = mobileOn ? '⤡' : '📱';
+    fsBtnDesktop.innerHTML = desktopOn ? '<i class="fa-solid fa-compress"></i>' : '<i class="fa-solid fa-desktop"></i>';
+    fsBtnMobile.innerHTML = mobileOn ? '<i class="fa-solid fa-compress"></i>' : '<i class="fa-solid fa-mobile-screen-button"></i>';
     fsBtnDesktop.title = desktopOn ? "To'liq ekrandan chiqish" : "Desktop — to'liq ekran";
     fsBtnMobile.title = mobileOn ? "To'liq ekrandan chiqish" : "Mobil — to'liq ekran (9:16)";
   }
