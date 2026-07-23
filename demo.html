@@ -186,9 +186,12 @@ body{
   transition:background .2s, transform .15s;
 }
 .chrome-fs-btn:hover{ background:rgba(255,255,255,.14); transform:translateY(-1px); }
+.chrome-fs-btn.is-active{ background:#6425f0; border-color:#6425f0; }
+.chrome-fs-group{ display:flex; gap:6px; flex:none; }
 
 /* ---- Fullscreen mode: hide chrome/URL bar & caption, show ONLY the scene, edge-to-edge ---- */
-.player:fullscreen{
+.player:fullscreen,
+.player:-webkit-full-screen{
   max-width:none;
   width:100vw;
   height:100vh;
@@ -197,27 +200,53 @@ body{
   border-radius:0;
   border:none;
   background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .player:fullscreen .browser-chrome,
-.player:fullscreen .caption-bar{
+.player:fullscreen .caption-bar,
+.player:-webkit-full-screen .browser-chrome,
+.player:-webkit-full-screen .caption-bar{
   display:none;
 }
-.player:fullscreen .screen-outer{
+.player:fullscreen .screen-outer,
+.player:-webkit-full-screen .screen-outer{
   width:100vw;
   height:100vh;
   max-width:none;
   margin:0;
   border-radius:0;
 }
-.player:-webkit-full-screen{
-  width:100vw; height:100vh; margin:0; padding:0; border-radius:0; border:none; background:#fff;
+
+/* ---- Mobile fullscreen mode: letterboxed 9:16 phone frame, centered, responsive ---- */
+.player:fullscreen.mode-mobile,
+.player:-webkit-full-screen.mode-mobile{
+  background:
+    radial-gradient(900px 500px at 50% 0%, #1c1e29 0%, transparent 60%),
+    #0b0c10;
 }
-.player:-webkit-full-screen .browser-chrome,
-.player:-webkit-full-screen .caption-bar{
-  display:none;
+.player:fullscreen.mode-mobile .screen-outer,
+.player:-webkit-full-screen.mode-mobile .screen-outer{
+  width:min(100vw, calc(100vh * 9 / 16));
+  height:min(100vh, calc(100vw * 16 / 9));
+  aspect-ratio:9/16;
+  max-width:100vw;
+  max-height:100vh;
+  margin:0 auto;
+  border-radius:min(3.2vh, 28px);
+  box-shadow:0 0 0 6px #1b1e27, 0 30px 90px -20px rgba(0,0,0,.75);
+  overflow:hidden;
 }
-.player:-webkit-full-screen .screen-outer{
-  width:100vw; height:100vh; max-width:none; margin:0; border-radius:0;
+/* On genuinely narrow/portrait devices the frame already matches the viewport, so no letterboxing shows */
+@media (max-aspect-ratio: 9/16){
+  .player:fullscreen.mode-mobile .screen-outer,
+  .player:-webkit-full-screen.mode-mobile .screen-outer{
+    width:100vw;
+    height:100vh;
+    border-radius:0;
+    box-shadow:none;
+  }
 }
 
 .screen-outer{
@@ -846,7 +875,10 @@ body{
       <div class="chrome-dots"><span></span><span></span><span></span></div>
       <div class="chrome-url"><span class="lock">🔒</span><span id="urlText">elegancebeauty.uz</span></div>
       <div class="chrome-live">● LIVE DEMO</div>
-      <button class="chrome-fs-btn" id="fsBtn" type="button" title="To'liq ekran">⛶</button>
+      <div class="chrome-fs-group">
+        <button class="chrome-fs-btn" id="fsBtnDesktop" type="button" title="Desktop — to'liq ekran">🖥️</button>
+        <button class="chrome-fs-btn" id="fsBtnMobile" type="button" title="Mobil — to'liq ekran (9:16)">📱</button>
+      </div>
     </div>
 
     <div class="screen-outer" id="screenOuter" data-theme="elegance">
@@ -1777,9 +1809,10 @@ async function sendTelegramNotification(text){
   prevBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx-1+projects.length)%projects.length); });
   nextBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx+1)%projects.length); });
 
-  /* ===================== FULLSCREEN (player only) ===================== */
+  /* ===================== FULLSCREEN (player only) — desktop & mobile (9:16) ===================== */
   const playerEl = document.querySelector('.player');
-  const fsBtn = document.getElementById('fsBtn');
+  const fsBtnDesktop = document.getElementById('fsBtnDesktop');
+  const fsBtnMobile = document.getElementById('fsBtnMobile');
 
   function isFs(){
     return document.fullscreenElement || document.webkitFullscreenElement;
@@ -1792,16 +1825,41 @@ async function sendTelegramNotification(text){
     if(document.exitFullscreen) await document.exitFullscreen();
     else if(document.webkitExitFullscreen) await document.webkitExitFullscreen();
   }
-  fsBtn.addEventListener('click', ()=>{
-    if(isFs()) exitFs(); else enterFs();
-  });
-  document.addEventListener('fullscreenchange', ()=>{
-    fsBtn.textContent = isFs() ? '⤡' : '⛶';
-    fsBtn.title = isFs() ? "To'liq ekrandan chiqish" : "To'liq ekran";
-  });
-  document.addEventListener('webkitfullscreenchange', ()=>{
-    fsBtn.textContent = isFs() ? '⤡' : '⛶';
-  });
+
+  async function toggleFs(mode){
+    // if already fullscreen in the SAME mode -> exit
+    if(isFs() && playerEl.classList.contains('mode-'+mode)){
+      await exitFs();
+      return;
+    }
+    // switch mode class before/while entering fullscreen
+    playerEl.classList.remove('mode-desktop','mode-mobile');
+    playerEl.classList.add('mode-'+mode);
+    if(!isFs()) await enterFs();
+    updateFsButtons();
+  }
+
+  function updateFsButtons(){
+    const active = isFs();
+    const mobileOn = active && playerEl.classList.contains('mode-mobile');
+    const desktopOn = active && playerEl.classList.contains('mode-desktop');
+    fsBtnDesktop.classList.toggle('is-active', desktopOn);
+    fsBtnMobile.classList.toggle('is-active', mobileOn);
+    fsBtnDesktop.textContent = desktopOn ? '⤡' : '🖥️';
+    fsBtnMobile.textContent = mobileOn ? '⤡' : '📱';
+    fsBtnDesktop.title = desktopOn ? "To'liq ekrandan chiqish" : "Desktop — to'liq ekran";
+    fsBtnMobile.title = mobileOn ? "To'liq ekrandan chiqish" : "Mobil — to'liq ekran (9:16)";
+  }
+
+  fsBtnDesktop.addEventListener('click', ()=> toggleFs('desktop'));
+  fsBtnMobile.addEventListener('click', ()=> toggleFs('mobile'));
+
+  function onFsChange(){
+    if(!isFs()) playerEl.classList.remove('mode-desktop','mode-mobile');
+    updateFsButtons();
+  }
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
 
   // kick off
   playProject(0);
