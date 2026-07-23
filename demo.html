@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
 <style>
 i.fa-solid, i.fa-regular, i.fa-brands{ line-height:1; }
 .icon-svg{ display:inline-flex; vertical-align:middle; }
@@ -493,7 +492,7 @@ body{
   transition:transform .2s;
 }
 .lu-cart-badge.bump{ animation:bump .35s ease; }
-@keyframes bump{ 0%{transform:scale(1);} 40%{transform:scale(1.5);} 100%{transform:scale(1);} }
+@keyframes bump{ 0%{transform:scale(1);} 40%{transform:scale(1.22);} 100%{transform:scale(1);} }
 .lu-hero{
   padding:50px 26px; text-align:center;
   background:linear-gradient(135deg,#EEF0FF,#fff 70%);
@@ -722,13 +721,7 @@ body{
   will-change: transform;
 }
 #screenScroll.zoom-soft{ transform: scale(1.03); }
-#screenScroll.zoom-punch{ transform: scale(1.08); }
-#screenScroll.punch-kick{ animation: punch-kick-anim .22s cubic-bezier(.3,1.6,.4,1); }
-@keyframes punch-kick-anim{
-  0%{ transform: scale(1.03); }
-  45%{ transform: scale(1.1); }
-  100%{ transform: scale(1.08); }
-}
+#screenScroll.zoom-punch{ transform: scale(1.07); }
 
 /* ============================================================
    LIVE ORDER POPUPS (Social Proof)
@@ -1007,9 +1000,9 @@ body{
 .hook-intro-badge{
   display:inline-flex; align-items:center; gap:6px;
   font-size:clamp(10px,3cqi,12.5px); font-weight:800; letter-spacing:1.2px;
-  text-transform:uppercase; color:#0b0c10;
-  background:linear-gradient(90deg,#7c4dff,#ff5cc6,#7c4dff);
-  background-size:200% auto; animation:neon-flow 5.5s linear infinite;
+  text-transform:uppercase; color:#fff;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
   padding:6px 14px; border-radius:20px;
 }
 .hook-intro-card h2{
@@ -1018,9 +1011,8 @@ body{
 }
 .hook-intro-arrow{
   font-size:clamp(22px, 8.5cqi, 36px);
-  animation:hook-bounce 1.6s ease-in-out infinite;
+  opacity:.85;
 }
-@keyframes hook-bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
 
 /* ---- Oxirida katta CTA-ekran ---- */
 .end-cta-overlay{
@@ -1042,20 +1034,15 @@ body{
   background:linear-gradient(135deg,#2fb3ee,#1c86bd);
   display:flex; align-items:center; justify-content:center;
   font-size:clamp(28px,9cqi,38px); color:#fff;
-  box-shadow:0 0 0 0 rgba(47,179,238,.5);
-  animation:end-cta-glow 2.2s ease-in-out infinite;
-}
-@keyframes end-cta-glow{
-  0%,100%{ box-shadow:0 0 0 0 rgba(47,179,238,.5); }
-  50%{ box-shadow:0 0 20px 6px rgba(47,179,238,.28); }
+  box-shadow:0 8px 24px -6px rgba(47,179,238,.5);
 }
 .end-cta-card h2{
   font-size:clamp(22px, 9.5cqi, 40px); font-weight:800; color:#fff; margin:0 0 12px; line-height:1.18;
 }
 .end-cta-handle{
-  display:inline-block; font-size:clamp(16px, 6.5cqi, 25px); font-weight:800; color:#0b0c10;
-  background:linear-gradient(90deg,#7c4dff,#ff5cc6,#7c4dff); background-size:200% auto;
-  animation:neon-flow 5.5s linear infinite;
+  display:inline-block; font-size:clamp(16px, 6.5cqi, 25px); font-weight:800; color:#fff;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
   padding:9px 22px; border-radius:30px; margin-bottom:12px;
 }
 .end-cta-card p{
@@ -1575,7 +1562,7 @@ async function sendTelegramNotification(text){
   // Reels tezligi: barcha animatsiya/pauza vaqtlari shu koeffitsientga ko'paytiriladi
   // (1 = asl tezlik, kichikroq son = tezroq sur'at). Hook/CTA/chip kabi "to'xtab turadigan"
   // ekranlar buning ta'sirida qolmasligi uchun alohida rawSleep() ishlatiladi.
-  const SPEED = 0.6;
+  const SPEED = 0.5;
 
   let playing = true;
   let runToken = 0;
@@ -1634,14 +1621,8 @@ async function sendTelegramNotification(text){
     screenScroll.classList.remove('zoom-soft','zoom-punch');
     screenScroll.classList.add(level === 'punch' ? 'zoom-punch' : 'zoom-soft');
   }
-  function cameraPunchKick(){
-    // Bosish lahzasida keskin "snap-zoom" pulsi — TikTok/Reels edit uslubidagi urg'u effekti.
-    screenScroll.classList.remove('punch-kick');
-    void screenScroll.offsetWidth;
-    screenScroll.classList.add('punch-kick');
-  }
   function resetZoom(){
-    screenScroll.classList.remove('zoom-soft','zoom-punch','punch-kick');
+    screenScroll.classList.remove('zoom-soft','zoom-punch');
   }
 
   function ripple(accent){
@@ -1672,7 +1653,6 @@ async function sendTelegramNotification(text){
     cameraTo(el, 'soft');
     await moveCursorTo(el, duration);
     cameraTo(el, 'punch');
-    cameraPunchKick();
     await clickOn(el, accent);
     await sleep(260);
     resetZoom();
@@ -1744,27 +1724,27 @@ async function sendTelegramNotification(text){
     cursor.style.opacity = '0';
     kineticCaption.innerHTML = buildKineticWords(html);
     kineticCaptionWrap.classList.add('show');
-    await rawSleep(1700);
+    await rawSleep(1250);
     kineticCaptionWrap.classList.remove('show');
     cursor.style.opacity = '1';
-    await rawSleep(250);
+    await rawSleep(200);
   }
 
   /* ---------- Ochilish hook: birinchi 1.5s'da katta "wow" matni ---------- */
   async function showHookIntro(){
     cursor.style.opacity = '0';
     hookIntroOverlay.classList.add('show');
-    await rawSleep(1500);
+    await rawSleep(1200);
     hookIntroOverlay.classList.remove('show');
     cursor.style.opacity = '1';
-    await rawSleep(350);
+    await rawSleep(250);
   }
 
   /* ---------- Har bir loyiha oxirida to'liq ekranli CTA (screenshot olishga ulguradigan pauza) ---------- */
   async function showEndCta(){
     cursor.style.opacity = '0';
     endCtaOverlay.classList.add('show');
-    await rawSleep(2400);
+    await rawSleep(1700);
     endCtaOverlay.classList.remove('show');
     cursor.style.opacity = '1';
     await rawSleep(200);
@@ -1820,23 +1800,11 @@ async function sendTelegramNotification(text){
     // 1.2) Boshqa mijoz ham hozirgina buyurtma berganini ko'rsatuvchi bitta xolisona bubble
     setTimeout(()=> spawnLivePopup(), 700);
 
-    // 2) Confetti — bitta, mo''tadil portlash (agar canvas-confetti kutubxonasi yuklangan bo'lsa)
-    if(window.confetti){
-      const rect = screenOuter.getBoundingClientRect();
-      const originX = (rect.left + rect.width/2) / window.innerWidth;
-      const originY = (rect.top + rect.height/2) / window.innerHeight;
-      window.confetti({
-        particleCount: 46, spread: 62, startVelocity: 28,
-        origin: { x: originX, y: originY }, zIndex: 9999,
-        colors: ['#7c4dff','#ffd166','#4ecdc4']
-      });
-    }
-
-    // 3) "Tashakkur" kassa cheki overlay'i
+    // 2) "Tashakkur" kassa cheki overlay'i — toza yashil ✓, portlashsiz
     receiptTitle.innerHTML = title;
     receiptText.textContent = text;
     receiptOverlay.classList.add('show');
-    await sleep(2200);
+    await sleep(1300);
     receiptOverlay.classList.remove('show');
   }
 
