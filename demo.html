@@ -817,7 +817,14 @@ body{
  position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between;
  padding:14px 22px; background:#1C1917; color:#fff;
 }
-.fd-logo{ font-weight:700; font-size:17px; }
+.fd-logo{ font-weight:700; font-size:17px; display:flex; align-items:center; gap:9px; color:#FBBF24; }
+.fd-logo-icon{ width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg,#FBBF24,#B91C1C); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; flex:none; }
+.fd-logo-food{ color:#fff; }
+.fd-navlinks{ display:flex; align-items:center; gap:22px; font-size:12.5px; font-weight:600; color:rgba(255,255,255,.8); }
+.fd-navlinks span{ cursor:default; }
+@container stage (max-width: 480px){
+ .fd-navlinks{ display:none; }
+}
 .fd-cats{ display:flex; gap:8px; padding:12px 22px; overflow-x:auto; background:#292524; }
 .fd-cat{
  flex:none; padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700; color:#e7e2da;
@@ -826,14 +833,20 @@ body{
 .fd-cat.active{ background:#F59E0B; color:#1C1917; border-color:#F59E0B; }
 .fd-cat.press{ transform:scale(.94); }
 .fd-actions{ display:flex; align-items:center; gap:14px; }
-.fd-cart-btn{ position:relative; background:none; border:none; color:#fff; font-size:17px; cursor:default; }
+.fd-cart-btn{
+ position:relative; background:#F59E0B; border:none; color:#1C1917; font-size:12.5px; font-weight:700;
+ border-radius:999px; padding:8px 14px; display:flex; align-items:center; gap:8px; cursor:default; font-family:inherit;
+}
 .fd-cart-badge{
  position:absolute; top:-7px; right:-9px; background:#DC2626; color:#fff; font-size:10px; font-weight:800;
  width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center;
 }
 .fd-cart-badge.bump{ animation:bump .35s ease; }
 .fd-hero{ padding:26px 22px; text-align:center; background:linear-gradient(135deg,#FEF3C7,#FFFBEB); }
+.fd-badge{ display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.6); color:#B45309; font-size:11px; font-weight:700; padding:6px 12px; border-radius:999px; margin-bottom:10px; }
 .fd-hero h1{ font-size:clamp(20px,4vw,28px); margin:0 0 6px; }
+.fd-hero h1 .accent-amber{ color:#D97706; }
+.fd-hero h1 .accent-chili{ color:#B91C1C; }
 .fd-hero p{ font-size:12.5px; color:#78350F; margin:0; }
 .fd-section{ padding:26px 22px 40px; }
 .fd-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; max-width:960px; margin:0 auto; }
@@ -861,9 +874,11 @@ body{
  transform:translateX(100%); transition:transform .35s; padding:22px; display:flex; flex-direction:column;
 }
 .fd-drawer-overlay.open .fd-drawer{ transform:translateX(0); }
-.fd-drawer h3{ margin:0 0 16px; font-size:16px; color:#1C1917; }
+.fd-drawer h3{ margin:0 0 16px; font-size:16px; color:#1C1917; display:flex; align-items:center; gap:8px; }
+.fd-drawer h3 i{ color:#B91C1C; }
 .fd-drawer-item{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px dashed #eee; font-size:12.5px; color:#1C1917; }
-.fd-subtotal{ margin-top:auto; padding-top:14px; display:flex; justify-content:space-between; font-weight:800; font-size:14px; color:#1C1917; }
+.fd-row{ display:flex; justify-content:space-between; font-size:12px; color:rgba(28,25,23,.65); margin-top:8px; }
+.fd-subtotal{ margin-top:auto; padding-top:14px; display:flex; justify-content:space-between; font-weight:800; font-size:14px; color:#1C1917; border-top:1px solid rgba(28,25,23,.1); }
 .fd-checkout-btn{
  margin-top:12px; width:100%; padding:12px; border:none; border-radius:10px; background:#DC2626; color:#fff;
  font-weight:700; font-size:13px; font-family:inherit; cursor:default;
@@ -884,17 +899,25 @@ body{
  font-size:12px; font-weight:700; font-family:inherit; cursor:default; display:inline-flex; align-items:center; gap:6px;
 }
 .fd-confirm-btn{
- width:100%; margin-top:6px; padding:12px; border:none; border-radius:10px; background:#1C1917; color:#fff;
- font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+ width:100%; margin-top:14px; padding:12px; border:none; border-radius:10px; background:#F59E0B; color:#1C1917;
+ font-weight:800; font-size:13px; font-family:inherit; cursor:default;
 }
+.fd-summary-box{ background:#FFFBEB; border:1px solid rgba(28,25,23,.1); border-radius:12px; padding:12px 14px; margin-top:14px; }
+.fd-summary-box .fd-row{ margin-top:6px; }
+.fd-summary-box .fd-row:first-child{ margin-top:0; }
+.fd-row-total{ font-weight:800; color:#1C1917 !important; padding-top:8px; margin-top:8px !important; border-top:1px solid rgba(28,25,23,.1); }
 .fd-success{
- position:absolute; inset:0; background:rgba(255,251,235,.98); display:flex; flex-direction:column; align-items:center;
- justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
+ position:absolute; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center;
+ justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
 }
 .fd-success.show{ opacity:1; pointer-events:auto; }
-.fd-success .ic{ font-size:44px; margin-bottom:14px; }
-.fd-success h3{ margin:0 0 8px; font-size:19px; }
-.fd-success p{ color:#78350F; font-size:13px; max-width:300px; }
+.fd-receipt{ background:#fff; border-radius:14px; padding:22px; width:min(320px,92%); box-shadow:0 20px 40px -15px rgba(0,0,0,.4); }
+.fd-receipt-check{ width:48px; height:48px; border-radius:50%; background:#DCFCE7; color:#16A34A; font-size:20px; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; }
+.fd-receipt h4{ margin:0 0 4px; font-size:17px; color:#1C1917; text-align:center; }
+.fd-receipt-sub{ text-align:center; font-size:12px; color:#78350F; margin:0; }
+.fd-receipt-divider{ border-top:1px dashed rgba(28,25,23,.2); margin:12px 0; }
+.fd-receipt .fd-row{ font-size:12px; margin-top:6px; }
+.fd-receipt .fd-row:first-child{ margin-top:0; }
 
 /* ============================================================
  Zoom/kamera effekti olib tashlandi — ekran doim bir xil o'lchamda,
@@ -1459,7 +1482,7 @@ body{
  <div class="eb-masters-grid">
  <div class="eb-master" id="master-madina">
  <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
- <h4>Madina Yusupova</h4><span>Bosh usta / Soch • 12 yil</span>
+ <h4>Alisher Yusupov</h4><span>Bosh usta / Soch • 12 yil</span>
  </div>
  <div class="eb-master" id="master-dilnoza">
  <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);">
@@ -1491,7 +1514,7 @@ body{
  <div class="eb-modal-step">
  <label>Ustani tanlang</label>
  <div class="eb-master-picker">
- <div class="eb-picker-item" id="pick-madina">Madina</div>
+ <div class="eb-picker-item" id="pick-madina">Alisher</div>
  <div class="eb-picker-item" id="pick-dilnoza">Dilnoza</div>
  <div class="eb-picker-item" id="pick-zarina">Zarina</div>
  </div>
@@ -1702,90 +1725,142 @@ body{
  </section>
  </div>
 
- <!-- ============== SCENE 4: OTABEKFOOD ============== -->
- <div class="scene food" id="scene-food">
- <header class="fd-nav">
- <div class="fd-logo"><i class="fa-solid fa-pizza-slice"></i> OtabekFood</div>
- <div class="fd-actions">
- <button class="fd-cart-btn" id="fd-cart-btn"><i class="fa-solid fa-cart-shopping"></i><span class="fd-cart-badge" id="fd-cart-badge">0</span></button>
- </div>
- </header>
- <div class="fd-cats">
- <div class="fd-cat active" id="cat-pizza"><i class="fa-solid fa-pizza-slice"></i> Pitsa</div>
- <div class="fd-cat" id="cat-burger"><i class="fa-solid fa-burger"></i> Burger</div>
- <div class="fd-cat" id="cat-drinks"><i class="fa-solid fa-glass-water"></i> Ichimlik</div>
- <div class="fd-cat" id="cat-sets"><i class="fa-solid fa-box"></i> Setlar</div>
- </div>
- <section class="fd-hero">
- <h1>30 daqiqada yetkazib beramiz! <i class="fa-solid fa-motorcycle"></i></h1>
- <p>Issiq, mazali va vaqtida — har safar.</p>
- </section>
- <section class="fd-section" id="fd-products">
- <div class="fd-grid">
- <!-- ---- PITSA (6) ---- -->
- <div class="fd-card" data-cat="pizza" id="prod-1"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p><div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="pizza" id="prod-2"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Pepperoni Pitsa</h3><p>Achchiq pepperoni, mozarella, sous</p><div class="fd-card-foot"><span>52 000 so'm</span><button class="fd-add-btn" id="fd-add-2"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="pizza" id="prod-3"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p><div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="pizza" id="prod-4"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>To'rt Pishloq Pitsa</h3><p>Mozarella, chеddar, parmezan, gorgonzola</p><div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-4"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="pizza" id="prod-5"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Sabzavotli Pitsa</h3><p>Bulg'or qalampiri, zaytun, pomidor</p><div class="fd-card-foot"><span>48 000 so'm</span><button class="fd-add-btn" id="fd-add-5"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="pizza" id="prod-6"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Mol Go'shtli Pitsa</h3><p>Qiyma mol go'shti, piyoz, pishloq</p><div class="fd-card-foot"><span>62 000 so'm</span><button class="fd-add-btn" id="fd-add-6"><i class="fa-solid fa-plus"></i></button></div></div>
- <!-- ---- BURGER (6) ---- -->
- <div class="fd-card" data-cat="burger" id="prod-7"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p><div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-7"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="burger" id="prod-8"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Chizburger</h3><p>Mol go'shti, erigan cheddar, tursho</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-8"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="burger" id="prod-9"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Tovuq Burger</h3><p>Qarsildoq tovuq filesi, salat, sous</p><div class="fd-card-foot"><span>30 000 so'm</span><button class="fd-add-btn" id="fd-add-9"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="burger" id="prod-10"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Fish Burger</h3><p>Panirovkali baliq file, tartar sous</p><div class="fd-card-foot"><span>32 000 so'm</span><button class="fd-add-btn" id="fd-add-10"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="burger" id="prod-11"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Bekon Burger</h3><p>Mol go'shti, qarsildoq bekon, BBQ sous</p><div class="fd-card-foot"><span>38 000 so'm</span><button class="fd-add-btn" id="fd-add-11"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="burger" id="prod-12"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Veggie Burger</h3><p>Sabzavotli kotlet, avokado, salat</p><div class="fd-card-foot"><span>27 000 so'm</span><button class="fd-add-btn" id="fd-add-12"><i class="fa-solid fa-plus"></i></button></div></div>
- <!-- ---- ICHIMLIK (6) ---- -->
- <div class="fd-card" data-cat="drinks" id="prod-13"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-13"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="drinks" id="prod-14"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Fanta 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-14"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="drinks" id="prod-15"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Sprite 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-15"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="drinks" id="prod-16"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Mineral Suv 0.5L</h3><p>Gazsiz toza ichimlik suvi</p><div class="fd-card-foot"><span>6 000 so'm</span><button class="fd-add-btn" id="fd-add-16"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="drinks" id="prod-17"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Tabiiy Limonad</h3><p>Yangi limon va yalpizdan tayyorlangan</p><div class="fd-card-foot"><span>14 000 so'm</span><button class="fd-add-btn" id="fd-add-17"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="drinks" id="prod-18"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Issiq Choy</h3><p>Qora yoki ko'k choy, xushbo'y</p><div class="fd-card-foot"><span>8 000 so'm</span><button class="fd-add-btn" id="fd-add-18"><i class="fa-solid fa-plus"></i></button></div></div>
- <!-- ---- SETLAR (6) ---- -->
- <div class="fd-card" data-cat="sets" id="prod-19"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p><div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-19"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-20"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Yakka Set</h3><p>1 pitsa + 1 ichimlik — bitta kishiga</p><div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-20"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-21"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Do'stlar Seti</h3><p>2 burger + 2 ichimlik — ikki kishiga</p><div class="fd-card-foot"><span>78 000 so'm</span><button class="fd-add-btn" id="fd-add-21"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-22"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Romantik Set</h3><p>1 pitsa + 2 ichimlik + shirinlik</p><div class="fd-card-foot"><span>89 000 so'm</span><button class="fd-add-btn" id="fd-add-22"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-23"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Ofis Lanch Seti</h3><p>1 burger + salat + ichimlik</p><div class="fd-card-foot"><span>42 000 so'm</span><button class="fd-add-btn" id="fd-add-23"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-24"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Balalar Seti</h3><p>Mini burger + kartoshka fri + sharbat</p><div class="fd-card-foot"><span>35 000 so'm</span><button class="fd-add-btn" id="fd-add-24"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-25"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Vegetarian Set</h3><p>1 vegetarian pitsa + salat + ichimlik</p><div class="fd-card-foot"><span>68 000 so'm</span><button class="fd-add-btn" id="fd-add-25"><i class="fa-solid fa-plus"></i></button></div></div>
- <div class="fd-card" data-cat="sets" id="prod-26"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Cheesecake</h3><p>Nyu-York uslubidagi yumshoq chizkeyk</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-26"><i class="fa-solid fa-plus"></i></button></div></div>
- </div>
- </section>
+	<!-- ============== SCENE 4: OTABEKFOOD ============== -->
+	<div class="scene food" id="scene-food">
+	<header class="fd-nav">
+	<div class="fd-logo"><span class="fd-logo-icon"><i class="fa-solid fa-pepper-hot"></i></span> OTABEK<span class="fd-logo-food">FOOD</span></div>
+	<nav class="fd-navlinks">
+	<span>Menyu</span>
+	<span>Biz haqimizda</span>
+	<span>Aloqa</span>
+	</nav>
+	<div class="fd-actions">
+	<button class="fd-cart-btn" id="fd-cart-btn"><i class="fa-solid fa-basket-shopping"></i><span>Savatcha</span><span class="fd-cart-badge" id="fd-cart-badge">0</span></button>
+	</div>
+	</header>
+	<div class="fd-cats">
+	<div class="fd-cat active" id="cat-all"><i class="fa-solid fa-border-all"></i> Barchasi</div>
+	<div class="fd-cat" id="cat-pizza"><i class="fa-solid fa-pizza-slice"></i> Pitsa</div>
+	<div class="fd-cat" id="cat-burger"><i class="fa-solid fa-burger"></i> Burger</div>
+	<div class="fd-cat" id="cat-drinks"><i class="fa-solid fa-mug-saucer"></i> Ichimliklar</div>
+	<div class="fd-cat" id="cat-sets"><i class="fa-solid fa-box"></i> Setlar</div>
+	<div class="fd-cat" id="cat-salads"><i class="fa-solid fa-bowl-food"></i> Salatlar</div>
+	<div class="fd-cat" id="cat-desserts"><i class="fa-solid fa-cake-candles"></i> Desertlar</div>
+	</div>
+	<section class="fd-hero">
+	<span class="fd-badge"><i class="fa-solid fa-bolt"></i> 30 daqiqada yetkazamiz</span>
+	<h1>Ishtahangiz uchun <span class="accent-amber">issiq</span> va <span class="accent-chili">shirali</span> taomlar</h1>
+	<p>Pitsa, burger, setlar va sovuq ichimliklar — bir marta bosish orqali eshigingizga yetkazib beramiz.</p>
+	</section>
+	<section class="fd-section" id="fd-products">
+	<div class="fd-grid">
+	<!-- ---- PITSA (9) ---- -->
+	<div class="fd-card" data-cat="pizza" id="prod-1"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella pishloq, rayhon</p><div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-2"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Pepperoni Pitsa</h3><p>Pepperoni kolbasa, mozarella, achchiq sous</p><div class="fd-card-foot"><span>55 000 so'm</span><button class="fd-add-btn" id="fd-add-2"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-3"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq go'shti, BBQ sous, bulg'or qalampiri</p><div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-4"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>4 Pishloq Pitsa</h3><p>Mozarella, chedder, parmezan, gorgonzola</p><div class="fd-card-foot"><span>62 000 so'm</span><button class="fd-add-btn" id="fd-add-4"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-5"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Mol Go'shtli Pitsa</h3><p>Mol go'shti qiyma, qalampir, piyoz, mozarella</p><div class="fd-card-foot"><span>64 000 so'm</span><button class="fd-add-btn" id="fd-add-5"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-6"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Dengiz Mahsulotlari Pitsa</h3><p>Krevetka, kalmar, mozarella, sarimsoqli sous</p><div class="fd-card-foot"><span>72 000 so'm</span><button class="fd-add-btn" id="fd-add-6"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-7"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Vegetarian Pitsa</h3><p>Qo'ziqorin, bulg'or qalampiri, zaytun, makkajo'xori</p><div class="fd-card-foot"><span>49 000 so'm</span><button class="fd-add-btn" id="fd-add-7"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-34"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Peperoni Extra Pitsa</h3><p>Ikki qatlam pepperoni, mozarella, achchiq yog'</p><div class="fd-card-foot"><span>60 000 so'm</span><button class="fd-add-btn" id="fd-add-34"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="pizza" id="prod-35"><div class="fd-card-icon"><i class="fa-solid fa-pizza-slice"></i></div><h3>Truffle Qo'ziqorin Pitsa</h3><p>Truffle yog'i, qo'ziqorin, parmezan, rayhon</p><div class="fd-card-foot"><span>68 000 so'm</span><button class="fd-add-btn" id="fd-add-35"><i class="fa-solid fa-plus"></i></button></div></div>
+	<!-- ---- BURGER (9) ---- -->
+	<div class="fd-card" data-cat="burger" id="prod-8"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Klassik Chizburger</h3><p>Mol go'shti, chedder, salat, pomidor</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-8"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-9"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p><div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-9"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-10"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Tovuq Burger</h3><p>Krispi tovuq filesi, achchiq sous, karam</p><div class="fd-card-foot"><span>26 000 so'm</span><button class="fd-add-btn" id="fd-add-10"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-11"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Baliq Burger</h3><p>Panirovka qilingan baliq file, tartar sous</p><div class="fd-card-foot"><span>29 000 so'm</span><button class="fd-add-btn" id="fd-add-11"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-12"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>BBQ Bekon Burger</h3><p>Mol go'shti, qovurilgan bekon, BBQ sous, chedder</p><div class="fd-card-foot"><span>38 000 so'm</span><button class="fd-add-btn" id="fd-add-12"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-13"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Mega Chizburger XL</h3><p>Katta hajmli mol go'shti, uch xil pishloq</p><div class="fd-card-foot"><span>42 000 so'm</span><button class="fd-add-btn" id="fd-add-13"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-36"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Double Cheese Burger</h3><p>Ikki qavat mol go'shti, ikki xil pishloq</p><div class="fd-card-foot"><span>40 000 so'm</span><button class="fd-add-btn" id="fd-add-36"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-37"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Jalapeno Burger</h3><p>Achchiq jalapeno, mol go'shti, nacho sous</p><div class="fd-card-foot"><span>34 000 so'm</span><button class="fd-add-btn" id="fd-add-37"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="burger" id="prod-38"><div class="fd-card-icon"><i class="fa-solid fa-burger"></i></div><h3>Vegetarian Burger</h3><p>Sabzavotli kotlet, avokado, yashil salat</p><div class="fd-card-foot"><span>27 000 so'm</span><button class="fd-add-btn" id="fd-add-38"><i class="fa-solid fa-plus"></i></button></div></div>
+	<!-- ---- ICHIMLIK (10) ---- -->
+	<div class="fd-card" data-cat="drinks" id="prod-14"><div class="fd-card-icon"><i class="fa-solid fa-bottle-water"></i></div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-14"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-15"><div class="fd-card-icon"><i class="fa-solid fa-bottle-water"></i></div><h3>Fanta 0.5L</h3><p>Apelsinli gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-15"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-16"><div class="fd-card-icon"><i class="fa-solid fa-bottle-water"></i></div><h3>Sprite 0.5L</h3><p>Limonli gazlangan ichimlik</p><div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-16"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-17"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Toza Suv 0.5L</h3><p>Gazsiz mineral suv</p><div class="fd-card-foot"><span>5 000 so'm</span><button class="fd-add-btn" id="fd-add-17"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-18"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Yangi siqilgan sharbat</h3><p>Apelsindan tabiiy fresh</p><div class="fd-card-foot"><span>18 000 so'm</span><button class="fd-add-btn" id="fd-add-18"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-19"><div class="fd-card-icon"><i class="fa-solid fa-mug-hot"></i></div><h3>Milkshake (shokolad)</h3><p>Shokoladli sut kokteyli, krem bilan</p><div class="fd-card-foot"><span>22 000 so'm</span><button class="fd-add-btn" id="fd-add-19"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-20"><div class="fd-card-icon"><i class="fa-solid fa-mug-saucer"></i></div><h3>Issiq choy</h3><p>Qora yoki ko'k choy, limon bilan</p><div class="fd-card-foot"><span>8 000 so'm</span><button class="fd-add-btn" id="fd-add-20"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-39"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Limonad (klassik)</h3><p>Uy sharoitida tayyorlangan limonli ichimlik</p><div class="fd-card-foot"><span>14 000 so'm</span><button class="fd-add-btn" id="fd-add-39"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-40"><div class="fd-card-icon"><i class="fa-solid fa-glass-water"></i></div><h3>Ayran</h3><p>Sovutilgan tabiiy ayran</p><div class="fd-card-foot"><span>9 000 so'm</span><button class="fd-add-btn" id="fd-add-40"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="drinks" id="prod-41"><div class="fd-card-icon"><i class="fa-solid fa-mug-hot"></i></div><h3>Latte (issiq)</h3><p>Espresso va bug'langan sut</p><div class="fd-card-foot"><span>20 000 so'm</span><button class="fd-add-btn" id="fd-add-41"><i class="fa-solid fa-plus"></i></button></div></div>
+	<!-- ---- SETLAR (7) ---- -->
+	<div class="fd-card" data-cat="sets" id="prod-25"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p><div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-25"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="sets" id="prod-26"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Do'stona Set</h3><p>1 pitsa + 2 burger + 2 ichimlik</p><div class="fd-card-foot"><span>98 000 so'm</span><button class="fd-add-btn" id="fd-add-26"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="sets" id="prod-27"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Yakka Set</h3><p>1 burger + kartoshka fri + ichimlik</p><div class="fd-card-foot"><span>52 000 so'm</span><button class="fd-add-btn" id="fd-add-27"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="sets" id="prod-28"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Biznes Lanch Set</h3><p>1 burger + salat + ichimlik (tushlik uchun)</p><div class="fd-card-foot"><span>39 000 so'm</span><button class="fd-add-btn" id="fd-add-28"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="sets" id="prod-29"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Kompaniya Seti (5 kishi)</h3><p>2 pitsa + 3 burger + 5 ichimlik + desert</p><div class="fd-card-foot"><span>210 000 so'm</span><button class="fd-add-btn" id="fd-add-29"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="sets" id="prod-44"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Vegetarian Set</h3><p>1 vegetarian pitsa + salat + ichimlik</p><div class="fd-card-foot"><span>68 000 so'm</span><button class="fd-add-btn" id="fd-add-44"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="sets" id="prod-45"><div class="fd-card-icon"><i class="fa-solid fa-box"></i></div><h3>Do'stlar Kompaniyasi Seti (3 kishi)</h3><p>2 pitsa + 3 burger + 3 ichimlik</p><div class="fd-card-foot"><span>165 000 so'm</span><button class="fd-add-btn" id="fd-add-45"><i class="fa-solid fa-plus"></i></button></div></div>
+	<!-- ---- SALAT (6) ---- -->
+	<div class="fd-card" data-cat="salads" id="prod-21"><div class="fd-card-icon"><i class="fa-solid fa-bowl-food"></i></div><h3>Sezar Salat (tovuq)</h3><p>Grill tovuq, salat bargi, parmezan, krutonlar</p><div class="fd-card-foot"><span>32 000 so'm</span><button class="fd-add-btn" id="fd-add-21"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="salads" id="prod-22"><div class="fd-card-icon"><i class="fa-solid fa-bowl-food"></i></div><h3>Yunon Salati</h3><p>Feta pishloq, zaytun, pomidor, bodring</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-22"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="salads" id="prod-23"><div class="fd-card-icon"><i class="fa-solid fa-carrot"></i></div><h3>Coleslaw Salat</h3><p>Karam, sabzi, krem-mayonez sous</p><div class="fd-card-foot"><span>15 000 so'm</span><button class="fd-add-btn" id="fd-add-23"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="salads" id="prod-24"><div class="fd-card-icon"><i class="fa-solid fa-leaf"></i></div><h3>Sabzavotli Salat</h3><p>Mavsumiy yangi sabzavotlar, zaytun moyi</p><div class="fd-card-foot"><span>18 000 so'm</span><button class="fd-add-btn" id="fd-add-24"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="salads" id="prod-42"><div class="fd-card-icon"><i class="fa-solid fa-bowl-food"></i></div><h3>Tabuli Salat</h3><p>Petrushka, bulg'ur, pomidor, limon sousi</p><div class="fd-card-foot"><span>22 000 so'm</span><button class="fd-add-btn" id="fd-add-42"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="salads" id="prod-43"><div class="fd-card-icon"><i class="fa-solid fa-shrimp"></i></div><h3>Krevetkali Salat</h3><p>Krevetka, avokado, rukola, sitrus sousi</p><div class="fd-card-foot"><span>38 000 so'm</span><button class="fd-add-btn" id="fd-add-43"><i class="fa-solid fa-plus"></i></button></div></div>
+	<!-- ---- DESERT (6) ---- -->
+	<div class="fd-card" data-cat="desserts" id="prod-30"><div class="fd-card-icon"><i class="fa-solid fa-cake-candles"></i></div><h3>Shokoladli Tort</h3><p>Yumshoq shokoladli bisküvi, krem bilan</p><div class="fd-card-foot"><span>24 000 so'm</span><button class="fd-add-btn" id="fd-add-30"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="desserts" id="prod-31"><div class="fd-card-icon"><i class="fa-solid fa-cake-candles"></i></div><h3>Tiramisu</h3><p>Klassik italyan deserti, kofe aromati</p><div class="fd-card-foot"><span>26 000 so'm</span><button class="fd-add-btn" id="fd-add-31"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="desserts" id="prod-32"><div class="fd-card-icon"><i class="fa-solid fa-ice-cream"></i></div><h3>Muzqaymoq (3 shar)</h3><p>Vanil, shokolad, qulupnay ta'mlari</p><div class="fd-card-foot"><span>16 000 so'm</span><button class="fd-add-btn" id="fd-add-32"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="desserts" id="prod-33"><div class="fd-card-icon"><i class="fa-solid fa-cookie"></i></div><h3>Belgiya Vaflisi</h3><p>Shokolad va mevali sous bilan issiq vafli</p><div class="fd-card-foot"><span>20 000 so'm</span><button class="fd-add-btn" id="fd-add-33"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="desserts" id="prod-46"><div class="fd-card-icon"><i class="fa-solid fa-cake-candles"></i></div><h3>Cheesecake</h3><p>Nyu-York uslubidagi yumshoq chizkeyk</p><div class="fd-card-foot"><span>28 000 so'm</span><button class="fd-add-btn" id="fd-add-46"><i class="fa-solid fa-plus"></i></button></div></div>
+	<div class="fd-card" data-cat="desserts" id="prod-47"><div class="fd-card-icon"><i class="fa-solid fa-cookie"></i></div><h3>Churros (6 dona)</h3><p>Shokoladli sous bilan qarsildoq churros</p><div class="fd-card-foot"><span>18 000 so'm</span><button class="fd-add-btn" id="fd-add-47"><i class="fa-solid fa-plus"></i></button></div></div>
+	</div>
+	</section>
 
 
- <div class="fd-drawer-overlay" id="fd-drawer-overlay">
- <div class="fd-drawer">
- <h3>Savatchangiz</h3>
- <div id="fd-drawer-items"></div>
- <div class="fd-subtotal"><span>Jami</span><span id="fd-subtotal-val">0 so'm</span></div>
- <button class="fd-checkout-btn" id="fd-checkout-btn">Buyurtma berish</button>
- </div>
- </div>
+	<div class="fd-drawer-overlay" id="fd-drawer-overlay">
+	<div class="fd-drawer">
+	<h3><i class="fa-solid fa-receipt"></i> Buyurtma cheki</h3>
+	<div id="fd-drawer-items"></div>
+	<div class="fd-row"><span>Mahsulotlar summasi</span><span id="fd-subtotal-val">0 so'm</span></div>
+	<div class="fd-row"><span>Yetkazib berish</span><span id="fd-delivery-val">0 so'm</span></div>
+	<div class="fd-subtotal"><span>Jami</span><span id="fd-total-val">0 so'm</span></div>
+	<button class="fd-checkout-btn" id="fd-checkout-btn"><i class="fa-solid fa-bag-shopping"></i> Buyurtma berish</button>
+	</div>
+	</div>
 
- <div class="fd-modal-overlay" id="fd-modal-overlay">
- <div class="fd-modal">
- <h3>Yetkazib berish ma'lumotlari</h3>
- <div class="fd-field"><label>Ism</label><input type="text" id="fd-name" readonly></div>
- <div class="fd-field">
- <label>Manzil</label>
- <textarea id="fd-address" rows="2" readonly></textarea>
- <button class="fd-geo-btn" id="fd-geo-btn"><i class="fa-solid fa-location-dot"></i> Joylashuvni aniqlash</button>
- </div>
- <div class="fd-field"><label>Telefon raqam</label><input type="text" id="fd-phone" readonly></div>
- <button class="fd-confirm-btn" id="fd-confirm">Buyurtmani tasdiqlash</button>
- </div>
- </div>
- <div class="fd-success" id="fd-success">
- <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
- <h3>Buyurtmangiz qabul qilindi!</h3>
- <p>Taxminiy yetkazib berish vaqti: 35 daqiqa. Kuryer: Sardor (+998 90 111 22 33)</p>
- </div>
- </div>
+	<div class="fd-modal-overlay" id="fd-modal-overlay">
+	<div class="fd-modal">
+	<h3><i class="fa-solid fa-user-pen"></i> Buyurtma ma'lumotlari</h3>
+	<div class="fd-field"><label>Ismingiz *</label><input type="text" id="fd-name" placeholder="Masalan: Aziz Karimov" readonly></div>
+	<div class="fd-field"><label>Telefon raqami *</label><input type="text" id="fd-phone" placeholder="+998 90 123 45 67" readonly></div>
+	<div class="fd-field">
+	<label>Yetkazib berish manzili *</label>
+	<textarea id="fd-address" rows="2" placeholder="Ko'cha, uy, kvartira" readonly></textarea>
+	<button class="fd-geo-btn" id="fd-geo-btn"><i class="fa-solid fa-location-crosshairs"></i> Joylashuvimni aniqlash</button>
+	</div>
+	<div class="fd-field"><label>Izoh (ixtiyoriy)</label><textarea id="fd-comment" rows="2" placeholder="Masalan: domofon kodi, qo'shimcha talab..." readonly></textarea></div>
+	<div class="fd-summary-box">
+	<div class="fd-row"><span>Mahsulotlar</span><span id="fd-modal-subtotal-val">0 so'm</span></div>
+	<div class="fd-row"><span>Yetkazib berish</span><span id="fd-modal-delivery-val">0 so'm</span></div>
+	<div class="fd-row fd-row-total"><span>Jami to'lov</span><span id="fd-modal-total-val">0 so'm</span></div>
+	</div>
+	<button class="fd-confirm-btn" id="fd-confirm"><i class="fa-solid fa-check"></i> Buyurtmani tasdiqlash</button>
+	</div>
+	</div>
+	<div class="fd-success" id="fd-success">
+	<div class="fd-receipt">
+	<div class="fd-receipt-check"><i class="fa-solid fa-check"></i></div>
+	<h4>Buyurtma qabul qilindi!</h4>
+	<p class="fd-receipt-sub">Tez orada siz bilan bog'lanamiz 🎉</p>
+	<div class="fd-receipt-divider"></div>
+	<div class="fd-row"><span>Mijoz</span><span id="fd-sc-name"></span></div>
+	<div class="fd-row"><span>Telefon</span><span id="fd-sc-phone"></span></div>
+	<div class="fd-row"><span>Manzil</span><span id="fd-sc-address"></span></div>
+	<div class="fd-receipt-divider"></div>
+	<div id="fd-sc-items"></div>
+	<div class="fd-receipt-divider"></div>
+	<div class="fd-row"><span>Mahsulotlar</span><span id="fd-sc-subtotal"></span></div>
+	<div class="fd-row"><span>Yetkazib berish</span><span id="fd-sc-delivery"></span></div>
+	<div class="fd-row fd-row-total"><span>Jami</span><span id="fd-sc-total"></span></div>
+	</div>
+	</div>
 
- </div>
+	</div>
+
  <div id="cursor">
  <svg width="26" height="26" viewBox="0 0 26 26">
  <path d="M3 1 L3 20 L8 16 L11.5 23 L14.5 21.5 L11 14.5 L18 14.5 Z" fill="#ffffff" stroke="#111319" stroke-width="1.4" stroke-linejoin="round"/>
@@ -1934,7 +2009,7 @@ async function sendTelegramNotification(text){
  // ro'yxat filtrlanmasdi (barcha bo'limda hammasi ko'rinib turaverardi).
  function fdShowCategory(scene, cat){
  scene.querySelectorAll('.fd-card').forEach(card=>{
- card.style.display = (card.dataset.cat === cat) ? '' : 'none';
+ card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
  });
  }
 
@@ -2241,7 +2316,7 @@ async function sendTelegramNotification(text){
  await zoomOut();
  id('eb-modal-overlay').classList.add('open'); await sleep(250);
  } },
- { caption:"Sevimli ustasini tanlaydi — <b>Madina Yusupova</b>",
+ { caption:"Sevimli ustasini tanlaydi — <b>Alisher Yusupov</b>",
  run: async(scene)=>{ await goAndClick(id('pick-madina'), '#C9A227'); id('pick-madina').classList.add('selected'); } },
  { caption:"Qulay vaqtni belgilaydi — <b>11:30</b>",
  run: async(scene)=>{ await goAndClick(id('slot-1130'), '#C9A227'); id('slot-1130').classList.add('selected'); } },
@@ -2257,11 +2332,11 @@ async function sendTelegramNotification(text){
  id('eb-toast').classList.remove('show');
  await celebrateSuccess({
  title:'Bron qabul qilindi! <i class="fa-solid fa-spa"></i>',
- text:"Madina Yusupova sizni 24-iyul, 11:30 da kutadi.",
+ text:"Alisher Yusupov sizni 24-iyul, 11:30 da kutadi.",
  telegramMessage:
  '<b>Yangi bron — Elegance Beauty</b>\n'+
  'Xizmat: Ayollar soch kesish (120 000 so\'m)\n'+
- 'Usta: Madina Yusupova\n'+
+ 'Usta: Alisher Yusupov\n'+
  'Sana/vaqt: 24-iyul, Payshanba, 11:30\n'+
  'Manba: Jonli namoyish demo'
  });
@@ -2411,14 +2486,25 @@ async function sendTelegramNotification(text){
  id('fd-cart-badge').textContent='0';
  id('fd-drawer-items').innerHTML='';
  id('fd-subtotal-val').textContent ="0 so'm";
- id('fd-name').value=''; id('fd-phone').value=''; id('fd-address').value='';
+ id('fd-delivery-val').textContent ="0 so'm";
+ id('fd-total-val').textContent ="0 so'm";
+ id('fd-modal-subtotal-val').textContent ="0 so'm";
+ id('fd-modal-delivery-val').textContent ="0 so'm";
+ id('fd-modal-total-val').textContent ="0 so'm";
+ id('fd-name').value=''; id('fd-phone').value=''; id('fd-address').value=''; id('fd-comment').value='';
  scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
- id('cat-pizza').classList.add('active');
- fdShowCategory(scene, 'pizza');
+ id('cat-all').classList.add('active');
+ fdShowCategory(scene, 'all');
  },
  steps:[
  { caption:"Mijoz och qoldi — tez ovqat izlayapti",
- run: async(scene)=>{ await goAndClick(id('cat-pizza'), '#F59E0B'); } },
+ run: async(scene)=>{
+ const catPizza = id('cat-pizza');
+ await goAndClick(catPizza, '#F59E0B');
+ scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
+ catPizza.classList.add('active');
+ fdShowCategory(scene, 'pizza');
+ } },
  { caption:"Turli xil pitsalarni solishtirib ko'radi",
  run: async(scene)=>{
  await moveCursorTo(id('prod-2'), 450);
@@ -2434,6 +2520,8 @@ async function sendTelegramNotification(text){
  id('fd-cart-badge').textContent='1'; id('fd-cart-badge').classList.add('bump');
  id('fd-drawer-items').innerHTML = '<div class="fd-drawer-item"><span>Margarita Pitsa</span><span>45 000 so\'m</span></div>';
  id('fd-subtotal-val').textContent ="45 000 so'm";
+ id('fd-delivery-val').textContent ="15 000 so'm";
+ id('fd-total-val').textContent ="60 000 so'm";
  await sleep(300); id('fd-cart-badge').classList.remove('bump');
  } },
  { caption:"Burger menyusidagi variantlarni ham solishtiradi",
@@ -2454,8 +2542,8 @@ async function sendTelegramNotification(text){
  scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
  catSets.classList.add('active');
  fdShowCategory(scene, 'sets');
- await moveCursorTo(id('prod-20'), 450);
- await moveCursorTo(id('prod-22'), 400);
+ await moveCursorTo(id('prod-25'), 450);
+ await moveCursorTo(id('prod-27'), 400);
  } },
  { caption:"Ichimliklarni ko'zdan kechirib, <b>Coca-Cola</b>'ni tanlaydi",
  run: async(scene)=>{
@@ -2466,10 +2554,12 @@ async function sendTelegramNotification(text){
  fdShowCategory(scene, 'drinks');
  await moveCursorTo(id('prod-14'), 450);
  await moveCursorTo(id('prod-16'), 400);
- await goAndClick(id('fd-add-13'), '#F59E0B');
+ await goAndClick(id('fd-add-14'), '#F59E0B');
  id('fd-cart-badge').textContent='2'; id('fd-cart-badge').classList.add('bump');
  id('fd-drawer-items').innerHTML += '<div class="fd-drawer-item"><span>Coca-Cola 0.5L</span><span>10 000 so\'m</span></div>';
  id('fd-subtotal-val').textContent ="55 000 so'm";
+ id('fd-delivery-val').textContent ="15 000 so'm";
+ id('fd-total-val').textContent ="70 000 so'm";
  await sleep(300); id('fd-cart-badge').classList.remove('bump');
  } },
  { caption:"Savatchasini ochib, buyurtmaga o'tadi",
@@ -2477,9 +2567,13 @@ async function sendTelegramNotification(text){
  await goAndClick(id('fd-cart-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.add('open');
  await sleep(300);
  await goAndClick(id('fd-checkout-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.remove('open');
- await sleep(150); id('fd-modal-overlay').classList.add('open');
+ await sleep(150);
+ id('fd-modal-subtotal-val').textContent ="55 000 so'm";
+ id('fd-modal-delivery-val').textContent ="15 000 so'm";
+ id('fd-modal-total-val').textContent ="70 000 so'm";
+ id('fd-modal-overlay').classList.add('open');
  } },
- { caption:"<i class=\"fa-solid fa-location-dot\"></i> bir bosish — manzil o'zi topiladi",
+ { caption:"<i class=\"fa-solid fa-location-crosshairs\"></i> bir bosish — manzil o'zi topiladi",
  run: async(scene)=>{ await goAndClick(id('fd-geo-btn'), '#F59E0B'); await typeInto(id('fd-address'), 'Toshkent sh., Chilonzor tumani, 12-uy', 28); } },
  { caption:"Ismi va raqamini kiritadi",
  run: async(scene)=>{
@@ -2491,6 +2585,15 @@ async function sendTelegramNotification(text){
  await goAndClick(id('fd-confirm'), '#F59E0B');
  await zoomOut();
  id('fd-modal-overlay').classList.remove('open');
+ id('fd-sc-name').textContent='Sardor Aliyev';
+ id('fd-sc-phone').textContent='+998 93 456 78 90';
+ id('fd-sc-address').textContent="Toshkent sh., Chilonzor tumani, 12-uy";
+ id('fd-sc-items').innerHTML =
+ '<div class="fd-row"><span>Margarita Pitsa</span><span>45 000 so\'m</span></div>'+
+ '<div class="fd-row"><span>Coca-Cola 0.5L</span><span>10 000 so\'m</span></div>';
+ id('fd-sc-subtotal').textContent ="55 000 so'm";
+ id('fd-sc-delivery').textContent ="15 000 so'm";
+ id('fd-sc-total').textContent ="70 000 so'm";
  await sleep(200); id('fd-success').classList.add('show'); } },
  { caption:"Buyurtma esa oshxonaga <b>Telegram bot</b> orqali zumda yetib boradi <i class='fa-solid fa-robot'></i>",
  splash:true, splashCaption:"<b>35 daqiqada</b> yetkaziladi",
@@ -2501,7 +2604,9 @@ async function sendTelegramNotification(text){
  telegramMessage:
  '<b>Yangi buyurtma — OtabekFood</b>\n'+
  'Mahsulotlar: Margarita Pitsa, Coca-Cola 0.5L\n'+
- 'Jami: 55 000 so\'m\n'+
+ 'Mahsulotlar summasi: 55 000 so\'m\n'+
+ 'Yetkazib berish: 15 000 so\'m\n'+
+ 'Jami: 70 000 so\'m\n'+
  'Mijoz: Sardor Aliyev\n'+
  'Telefon: +998 93 456 78 90\n'+
  'Manzil: Toshkent sh., Chilonzor tumani, 12-uy\n'+

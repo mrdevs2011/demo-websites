@@ -23,7 +23,7 @@ export const SERVICES = [
 ];
 
 export const MASTERS = [
-  { id: 'madina',  name: 'Madina Yusupova',  role: "Bosh usta / Soch", exp: "12 yillik tajriba", img: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop', specialties: ['hair_cut', 'hair_color', 'hair_style'] },
+  { id: 'madina',  name: 'Alisher Yusupov',  role: "Bosh usta / Soch", exp: "12 yillik tajriba", img: 'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop', specialties: ['hair_cut', 'hair_color', 'hair_style'] },
   { id: 'dilnoza', name: 'Dilnoza Karimova', role: "Manikur ustasi",   exp: "8 yillik tajriba",  img: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop', specialties: ['manicure', 'pedicure'] },
   { id: 'zarina',  name: 'Zarina Aliyeva',   role: "Vizajist",         exp: "6 yillik tajriba",  img: 'https://images.unsplash.com/photo-1521146764736-56c929d59c83?q=80&w=400&auto=format&fit=crop', specialties: ['makeup', 'evening_makeup', 'brows'] },
   { id: 'jasur',   name: 'Jasur Rahimov',    role: "Barber",           exp: "10 yillik tajriba", img: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=400&auto=format&fit=crop', specialties: ['barber_cut', 'beard_care'] },
