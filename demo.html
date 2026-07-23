@@ -739,7 +739,7 @@ body{
 }
 .lu-badge-cat{
  position:absolute; top:8px; right:8px; background:rgba(11,11,18,.55); color:#fff; font-size:8.5px; font-weight:700;
- padding:3px 7px; border-radius:6px; text-transform:capitalize;
+ padding:3px 7px; border-radius:6px; text-transform:uppercase;
 }
 .lu-card-body{ padding:11px; display:flex; flex-direction:column; gap:8px; }
 .lu-card h3{ font-size:11.5px; margin:0; font-weight:700; line-height:1.3; }
@@ -844,6 +844,10 @@ body{
 .lu-sc-row{ display:flex; justify-content:space-between; gap:8px; font-size:10.5px; padding:2px 0; }
 .lu-sc-row span{ color:#75758A; }
 .lu-sc-row b{ font-weight:600; text-align:right; color:#0B0B12; }
+.lu-sc-items{ display:flex; flex-direction:column; gap:5px; }
+.lu-sc-items .lu-sc-item{ display:flex; justify-content:space-between; font-size:10px; }
+.lu-sc-items .lu-sc-item .name{ color:#0B0B12; }
+.lu-sc-items .lu-sc-item .price{ font-weight:600; white-space:nowrap; color:#0B0B12; }
 .lu-sc-total{ display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#4F46E5; color:#fff; border-radius:10px; font-size:11.5px; width:100%; max-width:260px; box-sizing:border-box; }
 .lu-sc-total b{ font-family:'Space Grotesk',sans-serif; font-size:13px; }
 
@@ -1676,7 +1680,7 @@ body{
  </div>
  <div class="lu-card">
  <div class="lu-card-media"><img class="lu-card-img" src="https://images.unsplash.com/photo-1516600164266-f3b8166ae679?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><span class="lu-badge-sale">-18%</span><span class="lu-badge-cat">uy-tovarlari</span></div>
- <h3>Bambuk choy stakan seti</h3>
+ <h3>Bambuk choy stakan seti (4 ta)</h3>
  <div><span class="lu-price">189 000 so'm</span><span class="lu-old-price">230 000</span></div>
  <div class="lu-sizes">&nbsp;</div>
  <button class="lu-add-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/></svg>Savatga qo'shish</button>
@@ -1705,7 +1709,7 @@ body{
  <div id="lu-drawer-items"></div>
  </div>
  <div class="lu-drawer-foot">
- <div class="lu-subtotal"><span>Jami</span><span id="lu-subtotal-val">0 so'm</span></div>
+ <div class="lu-subtotal"><span>Jami:</span><span id="lu-subtotal-val">0 so'm</span></div>
  <button class="lu-checkout-btn" id="lu-checkout-btn">Buyurtma berish</button>
  </div>
  </div>
@@ -1727,12 +1731,16 @@ body{
  <div class="lu-success" id="lu-success">
  <div class="lu-success-card">
  <div class="ic"><i class="fa-solid fa-circle-check"></i></div>
- <h3>Rahmat, buyurtma qabul qilindi!</h3>
- <p>Tez orada operatorlarimiz siz bilan bog'lanadi va yetkazib berish vaqtini aniqlashtiradi.</p>
- <div class="lu-order-chip" id="lu-order-chip">№ LU-20394</div>
+ <h3>Buyurtma qabul qilindi!</h3>
+ <p>Operatorimiz tez orada siz bilan bog'lanadi.</p>
+ <div class="lu-order-chip" id="lu-order-chip">№ order_m8kf2a_x9y8z7</div>
  <div class="lu-sc-block">
- <div class="lu-sc-row"><span>Mahsulot</span><b id="lu-sc-item">Klassik oq krossovka (M)</b></div>
  <div class="lu-sc-row"><span>Xaridor</span><b id="lu-sc-name">Aziz Karimov</b></div>
+ <div class="lu-sc-row"><span>Telefon</span><b id="lu-sc-phone">+998 90 123 45 67</b></div>
+ <div class="lu-sc-row"><span>Manzil</span><b id="lu-sc-address">Toshkent sh., Yunusobod tumani, 14-uy</b></div>
+ </div>
+ <div class="lu-sc-block lu-sc-items" id="lu-sc-items">
+ <div class="lu-sc-item"><span class="name">Klassik oq krossovka <span style="color:#75758A">(M) ×1</span></span><span class="price">399 000 so'm</span></div>
  </div>
  <div class="lu-sc-total"><span>Jami</span><b id="lu-sc-total-val">399 000 so'm</b></div>
  </div>
