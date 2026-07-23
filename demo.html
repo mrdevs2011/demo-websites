@@ -129,6 +129,7 @@ body{
 
 /* ---- Browser chrome ---- */
 .player{
+  position:relative;
   background:var(--panel);
   border:1px solid var(--panel-border);
   border-radius:18px;
@@ -751,6 +752,72 @@ body{
 .live-popup .lp-time{ display:block; margin-top:2px; font-size:9.5px; color:rgba(255,255,255,.5); }
 
 /* ============================================================
+   ADMIN TELEFONI — Telegram bildirishnomasi suzib chiqadi
+   ============================================================ */
+.admin-phone-pop{
+  position:absolute;
+  right:16px;
+  bottom:88px;
+  width:130px;
+  z-index:210;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  opacity:0;
+  transform:translateY(65%) scale(.92) rotate(-4deg);
+  transition:opacity .5s cubic-bezier(.22,.9,.32,1), transform .55s cubic-bezier(.22,.9,.32,1);
+  pointer-events:none;
+  filter:drop-shadow(0 18px 30px rgba(0,0,0,.5));
+}
+.admin-phone-pop.show{ opacity:1; transform:translateY(0) scale(1) rotate(-2deg); }
+.apw-label{
+  font-size:9.5px; font-weight:700; color:#fff; background:rgba(0,0,0,.6); backdrop-filter:blur(4px);
+  padding:3px 9px; border-radius:20px; white-space:nowrap; letter-spacing:.2px;
+  display:flex; align-items:center; gap:4px; border:1px solid rgba(255,255,255,.12);
+}
+.apw-phone{
+  width:100%; aspect-ratio:9/18.5; background:#0b0c10; border-radius:16px; padding:5px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1);
+}
+.apw-screen{
+  width:100%; height:100%; border-radius:11px; position:relative; overflow:hidden;
+  background:linear-gradient(160deg,#1e2a38,#0e1620);
+}
+.apw-notch{
+  position:absolute; top:3px; left:50%; transform:translateX(-50%);
+  width:36%; height:8px; background:#0b0c10; border-radius:0 0 7px 7px; z-index:2;
+}
+.apw-clock{ text-align:center; font-size:9px; font-weight:700; color:rgba(255,255,255,.8); padding:13px 0 6px; font-family:'Manrope',sans-serif; }
+.apw-noti{
+  margin:0 6px; background:rgba(255,255,255,.12); backdrop-filter:blur(6px);
+  border-radius:9px; padding:6px 7px;
+  display:flex; gap:6px; align-items:flex-start;
+  border:1px solid rgba(255,255,255,.1);
+  opacity:0; transform:translateY(-6px);
+  transition:opacity .35s ease .25s, transform .35s ease .25s;
+}
+.admin-phone-pop.show .apw-noti{ opacity:1; transform:translateY(0); }
+.apw-noti-ic{
+  flex:none; width:17px; height:17px; border-radius:5px; background:#229ED9;
+  display:flex; align-items:center; justify-content:center; font-size:10px; color:#fff;
+}
+.apw-noti-body{ min-width:0; }
+.apw-noti-top{ display:flex; align-items:center; gap:4px; }
+.apw-noti-top b{ font-size:7.5px; color:#fff; font-weight:800; }
+.apw-noti-top span{ font-size:6.8px; color:rgba(255,255,255,.45); margin-left:auto; }
+.apw-noti-title{ font-size:7.3px; color:#fff; font-weight:700; margin-top:2px; line-height:1.25; }
+.apw-noti-msg{
+  font-size:6.6px; color:rgba(255,255,255,.7); margin-top:1px; line-height:1.3;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+@media (max-width:720px){
+  .admin-phone-pop{ width:100px; right:10px; bottom:78px; }
+}
+.player:fullscreen .admin-phone-pop,
+.player:-webkit-full-screen .admin-phone-pop{ bottom:22px; }
+
+/* ============================================================
    CONFETTI SUCCESS RECEIPT OVERLAY
    ============================================================ */
 .receipt-overlay{
@@ -1226,6 +1293,24 @@ body{
       </div>
     </div>
 
+    <div class="admin-phone-pop" id="adminPhonePop">
+      <div class="apw-label">📲 Admin telefonida</div>
+      <div class="apw-phone">
+        <div class="apw-screen">
+          <div class="apw-notch"></div>
+          <div class="apw-clock" id="apwClock">09:41</div>
+          <div class="apw-noti">
+            <div class="apw-noti-ic">✈️</div>
+            <div class="apw-noti-body">
+              <div class="apw-noti-top"><b>Telegram</b><span>hozir</span></div>
+              <div class="apw-noti-title" id="apwTitle">Yangi buyurtma!</div>
+              <div class="apw-noti-msg" id="apwMsg">Bot orqali xabar keldi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="caption-bar">
       <span class="cap-badge" id="stepIndicator">1/1</span>
       <div id="caption">Boshlanyapti…</div>
@@ -1435,11 +1520,45 @@ async function sendTelegramNotification(text){
   }
 
   /* ============================================================
+     ADMIN TELEFONI — Telegram bildirishnomasi suzib chiqadi
+     ============================================================ */
+  const adminPhonePop = document.getElementById('adminPhonePop');
+  const apwClock = document.getElementById('apwClock');
+  const apwTitle = document.getElementById('apwTitle');
+  const apwMsg = document.getElementById('apwMsg');
+  let adminPhoneTimer = null;
+
+  function showAdminPhoneNotification(telegramMessage){
+    if(!telegramMessage) return;
+    const plain = telegramMessage.replace(/<\/?b>/g,'');
+    const lines = plain.split('\n').filter(Boolean);
+    apwTitle.textContent = (lines[0] || 'Yangi xabar!').trim();
+    apwMsg.textContent = lines.slice(1).join(' · ') || 'Bot orqali yangi ma\'lumot keldi';
+    const now = new Date();
+    apwClock.textContent = String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+
+    clearTimeout(adminPhoneTimer);
+    adminPhonePop.classList.remove('show');
+    // kichik kechikish bilan qayta ko'rsatish (retrigger animatsiyasi uchun)
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        adminPhonePop.classList.add('show');
+        adminPhoneTimer = setTimeout(()=>{
+          adminPhonePop.classList.remove('show');
+        }, 3600);
+      });
+    });
+  }
+
+  /* ============================================================
      CONFETTI + RECEIPT + TELEGRAM — buyurtma yakunlanganda
      ============================================================ */
   async function celebrateSuccess({title, text, telegramMessage}){
     // 1) Real Telegram Bot API'ga fetch orqali xabar yuborish (yoki simulyatsiya)
     sendTelegramNotification(telegramMessage);
+
+    // 1.1) Admin telefonida Telegram bildirishnomasi "suzib" chiqadi
+    setTimeout(()=> showAdminPhoneNotification(telegramMessage), 450);
 
     // 2) Confetti (agar canvas-confetti kutubxonasi yuklangan bo'lsa)
     if(window.confetti){
