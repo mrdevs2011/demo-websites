@@ -641,112 +641,203 @@ body{
 .eb-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
 /* ============================================================
- SCENE 2 — LUMEN STORE
+ SCENE 2 — LUMEN STORE (production bilan 1:1 — palette: indigo #4F46E5,
+ indigo-dark #3B32C4, indigo-deep #1E1B4B, black #0B0B12, bg #F6F6FA,
+ line #E6E6EF, muted #75758A, sale #FF5A5F)
  ============================================================ */
-.scene.lumen{ font-family:'Inter',sans-serif; background:#fff; color:#111; }
+.scene.lumen{ font-family:'Inter',sans-serif; background:#F6F6FA; color:#0B0B12; }
 .scene.lumen h1,.scene.lumen h2,.scene.lumen h3,.lu-logo{ font-family:'Space Grotesk',sans-serif; }
 .lu-nav{
  position:sticky; top:0; z-index:20;
- display:flex; align-items:center; justify-content:space-between;
- padding:16px 26px; background:#0B0B12; color:#fff;
+ display:flex; align-items:center; gap:14px;
+ padding:13px 22px; background:rgba(255,255,255,.85); backdrop-filter:blur(8px);
+ border-bottom:1px solid #E6E6EF; color:#0B0B12;
 }
-.lu-logo{ font-weight:800; letter-spacing:2px; font-size:16px; }
-.lu-links{ display:flex; gap:20px; font-size:12.5px; opacity:.85; }
-.lu-actions{ display:flex; align-items:center; gap:16px; }
-.lu-cart-btn{ position:relative; background:none; border:none; color:#fff; font-size:17px; cursor:default; }
+.lu-logo{ font-weight:800; letter-spacing:1px; font-size:14.5px; display:flex; align-items:center; gap:7px; flex:none; }
+.lu-logo .dot{ width:8px; height:8px; border-radius:50%; background:#4F46E5; display:inline-block; }
+.lu-search{ flex:1; max-width:190px; position:relative; }
+.lu-search svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); width:12px; height:12px; color:#75758A; }
+.lu-search input{
+ width:100%; box-sizing:border-box; padding:7px 12px 7px 30px; border:1px solid #E6E6EF; border-radius:999px;
+ background:#fff; font-size:11px; font-family:inherit; outline:none; color:#0B0B12;
+}
+.lu-links{ display:flex; gap:14px; font-size:11px; font-weight:500; color:#75758A; flex:none; }
+.lu-links span.active{ color:#0B0B12; }
+@container stage (max-width: 480px){ .lu-links{ display:none; } }
+.lu-actions{ display:flex; align-items:center; gap:12px; flex:none; }
+.lu-cart-btn{
+ position:relative; width:36px; height:36px; border-radius:50%; background:#0B0B12; color:#fff;
+ display:flex; align-items:center; justify-content:center; border:none; cursor:default;
+}
+.lu-cart-btn svg{ width:15px; height:15px; }
 .lu-cart-badge{
- position:absolute; top:-7px; right:-9px; background:#4F46E5; color:#fff; font-size:10px; font-weight:800;
- width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center;
- transition:transform .2s;
+ position:absolute; top:-5px; right:-6px; background:#4F46E5; color:#fff; font-size:9.5px; font-weight:800;
+ width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+ border:2px solid #fff; transition:transform .2s;
 }
 .lu-cart-badge.bump{ animation:bump .35s ease; }
 @keyframes bump{ 0%{transform:scale(1);} 40%{transform:scale(1.22);} 100%{transform:scale(1);} }
+
+/* ---- HERO SLIDER ---- */
+.lu-hero-wrap{ padding:16px 22px 0; }
 .lu-hero{
- padding:50px 26px; text-align:center;
- background:linear-gradient(135deg,#EEF0FF,#fff 70%);
+ position:relative; border-radius:20px; overflow:hidden; min-height:220px;
+ background:#1E1B4B url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=1000&auto=format&fit=crop') center/cover;
+ display:flex; align-items:center; padding:26px 20px;
 }
-.lu-hero h1{ font-size:clamp(22px,4vw,34px); margin:0 0 10px; font-weight:800; }
-.lu-hero p{ color:#75758A; font-size:13.5px; margin:0; }
+.lu-hero::before{
+ content:''; position:absolute; inset:0;
+ background:linear-gradient(100deg, rgba(11,11,18,.88) 20%, rgba(11,11,18,.5) 60%, rgba(79,70,229,.25) 100%);
+}
+.lu-hero-content{ position:relative; z-index:1; max-width:78%; color:#fff; }
+.lu-hero-eyebrow{
+ display:inline-flex; align-items:center; gap:7px; font-size:9.5px; font-weight:700; letter-spacing:1.3px;
+ text-transform:uppercase; color:#C7C4FF; margin-bottom:9px;
+}
+.lu-hero-eyebrow::before{ content:''; width:16px; height:1px; background:#C7C4FF; }
+.lu-hero h1{ font-size:clamp(19px,6cqi,26px); line-height:1.1; margin:0 0 8px; font-weight:700; }
+.lu-hero p{ font-size:11px; color:#D9D8EA; margin:0 0 16px; line-height:1.5; max-width:260px; }
 .lu-hero span{ color:#4F46E5; }
-.lu-section{ padding:40px 26px; }
-.lu-section h2{ font-size:19px; margin:0 0 20px; font-weight:800; }
-.lu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; max-width:960px; margin:0 auto; }
-.lu-card{ transition:transform .2s; }
+.lu-hero-cta{
+ display:inline-flex; align-items:center; gap:8px; background:#fff; color:#0B0B12; padding:9px 16px;
+ border-radius:999px; font-weight:700; font-size:11px;
+}
+.lu-hero-badge{
+ position:absolute; z-index:1; top:16px; right:16px; background:#4F46E5; color:#fff; font-weight:800;
+ font-size:15px; padding:8px 12px; border-radius:12px; text-align:center; line-height:1.1;
+}
+.lu-hero-badge span{ display:block; font-size:8px; font-weight:700; letter-spacing:.6px; text-transform:uppercase; opacity:.85; }
+.lu-hero-dots{ position:absolute; z-index:1; bottom:14px; left:20px; display:flex; gap:6px; }
+.lu-hero-dots i{ width:18px; height:3px; border-radius:2px; background:rgba(255,255,255,.35); display:block; }
+.lu-hero-dots i.active{ background:#fff; }
+
+/* ---- SECTION HEAD / TOOLBAR ---- */
+.lu-section{ padding:30px 22px 0; }
+.lu-section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin-bottom:16px; }
+.lu-section-head h2{ font-size:17px; margin:0; font-weight:700; }
+.lu-section-head p{ margin:4px 0 0; color:#75758A; font-size:10.5px; }
+.lu-toolbar{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+.lu-cat-tabs{ display:flex; gap:6px; flex-wrap:wrap; }
+.lu-cat-tabs span{
+ padding:6px 12px; border-radius:999px; background:#fff; border:1px solid #E6E6EF; font-size:10px; font-weight:600; color:#75758A;
+}
+.lu-cat-tabs span.active{ background:#0B0B12; color:#fff; border-color:#0B0B12; }
+.lu-sort{ margin-left:auto; padding:6px 12px; border-radius:999px; border:1px solid #E6E6EF; background:#fff; font-size:10px; font-weight:600; color:#0B0B12; display:flex; align-items:center; gap:6px; }
+.lu-sort i{ font-size:8px; color:#75758A; }
+
+/* ---- PRODUCT GRID ---- */
+.lu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; max-width:960px; margin:0 auto; }
+.lu-card{ background:#fff; border-radius:14px; border:1px solid #E6E6EF; overflow:hidden; transition:transform .2s; }
 .lu-card.press{ transform:scale(.96); }
-.lu-card-media{ position:relative; margin-bottom:10px; }
-.lu-card-img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; background:#f2f2f2; display:block; }
+.lu-card-media{ position:relative; aspect-ratio:4/5; background:#EEEEF4; overflow:hidden; }
+.lu-card-img{ width:100%; height:100%; object-fit:cover; display:block; }
 .lu-badge-sale{
- position:absolute; top:8px; left:8px; background:#FF5A5F; color:#fff; font-size:10px; font-weight:800;
- padding:3px 8px; border-radius:6px;
+ position:absolute; top:8px; left:8px; background:#FF5A5F; color:#fff; font-size:9.5px; font-weight:800;
+ padding:3px 7px; border-radius:6px;
 }
 .lu-badge-cat{
- position:absolute; top:8px; right:8px; background:rgba(0,0,0,.55); color:#fff; font-size:9.5px; font-weight:700;
- padding:3px 8px; border-radius:6px; text-transform:capitalize;
+ position:absolute; top:8px; right:8px; background:rgba(11,11,18,.55); color:#fff; font-size:8.5px; font-weight:700;
+ padding:3px 7px; border-radius:6px; text-transform:capitalize;
 }
-.lu-card h3{ font-size:13.5px; margin:0 0 6px; font-weight:700; }
-.lu-price{ font-size:13.5px; font-weight:800; }
-.lu-old-price{ font-size:11.5px; color:#75758A; text-decoration:line-through; margin-left:6px; font-weight:500; }
-.lu-sizes{ display:flex; gap:6px; margin:10px 0; }
+.lu-card-body{ padding:11px; display:flex; flex-direction:column; gap:8px; }
+.lu-card h3{ font-size:11.5px; margin:0; font-weight:700; line-height:1.3; }
+.lu-price{ font-size:12px; font-weight:800; }
+.lu-old-price{ font-size:10px; color:#75758A; text-decoration:line-through; margin-left:5px; font-weight:500; }
+.lu-sizes{ display:flex; gap:5px; }
 .lu-size-chip{
- width:30px; height:30px; border-radius:8px; border:1.5px solid #ddd; font-size:11.5px; font-weight:700;
- display:flex; align-items:center; justify-content:center; cursor:default; transition:all .15s; color:#75758A;
+ width:24px; height:24px; border-radius:6px; border:1.5px solid #E6E6EF; font-size:9.5px; font-weight:700;
+ display:flex; align-items:center; justify-content:center; cursor:default; transition:all .15s; color:#75758A; background:#fff;
 }
-.lu-size-chip.selected{ background:#111; border-color:#111; color:#fff; }
+.lu-size-chip.selected{ background:#4F46E5; border-color:#4F46E5; color:#fff; }
 .lu-size-chip.press{ transform:scale(.9); }
 .lu-add-btn{
- width:100%; padding:10px; border:none; border-radius:8px; background:#111; color:#fff; font-weight:700;
- font-size:12px; font-family:inherit; cursor:default; display:flex; align-items:center; justify-content:center; gap:6px;
+ margin-top:2px; width:100%; padding:8px; border:none; border-radius:8px; background:#0B0B12; color:#fff; font-weight:700;
+ font-size:10.5px; font-family:inherit; cursor:default; display:flex; align-items:center; justify-content:center; gap:6px;
 }
-.lu-add-btn svg{ width:14px; height:14px; }
+.lu-add-btn svg{ width:12px; height:12px; }
 .lu-add-btn.press{ transform:scale(.96); }
 
+/* ---- FOOTER ---- */
+.lu-footer{ margin-top:40px; background:#0B0B12; color:#B9B8CC; padding:34px 22px 18px; }
+.lu-footer-brand{ display:flex; align-items:center; gap:7px; color:#fff; font-weight:800; font-size:13px; margin-bottom:10px; }
+.lu-footer-brand .dot{ width:7px; height:7px; border-radius:50%; background:#4F46E5; display:inline-block; }
+.lu-footer p.lu-footer-desc{ font-size:10.5px; color:#8F8EA6; line-height:1.6; max-width:280px; margin:0 0 22px; }
+.lu-footer-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:18px; margin-bottom:22px; }
+.lu-footer-grid h5{ color:#fff; font-size:10px; text-transform:uppercase; letter-spacing:1px; margin:0 0 10px; }
+.lu-footer-grid a{ display:block; font-size:10.5px; color:#B9B8CC; margin-bottom:7px; }
+.lu-footer-bottom{ padding-top:16px; border-top:1px solid rgba(255,255,255,.08); display:flex; justify-content:space-between; font-size:9.5px; color:#6E6D84; flex-wrap:wrap; gap:6px; }
+
+/* ---- CART DRAWER ---- */
 .lu-drawer-overlay{
- position:absolute; inset:0; background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
+ position:absolute; inset:0; background:rgba(11,11,18,.45); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
 }
 .lu-drawer-overlay.open{ opacity:1; pointer-events:auto; }
 .lu-drawer{
  position:absolute; top:0; right:0; height:100%; width:min(320px,88%);
  background:#fff; box-shadow:-10px 0 30px rgba(0,0,0,.15);
- transform:translateX(100%); transition:transform .35s; padding:22px; display:flex; flex-direction:column;
+ transform:translateX(100%); transition:transform .35s; display:flex; flex-direction:column;
 }
 .lu-drawer-overlay.open .lu-drawer{ transform:translateX(0); }
-.lu-drawer h3{ margin:0 0 16px; font-size:16px; color:#111; }
-.lu-drawer-item{ display:flex; gap:10px; align-items:center; padding:10px 0; border-bottom:1px solid #eee; color:#111; }
-.lu-drawer-item img{ width:46px; height:46px; border-radius:8px; object-fit:cover; }
-.lu-drawer-item .info{ flex:1; font-size:12.5px; color:#111; }
-.lu-drawer-item .info b{ display:block; font-size:12.5px; color:#111; }
-.lu-subtotal{ margin-top:auto; padding-top:14px; display:flex; justify-content:space-between; font-weight:800; font-size:14px; color:#111; }
+.lu-drawer-head{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid #E6E6EF; }
+.lu-drawer-head h3{ margin:0; font-size:15px; color:#0B0B12; }
+.lu-drawer-close{ width:28px; height:28px; border-radius:50%; background:#F6F6FA; display:flex; align-items:center; justify-content:center; font-size:11px; color:#0B0B12; }
+.lu-drawer-body{ flex:1; padding:14px 20px; overflow:hidden; }
+.lu-drawer-item{ display:flex; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid #F0F0F5; color:#0B0B12; }
+.lu-drawer-item img{ width:46px; height:56px; border-radius:8px; object-fit:cover; background:#EEEEF4; flex:none; }
+.lu-drawer-item .info{ flex:1; font-size:11.5px; color:#75758A; }
+.lu-drawer-item .info b{ display:block; font-size:12px; color:#0B0B12; font-weight:600; margin-bottom:2px; }
+.lu-drawer-foot{ padding:16px 20px 20px; border-top:1px solid #E6E6EF; }
+.lu-subtotal{ display:flex; justify-content:space-between; font-weight:800; font-size:13.5px; color:#0B0B12; margin-bottom:12px; }
 .lu-checkout-btn{
- margin-top:12px; width:100%; padding:12px; border:none; border-radius:8px; background:#4F46E5; color:#fff;
- font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+ width:100%; padding:12px; border:none; border-radius:10px; background:#4F46E5; color:#fff;
+ font-weight:700; font-size:12.5px; font-family:inherit; cursor:default;
 }
 
+/* ---- CHECKOUT MODAL ---- */
 .lu-modal-overlay{
- position:absolute; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center;
- opacity:0; pointer-events:none; transition:opacity .3s; z-index:60;
+ position:absolute; inset:0; background:rgba(11,11,18,.55); display:flex; align-items:center; justify-content:center;
+ opacity:0; pointer-events:none; transition:opacity .3s; z-index:60; padding:18px;
 }
 .lu-modal-overlay.open{ opacity:1; pointer-events:auto; }
-.lu-modal{ background:#fff; border-radius:14px; padding:24px; width:min(360px,88%); transform:scale(.96); transition:transform .3s; }
+.lu-modal{ background:#fff; border-radius:18px; padding:22px; width:min(340px,100%); transform:scale(.96); transition:transform .3s; box-sizing:border-box; }
 .lu-modal-overlay.open .lu-modal{ transform:scale(1); }
-.lu-modal h3{ margin:0 0 16px; font-size:16px; color:#111; }
-.lu-field{ margin-bottom:12px; }
-.lu-field label{ display:block; font-size:11px; color:#75758A; margin-bottom:5px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
+.lu-modal h3{ margin:0 0 4px; font-size:15.5px; color:#0B0B12; }
+.lu-modal > p.sub{ margin:0 0 16px; color:#75758A; font-size:11px; }
+.lu-field{ margin-bottom:11px; }
+.lu-field label{ display:block; font-size:10px; color:#75758A; margin-bottom:5px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
 .lu-field input, .lu-field textarea{
- width:100%; border:1.5px solid #e2e2e2; border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit;
- outline:none; color:#111;
+ width:100%; box-sizing:border-box; border:1px solid #E6E6EF; border-radius:9px; padding:9px 11px; font-size:12.5px; font-family:inherit;
+ outline:none; color:#0B0B12; background:#fff;
 }
+.lu-modal-actions{ display:flex; gap:8px; margin-top:14px; }
+.lu-btn-secondary{ flex:1; padding:11px; border-radius:9px; background:#F6F6FA; font-weight:700; font-size:11.5px; color:#0B0B12; border:none; }
 .lu-confirm-btn{
- width:100%; margin-top:6px; padding:12px; border:none; border-radius:8px; background:#111; color:#fff;
- font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+ flex:2; padding:11px; border:none; border-radius:9px; background:#4F46E5; color:#fff;
+ font-weight:700; font-size:11.5px; font-family:inherit; cursor:default;
 }
+
+/* ---- SUCCESS CARD (checkout modal ichida, production'dagi kabi) ---- */
 .lu-success{
- position:absolute; inset:0; background:rgba(255,255,255,.98); display:flex; flex-direction:column; align-items:center;
- justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
+ position:absolute; inset:0; background:#fff; border-radius:18px; display:flex; flex-direction:column; align-items:center;
+ justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:22px; box-sizing:border-box;
 }
 .lu-success.show{ opacity:1; pointer-events:auto; }
-.lu-success .ic{ font-size:44px; margin-bottom:14px; }
-.lu-success h3{ margin:0 0 8px; font-size:19px; }
-.lu-success p{ color:#75758A; font-size:13px; max-width:280px; }
+.lu-success .ic{
+ width:48px; height:48px; border-radius:50%; background:#E9FBF1; color:#1a9e5c; font-size:20px;
+ display:flex; align-items:center; justify-content:center; margin-bottom:12px;
+}
+.lu-success h3{ margin:0 0 4px; font-size:16px; }
+.lu-success p{ color:#75758A; font-size:11.5px; max-width:260px; margin:0 0 12px; }
+.lu-order-chip{
+ display:inline-block; background:#1E1B4B; color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700;
+ font-size:10.5px; letter-spacing:.4px; padding:5px 12px; border-radius:999px; margin-bottom:12px;
+}
+.lu-sc-block{ background:#F6F6FA; border-radius:10px; padding:10px 12px; width:100%; max-width:260px; text-align:left; margin-bottom:8px; box-sizing:border-box; }
+.lu-sc-row{ display:flex; justify-content:space-between; gap:8px; font-size:10.5px; padding:2px 0; }
+.lu-sc-row span{ color:#75758A; }
+.lu-sc-row b{ font-weight:600; text-align:right; color:#0B0B12; }
+.lu-sc-total{ display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#4F46E5; color:#fff; border-radius:10px; font-size:11.5px; width:100%; max-width:260px; box-sizing:border-box; }
+.lu-sc-total b{ font-family:'Space Grotesk',sans-serif; font-size:13px; }
 
 /* ============================================================
  SCENE 3 — NEXT GEN ACADEMY  (production bilan 1:1 mos — brand palette:
