@@ -287,6 +287,10 @@ body{
  overflow-y:auto;
  overflow-x:hidden;
  scrollbar-width:none;
+ transition:transform .45s cubic-bezier(.22,.61,.36,1);
+}
+.screen-scroll.zoomed{
+ transform:scale(var(--zoom-scale, 1.38));
 }
 .screen-scroll::-webkit-scrollbar{ display:none; }
 .scene{ display:none; min-height:100%; }
@@ -1651,6 +1655,26 @@ async function sendTelegramNotification(text){
  await sleep(duration + 60);
  }
 
+ /* ---------- Punch-zoom: muhim (konversiya) lahzalarida kursor turgan
+ nuqtaga qarab ekran biroz kattalashadi — e'tiborni CTA tugmasiga tortadi.
+ Faqat eng muhim bosishlarda ishlatiladi (har loyihada ~2 marta), doim emas. ---------- */
+ async function zoomIn(el, scale){
+ scale = scale || 1.38;
+ const contentRect = screenScroll.getBoundingClientRect();
+ const r = el.getBoundingClientRect();
+ const originX = ((r.left + r.width/2 - contentRect.left) / contentRect.width) * 100;
+ const originY = ((r.top + r.height/2 - contentRect.top) / contentRect.height) * 100;
+ screenScroll.style.transformOrigin = originX + '% ' + originY + '%';
+ screenScroll.style.setProperty('--zoom-scale', scale);
+ screenScroll.classList.add('zoomed');
+ await sleep(450);
+ }
+
+ async function zoomOut(){
+ screenScroll.classList.remove('zoomed');
+ await sleep(450);
+ }
+
  function ripple(accent){
  const x = parseFloat(cursor.style.left);
  const y = parseFloat(cursor.style.top);
@@ -1899,14 +1923,20 @@ async function sendTelegramNotification(text){
  splash:true, splashCaption:"Bron qiling — <b>bir bosishda</b>",
  run: async(scene)=>{
  await scrollSceneTo(scene, id('eb-services'));
- await goAndClick(id('eb-book-haircut'), '#C9A227'); id('eb-modal-overlay').classList.add('open'); await sleep(250);
+ await zoomIn(id('eb-book-haircut'));
+ await goAndClick(id('eb-book-haircut'), '#C9A227');
+ await zoomOut();
+ id('eb-modal-overlay').classList.add('open'); await sleep(250);
  } },
  { caption:"Sevimli ustasini tanlaydi — <b>Madina Yusupova</b>",
  run: async(scene)=>{ await goAndClick(id('pick-madina'), '#C9A227'); id('pick-madina').classList.add('selected'); } },
  { caption:"Qulay vaqtni belgilaydi — <b>11:30</b>",
  run: async(scene)=>{ await goAndClick(id('slot-1130'), '#C9A227'); id('slot-1130').classList.add('selected'); } },
  { caption:"Bir bosish — va tayyor!",
- run: async(scene)=>{ await goAndClick(id('eb-confirm-booking'), '#C9A227'); id('eb-modal-overlay').classList.remove('open');
+ run: async(scene)=>{ await zoomIn(id('eb-confirm-booking'));
+ await goAndClick(id('eb-confirm-booking'), '#C9A227');
+ await zoomOut();
+ id('eb-modal-overlay').classList.remove('open');
  await sleep(200); id('eb-toast').classList.add('show'); } },
  { caption:"Bron esa administratorga Telegram'da zumda yetib boradi <i class='fa-brands fa-telegram'></i>",
  splash:true, splashCaption:"Bron zumda administratorga yetadi <i class='fa-brands fa-telegram'></i>",
@@ -1958,7 +1988,9 @@ async function sendTelegramNotification(text){
  { caption:"Bir bosish — <b>savatga qo'shildi</b>",
  splash:true, splashCaption:"Savatga qo'shing — <b>1 bosish</b>",
  run: async(scene)=>{
+ await zoomIn(id('add-201'));
  await goAndClick(id('add-201'), '#4338CA');
+ await zoomOut();
  id('lu-cart-badge').textContent='1'; id('lu-cart-badge').classList.add('bump');
  id('lu-drawer-items').innerHTML = `<div class="lu-drawer-item"><img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" referrerpolicy="no-referrer" loading="lazy" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';const ic=document.createElement('i');ic.className='fa-solid fa-image';d.appendChild(ic);this.replaceWith(d);"><div class="info"><b>Klassik oq krossovka</b>O'lcham: M</div><div>399 000 so'm</div></div>`;
  id('lu-subtotal-val').textContent = '399 000 so\'m';
@@ -1977,7 +2009,10 @@ async function sendTelegramNotification(text){
  run: async(scene)=>{ await moveCursorTo(id('lu-address'),400); await typeInto(id('lu-address'), 'Toshkent sh., Yunusobod tumani, 14-uy', 30); } },
  { caption:"Bosadi — va tamom!",
  splash:true, splashCaption:"Buyurtma qabul qilindi!",
- run: async(scene)=>{ await goAndClick(id('lu-confirm-order'), '#4338CA'); id('lu-modal-overlay').classList.remove('open');
+ run: async(scene)=>{ await zoomIn(id('lu-confirm-order'));
+ await goAndClick(id('lu-confirm-order'), '#4338CA');
+ await zoomOut();
+ id('lu-modal-overlay').classList.remove('open');
  await sleep(200); id('lu-success').classList.add('show'); await sleep(900); id('lu-success').classList.remove('show');
  await celebrateSuccess({
  title:'Buyurtma qabul qilindi! <i class="fa-solid fa-bag-shopping"></i>',
@@ -2018,7 +2053,9 @@ async function sendTelegramNotification(text){
  run: async(scene)=>{ await moveCursorTo(q(scene,'#course-frontend h3'), 500); } },
  { caption:"<b>Yozilish</b>ga bosadi",
  splash:true, splashCaption:"Kursga yoziling — <b>hoziroq</b>",
- run: async(scene)=>{ await goAndClick(id('enroll-frontend'), '#7c4dff');
+ run: async(scene)=>{ await zoomIn(id('enroll-frontend'));
+ await goAndClick(id('enroll-frontend'), '#7c4dff');
+ await zoomOut();
  await scrollSceneTo(scene, id('ac-lead-form'), 10);
  id('ac-course-select').value = 'Frontend Development';
  id('ac-course-select').classList.add('highlight');
@@ -2029,7 +2066,10 @@ async function sendTelegramNotification(text){
  { caption:"Telefon raqamini kiritadi",
  run: async(scene)=>{ await moveCursorTo(id('ac-phone'),400); await typeInto(id('ac-phone'), '+998 91 234 56 78'); } },
  { caption:"Arizani yuboradi — bosildi!",
- run: async(scene)=>{ await goAndClick(id('ac-submit-lead'), '#7c4dff'); id('ac-lead-success').classList.add('show'); } },
+ run: async(scene)=>{ await zoomIn(id('ac-submit-lead'));
+ await goAndClick(id('ac-submit-lead'), '#7c4dff');
+ await zoomOut();
+ id('ac-lead-success').classList.add('show'); } },
  { caption:"Ma'lumotlar zumda <b>bazaga</b> tushadi — hech narsa qo'ldan boy berilmaydi <i class='fa-solid fa-database'></i>",
  splash:true, splashCaption:"Ariza zumda <b>bazaga</b> tushadi <i class='fa-solid fa-database'></i>",
  run: async(scene)=>{ await sleep(900); id('ac-lead-success').classList.remove('show');
@@ -2071,7 +2111,9 @@ async function sendTelegramNotification(text){
  { caption:"«Margarita Pitsa»ni savatga tashlaydi",
  splash:true, splashCaption:"Pitsa buyurtma qiling",
  run: async(scene)=>{
+ await zoomIn(id('fd-add-1'));
  await goAndClick(id('fd-add-1'), '#F59E0B');
+ await zoomOut();
  id('fd-cart-badge').textContent='1'; id('fd-cart-badge').classList.add('bump');
  id('fd-drawer-items').innerHTML = '<div class="fd-drawer-item"><span>Margarita Pitsa</span><span>45 000 so\'m</span></div>';
  id('fd-subtotal-val').textContent ="45 000 so'm";
@@ -2114,7 +2156,10 @@ async function sendTelegramNotification(text){
  await moveCursorTo(id('fd-phone'),400); await typeInto(id('fd-phone'), '+998 93 456 78 90');
  } },
  { caption:"Tasdiqlaydi — va bosh og'rig'i tugadi!",
- run: async(scene)=>{ await goAndClick(id('fd-confirm'), '#F59E0B'); id('fd-modal-overlay').classList.remove('open');
+ run: async(scene)=>{ await zoomIn(id('fd-confirm'));
+ await goAndClick(id('fd-confirm'), '#F59E0B');
+ await zoomOut();
+ id('fd-modal-overlay').classList.remove('open');
  await sleep(200); id('fd-success').classList.add('show'); } },
  { caption:"Buyurtma esa oshxonaga <b>Telegram bot</b> orqali zumda yetib boradi <i class='fa-solid fa-robot'></i>",
  splash:true, splashCaption:"<b>35 daqiqada</b> yetkaziladi",
