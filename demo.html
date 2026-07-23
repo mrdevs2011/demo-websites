@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 ta loyiha — Jonli namoyish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GLOBAL / STAGE
+   ============================================================ */
+:root{
+  --stage-bg-1:#0b0c10;
+  --stage-bg-2:#16181f;
+  --panel:#1b1e27;
+  --panel-border:rgba(255,255,255,.08);
+  --text-dim:rgba(255,255,255,.55);
+  --text:#f2f3f5;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(1200px 700px at 15% -10%, #201a2e 0%, transparent 60%),
+    radial-gradient(1000px 600px at 100% 10%, #1a2430 0%, transparent 55%),
+    linear-gradient(180deg, var(--stage-bg-1), var(--stage-bg-2));
+  font-family:'Manrope', sans-serif;
+  color:var(--text);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px 16px 60px;
+}
+.app-shell{
+  width:100%;
+  max-width:1180px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* ---- Header ---- */
+.stage-header{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:14px;
+}
+.stage-header h1{
+  font-size:clamp(20px,3vw,28px);
+  margin:0 0 4px;
+  letter-spacing:.2px;
+  font-weight:800;
+}
+.stage-header p{
+  margin:0;
+  color:var(--text-dim);
+  font-size:14px;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
+  color:#8b8fff;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.eyebrow .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#ff5c5c;
+  box-shadow:0 0 0 0 rgba(255,92,92,.6);
+  animation:pulse-rec 1.6s infinite;
+}
+@keyframes pulse-rec{
+  0%{box-shadow:0 0 0 0 rgba(255,92,92,.55);}
+  70%{box-shadow:0 0 0 8px rgba(255,92,92,0);}
+  100%{box-shadow:0 0 0 0 rgba(255,92,92,0);}
+}
+
+/* ---- Tabs ---- */
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.tab-btn{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  color:var(--text-dim);
+  cursor:pointer;
+  font-family:inherit;
+  text-align:left;
+  transition:border-color .25s, color .25s, transform .15s;
+}
+.tab-btn:hover{ transform:translateY(-1px); color:var(--text); }
+.tab-btn .tab-icon{
+  width:34px;height:34px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex:none;
+  background:rgba(255,255,255,.06);
+}
+.tab-btn .tab-name{ font-weight:700; font-size:13.5px; color:var(--text); }
+.tab-btn .tab-sub{ font-size:11px; color:var(--text-dim); }
+.tab-btn.active{ border-color:var(--tab-accent,#7c4dff); color:var(--text); }
+.tab-btn.active .tab-icon{ background:var(--tab-accent,#7c4dff); }
+.tab-progress{
+  position:absolute; left:0; bottom:0; height:3px; width:100%;
+  background:rgba(255,255,255,.08);
+}
+.tab-progress-fill{
+  height:100%; width:0%;
+  background:var(--tab-accent,#7c4dff);
+  transition:width .25s linear;
+}
+
+/* ---- Browser chrome ---- */
+.player{
+  background:var(--panel);
+  border:1px solid var(--panel-border);
+  border-radius:18px;
+  padding:10px;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.7);
+}
+.browser-chrome{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  background:#22242e;
+  border-radius:10px 10px 0 0;
+}
+.chrome-dots{ display:flex; gap:6px; flex:none; }
+.chrome-dots span{ width:10px;height:10px;border-radius:50%; display:block; }
+.chrome-dots span:nth-child(1){ background:#ff5f57; }
+.chrome-dots span:nth-child(2){ background:#febc2e; }
+.chrome-dots span:nth-child(3){ background:#28c840; }
+.chrome-url{
+  flex:1;
+  background:rgba(255,255,255,.06);
+  border-radius:8px;
+  padding:6px 12px;
+  font-size:12.5px;
+  color:var(--text-dim);
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.chrome-url .lock{ font-size:10px; opacity:.8; }
+.chrome-live{
+  flex:none;
+  font-size:11px;
+  font-weight:700;
+  color:#ff8080;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 9px;
+  border-radius:20px;
+  background:rgba(255,92,92,.12);
+}
+.chrome-fs-btn{
+  flex:none;
+  width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  cursor:pointer;
+  font-size:13px;
+  line-height:1;
+  transition:background .2s, transform .15s;
+}
+.chrome-fs-btn:hover{ background:rgba(255,255,255,.14); transform:translateY(-1px); }
+
+/* ---- Fullscreen mode: show only the player (browser chrome + screen + caption) ---- */
+.player:fullscreen{
+  max-width:none;
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:var(--stage-bg-1);
+  padding:18px;
+}
+.player:fullscreen .screen-outer{
+  flex:1 1 auto;
+  height:auto;
+  min-height:0;
+  max-width:min(1100px, 96vw);
+  margin:0 auto;
+  width:100%;
+}
+.player:fullscreen .browser-chrome{
+  max-width:min(1100px, 96vw);
+  margin:0 auto;
+  width:100%;
+}
+.player:fullscreen .caption-bar{
+  max-width:min(1100px, 96vw);
+  margin:0 auto;
+  width:100%;
+}
+.player:-webkit-full-screen{
+  width:100vw; height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  background:var(--stage-bg-1); padding:18px;
+}
+
+.screen-outer{
+  position:relative;
+  overflow:hidden;
+  background:#fff;
+  height:min(64vw, 600px);
+  min-height:380px;
+}
+.screen-scroll{
+  position:absolute; inset:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:none;
+}
+.screen-scroll::-webkit-scrollbar{ display:none; }
+.scene{ display:none; min-height:100%; }
+.scene.active{ display:block; }
+
+/* ---- Cursor ---- */
+#cursor{
+  position:absolute;
+  left:50%; top:50%;
+  width:26px; height:26px;
+  transform:translate(-4px,-2px);
+  transition-property:left, top;
+  transition-timing-function:cubic-bezier(.45,0,.2,1);
+  transition-duration:650ms;
+  pointer-events:none;
+  z-index:9999;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.45));
+}
+#cursor svg{ display:block; }
+#cursor.clicking{ transform:translate(-4px,-2px) scale(.82); }
+#cursor{ transition-property:left, top, transform; }
+.img-fallback{
+  background:linear-gradient(135deg,#e9e9f2,#d8d8e8);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; color:#9c9cb0;
+}
+.click-ripple{
+  position:absolute;
+  width:14px;height:14px;
+  margin:-7px 0 0 -7px;
+  border-radius:50%;
+  border:2px solid var(--rc,#fff);
+  pointer-events:none;
+  z-index:9998;
+  animation:ripple-anim .65s ease-out forwards;
+}
+@keyframes ripple-anim{
+  0%{ transform:scale(0.4); opacity:.9; }
+  100%{ transform:scale(3.2); opacity:0; }
+}
+
+/* ---- Caption bar ---- */
+.caption-bar{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  border-top:1px solid var(--panel-border);
+  margin-top:10px;
+}
+.caption-bar .cap-badge{
+  flex:none;
+  font-size:11px;
+  font-weight:700;
+  color:#0b0c10;
+  background:#f2f3f5;
+  padding:4px 9px;
+  border-radius:20px;
+}
+#caption{
+  flex:1;
+  font-size:14.5px;
+  color:var(--text);
+  min-height:20px;
+}
+#caption b{ color:#a6a9ff; }
+
+/* ---- Controls ---- */
+.controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding-top:4px;
+}
+.ctrl-btn{
+  display:flex; align-items:center; justify-content:center;
+  gap:7px;
+  padding:10px 16px;
+  border-radius:30px;
+  border:1px solid var(--panel-border);
+  background:var(--panel);
+  color:var(--text);
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:700;
+  font-size:13px;
+  transition:transform .15s, border-color .2s;
+}
+.ctrl-btn:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.25); }
+.ctrl-btn.primary{ background:#6425f0; border-color:#6425f0; }
+.footnote{
+  text-align:center;
+  color:var(--text-dim);
+  font-size:12px;
+  padding-top:2px;
+}
+
+@media (max-width:720px){
+  .tabs{ grid-template-columns:repeat(2,1fr); }
+  .tab-btn .tab-sub{ display:none; }
+}
+
+/* ============================================================
+   SCENE 1 — ELEGANCE BEAUTY
+   ============================================================ */
+.scene.elegance{
+  font-family:'Manrope', sans-serif;
+  color:#0E2A21;
+  background:#FAF8F3;
+}
+.scene.elegance h1, .scene.elegance h2, .scene.elegance h3, .scene.elegance .eb-logo{
+  font-family:'Playfair Display', serif;
+}
+.eb-nav{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 26px;
+  background:#0B3B2E;
+  color:#FAF8F3;
+}
+.eb-logo{ font-size:18px; font-weight:700; letter-spacing:.5px; }
+.eb-logo span{ color:#D9BB5C; }
+.eb-links{ display:flex; gap:22px; font-size:13px; }
+.eb-links a{ color:#FAF8F3; opacity:.85; cursor:default; }
+.eb-btn-nav{
+  background:#D9BB5C; color:#0B3B2E; border:none; padding:9px 16px;
+  border-radius:30px; font-weight:700; font-size:12.5px; font-family:inherit; cursor:default;
+}
+.eb-hero{
+  padding:56px 26px 48px;
+  background:linear-gradient(160deg,#0E4B3A,#0B3B2E 70%);
+  color:#FAF8F3;
+  text-align:center;
+}
+.eb-hero h1{ font-size:clamp(24px,4vw,38px); margin:0 0 14px; font-weight:600; }
+.eb-hero h1 em{ color:#E8D48A; font-style:normal; }
+.eb-hero p{ opacity:.8; max-width:480px; margin:0 auto 22px; font-size:14px; }
+.eb-btn-primary{
+  background:#C9A227; color:#0B3B2E; border:none; padding:13px 26px;
+  border-radius:30px; font-weight:800; font-size:13.5px; font-family:inherit; cursor:default;
+  transition:transform .15s;
+}
+.eb-services, .eb-masters{ padding:48px 26px; }
+.eb-services h2, .eb-masters h2{ text-align:center; font-size:24px; margin:0 0 28px; color:#0B3B2E; font-weight:600;}
+.eb-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; max-width:920px; margin:0 auto;
+}
+.eb-card{
+  background:#fff; border:1px solid #eee6d3; border-radius:14px; padding:20px;
+  transition:transform .2s, box-shadow .2s;
+}
+.eb-card.press, .eb-master.press, .eb-picker-item.press, .eb-slot.press{ transform:scale(.95); }
+.eb-card-icon{ font-size:26px; margin-bottom:10px; }
+.eb-card h3{ font-size:15px; margin:0 0 6px; font-weight:600; }
+.eb-card p{ font-size:12.5px; color:#6b6558; margin:0 0 14px; }
+.eb-card-foot{ display:flex; align-items:center; justify-content:space-between; }
+.eb-card-foot span{ font-weight:700; font-size:13px; color:#A9821C; }
+.eb-card-btn{
+  background:#0B3B2E; color:#fff; border:none; padding:8px 13px; border-radius:20px;
+  font-size:11.5px; font-weight:700; font-family:inherit; cursor:default;
+}
+.eb-masters-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; max-width:800px; margin:0 auto;
+}
+.eb-master{ text-align:center; transition:transform .2s; }
+.eb-master img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:14px; margin-bottom:10px; }
+.eb-master h4{ margin:0; font-size:13.5px; font-family:'Manrope',sans-serif; font-weight:700; }
+.eb-master span{ font-size:11px; color:#8a8474; }
+
+.eb-modal-overlay{
+  position:fixed; inset:0; background:rgba(11,59,46,.55);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
+}
+.eb-modal-overlay.open{ opacity:1; pointer-events:auto; }
+.eb-modal{
+  background:#FAF8F3; border-radius:16px; padding:26px; width:min(420px,88%);
+  transform:translateY(14px) scale(.97); transition:transform .3s; position:relative;
+}
+.eb-modal-overlay.open .eb-modal{ transform:translateY(0) scale(1); }
+.eb-modal h3{ margin:0 0 16px; font-size:19px; color:#0B3B2E; }
+.eb-modal-close{
+  position:absolute; top:14px; right:16px; border:none; background:none; font-size:16px; cursor:default; color:#8a8474;
+}
+.eb-modal-step{ margin-bottom:16px; }
+.eb-modal-step label{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:#8a8474; margin-bottom:8px; font-weight:700; }
+.eb-selected-chip{ background:#0B3B2E; color:#E8D48A; padding:9px 12px; border-radius:10px; font-size:13px; font-weight:600; }
+.eb-master-picker{ display:flex; gap:8px; flex-wrap:wrap; }
+.eb-picker-item{
+  padding:9px 14px; border-radius:20px; border:1.5px solid #e3dcc8; font-size:12.5px; font-weight:600; color:#5c5748;
+  transition:all .15s; cursor:default;
+}
+.eb-picker-item.selected{ background:#C9A227; border-color:#C9A227; color:#0B3B2E; }
+.eb-time-slots{ display:flex; gap:8px; flex-wrap:wrap; }
+.eb-slot{
+  padding:8px 13px; border-radius:10px; border:1.5px solid #e3dcc8; font-size:12.5px; font-weight:600; color:#5c5748;
+  transition:all .15s; cursor:default;
+}
+.eb-slot.selected{ background:#0B3B2E; border-color:#0B3B2E; color:#E8D48A; }
+.eb-modal-confirm{ width:100%; margin-top:6px; }
+.eb-toast{
+  position:fixed; top:22px; left:50%; transform:translateX(-50%) translateY(-12px);
+  background:#145C43; color:#fff; padding:12px 20px; border-radius:12px; font-size:13.5px; font-weight:700;
+  opacity:0; transition:all .3s; z-index:60; box-shadow:0 12px 30px -8px rgba(0,0,0,.4);
+}
+.eb-toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ============================================================
+   SCENE 2 — LUMEN STORE
+   ============================================================ */
+.scene.lumen{ font-family:'Manrope',sans-serif; background:#fff; color:#111; }
+.lu-nav{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 26px; background:#111; color:#fff;
+}
+.lu-logo{ font-weight:800; letter-spacing:2px; font-size:16px; }
+.lu-links{ display:flex; gap:20px; font-size:12.5px; opacity:.85; }
+.lu-actions{ display:flex; align-items:center; gap:16px; }
+.lu-cart-btn{ position:relative; background:none; border:none; color:#fff; font-size:17px; cursor:default; }
+.lu-cart-badge{
+  position:absolute; top:-7px; right:-9px; background:#4338CA; color:#fff; font-size:10px; font-weight:800;
+  width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s;
+}
+.lu-cart-badge.bump{ animation:bump .35s ease; }
+@keyframes bump{ 0%{transform:scale(1);} 40%{transform:scale(1.5);} 100%{transform:scale(1);} }
+.lu-hero{
+  padding:50px 26px; text-align:center;
+  background:linear-gradient(135deg,#EEF0FF,#fff 70%);
+}
+.lu-hero h1{ font-size:clamp(22px,4vw,34px); margin:0 0 10px; font-weight:800; }
+.lu-hero p{ color:#666; font-size:13.5px; margin:0; }
+.lu-hero span{ color:#4338CA; }
+.lu-section{ padding:40px 26px; }
+.lu-section h2{ font-size:19px; margin:0 0 20px; font-weight:800; }
+.lu-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; max-width:960px; margin:0 auto; }
+.lu-card{ transition:transform .2s; }
+.lu-card.press{ transform:scale(.96); }
+.lu-card-img{ width:100%; aspect-ratio:1; object-fit:cover; border-radius:10px; margin-bottom:10px; background:#f2f2f2; }
+.lu-card h3{ font-size:13.5px; margin:0 0 6px; font-weight:700; }
+.lu-price{ font-size:13.5px; font-weight:800; }
+.lu-old-price{ font-size:11.5px; color:#999; text-decoration:line-through; margin-left:6px; font-weight:500; }
+.lu-sizes{ display:flex; gap:6px; margin:10px 0; }
+.lu-size-chip{
+  width:30px; height:30px; border-radius:8px; border:1.5px solid #ddd; font-size:11.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; cursor:default; transition:all .15s; color:#444;
+}
+.lu-size-chip.selected{ background:#111; border-color:#111; color:#fff; }
+.lu-size-chip.press{ transform:scale(.9); }
+.lu-add-btn{
+  width:100%; padding:10px; border:none; border-radius:8px; background:#111; color:#fff; font-weight:700;
+  font-size:12px; font-family:inherit; cursor:default;
+}
+.lu-add-btn.press{ transform:scale(.96); }
+
+.lu-drawer-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
+}
+.lu-drawer-overlay.open{ opacity:1; pointer-events:auto; }
+.lu-drawer{
+  position:absolute; top:0; right:0; height:100%; width:min(320px,88%);
+  background:#fff; box-shadow:-10px 0 30px rgba(0,0,0,.15);
+  transform:translateX(100%); transition:transform .35s; padding:22px; display:flex; flex-direction:column;
+}
+.lu-drawer-overlay.open .lu-drawer{ transform:translateX(0); }
+.lu-drawer h3{ margin:0 0 16px; font-size:16px; }
+.lu-drawer-item{ display:flex; gap:10px; align-items:center; padding:10px 0; border-bottom:1px solid #eee; }
+.lu-drawer-item img{ width:46px; height:46px; border-radius:8px; object-fit:cover; }
+.lu-drawer-item .info{ flex:1; font-size:12.5px; }
+.lu-drawer-item .info b{ display:block; font-size:12.5px; }
+.lu-subtotal{ margin-top:auto; padding-top:14px; display:flex; justify-content:space-between; font-weight:800; font-size:14px; }
+.lu-checkout-btn{
+  margin-top:12px; width:100%; padding:12px; border:none; border-radius:8px; background:#4338CA; color:#fff;
+  font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+}
+
+.lu-modal-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .3s; z-index:60;
+}
+.lu-modal-overlay.open{ opacity:1; pointer-events:auto; }
+.lu-modal{ background:#fff; border-radius:14px; padding:24px; width:min(360px,88%); transform:scale(.96); transition:transform .3s; }
+.lu-modal-overlay.open .lu-modal{ transform:scale(1); }
+.lu-modal h3{ margin:0 0 16px; font-size:16px; }
+.lu-field{ margin-bottom:12px; }
+.lu-field label{ display:block; font-size:11px; color:#888; margin-bottom:5px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; }
+.lu-field input, .lu-field textarea{
+  width:100%; border:1.5px solid #e2e2e2; border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit;
+  outline:none; color:#111;
+}
+.lu-confirm-btn{
+  width:100%; margin-top:6px; padding:12px; border:none; border-radius:8px; background:#111; color:#fff;
+  font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+}
+.lu-success{
+  position:fixed; inset:0; background:rgba(255,255,255,.98); display:flex; flex-direction:column; align-items:center;
+  justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
+}
+.lu-success.show{ opacity:1; pointer-events:auto; }
+.lu-success .ic{ font-size:44px; margin-bottom:14px; }
+.lu-success h3{ margin:0 0 8px; font-size:19px; }
+.lu-success p{ color:#666; font-size:13px; max-width:280px; }
+
+/* ============================================================
+   SCENE 3 — NEXT GEN ACADEMY
+   ============================================================ */
+.scene.academy{ font-family:'Inter',sans-serif; background:#fff; color:#140e2b; }
+.scene.academy h1,.scene.academy h2,.scene.academy h3{ font-family:'Montserrat',sans-serif; }
+.ac-nav{
+  position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between;
+  padding:15px 26px; background:#fff; border-bottom:1px solid #eee6ff;
+}
+.ac-logo{ font-weight:800; font-size:15px; }
+.ac-logo span{ color:#7c4dff; }
+.ac-links{ display:flex; gap:18px; font-size:12.5px; color:#5c5578; }
+.ac-cta-btn{
+  background:linear-gradient(90deg,#6425f0,#391284); color:#fff; border:none; padding:9px 16px; border-radius:30px;
+  font-weight:700; font-size:12px; font-family:inherit; cursor:default;
+}
+.ac-hero{ padding:52px 26px; text-align:center; background:linear-gradient(180deg,#f4f2ff,#fff); }
+.ac-hero h1{ font-size:clamp(22px,4vw,34px); font-weight:800; margin:0 0 14px; }
+.ac-hero h1 span{ color:#7c4dff; }
+.ac-hero p{ color:#5c5578; font-size:13.5px; max-width:440px; margin:0 auto 22px; }
+.ac-section{ padding:44px 26px; }
+.ac-section h2{ text-align:center; font-size:21px; margin:0 0 24px; }
+.ac-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; max-width:980px; margin:0 auto; }
+.ac-card{ background:#fff; border:1px solid #ece8ff; border-radius:14px; overflow:hidden; transition:transform .2s; }
+.ac-card.press{ transform:scale(.96); }
+.ac-card img{ width:100%; height:110px; object-fit:cover; }
+.ac-card-body{ padding:15px; }
+.ac-card h3{ font-size:13.5px; margin:0 0 6px; font-weight:700; }
+.ac-card p{ font-size:11.5px; color:#7a7594; margin:0 0 12px; }
+.ac-card-foot{ display:flex; align-items:center; justify-content:space-between; }
+.ac-card-foot span{ font-weight:800; font-size:12px; color:#5417ce; }
+.ac-enroll-btn{
+  background:#6425f0; color:#fff; border:none; padding:7px 12px; border-radius:20px; font-size:11px; font-weight:700;
+  font-family:inherit; cursor:default;
+}
+.ac-lead{ background:#f4f2ff; padding:44px 26px; }
+.ac-lead-box{ max-width:420px; margin:0 auto; background:#fff; border-radius:16px; padding:26px; box-shadow:0 20px 45px -15px rgba(100,37,240,.2); position:relative; }
+.ac-lead-box h3{ margin:0 0 16px; font-size:17px; text-align:center; }
+.ac-field{ margin-bottom:12px; }
+.ac-field label{ display:block; font-size:11px; color:#8b86a3; margin-bottom:5px; font-weight:700; }
+.ac-field input, .ac-field select{
+  width:100%; border:1.5px solid #e4e0ff; border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit; outline:none; color:#140e2b;
+}
+.ac-field select.highlight{ border-color:#7c4dff; box-shadow:0 0 0 3px rgba(124,77,255,.15); }
+.ac-submit-btn{
+  width:100%; margin-top:6px; padding:12px; border:none; border-radius:8px; font-weight:700; font-size:13px;
+  font-family:inherit; cursor:default; background:linear-gradient(90deg,#6425f0,#391284); color:#fff;
+}
+.ac-lead-success{
+  position:absolute; inset:0; background:#fff; border-radius:16px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; padding:20px;
+}
+.ac-lead-success.show{ opacity:1; pointer-events:auto; }
+.ac-lead-success .ic{ font-size:38px; margin-bottom:10px; }
+.ac-lead-success h4{ margin:0 0 6px; font-size:16px; }
+.ac-lead-success p{ color:#7a7594; font-size:12.5px; margin:0; max-width:260px; }
+
+/* ============================================================
+   SCENE 4 — OTABEKFOOD
+   ============================================================ */
+.scene.food{ font-family:'Inter',sans-serif; background:#FFFBEB; color:#1C1917; }
+.scene.food h1,.scene.food h2,.scene.food h3,.fd-logo{ font-family:'Baloo 2',cursive; }
+.fd-nav{
+  position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px; background:#1C1917; color:#fff;
+}
+.fd-logo{ font-weight:700; font-size:17px; }
+.fd-cats{ display:flex; gap:8px; padding:12px 22px; overflow-x:auto; background:#292524; }
+.fd-cat{
+  flex:none; padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700; color:#e7e2da;
+  border:1.5px solid #44403a; cursor:default; transition:all .15s;
+}
+.fd-cat.active{ background:#F59E0B; color:#1C1917; border-color:#F59E0B; }
+.fd-cat.press{ transform:scale(.94); }
+.fd-actions{ display:flex; align-items:center; gap:14px; }
+.fd-cart-btn{ position:relative; background:none; border:none; color:#fff; font-size:17px; cursor:default; }
+.fd-cart-badge{
+  position:absolute; top:-7px; right:-9px; background:#DC2626; color:#fff; font-size:10px; font-weight:800;
+  width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+}
+.fd-cart-badge.bump{ animation:bump .35s ease; }
+.fd-hero{ padding:26px 22px; text-align:center; background:linear-gradient(135deg,#FEF3C7,#FFFBEB); }
+.fd-hero h1{ font-size:clamp(20px,4vw,28px); margin:0 0 6px; }
+.fd-hero p{ font-size:12.5px; color:#78350F; margin:0; }
+.fd-section{ padding:26px 22px 40px; }
+.fd-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; max-width:960px; margin:0 auto; }
+.fd-card{ background:#fff; border-radius:14px; padding:16px; box-shadow:0 10px 24px -12px rgba(0,0,0,.15); transition:transform .2s; }
+.fd-card.press{ transform:scale(.96); }
+.fd-card .ic{ font-size:26px; margin-bottom:8px; }
+.fd-card h3{ font-size:13.5px; margin:0 0 4px; }
+.fd-card p{ font-size:11px; color:#78350F; margin:0 0 12px; opacity:.8; }
+.fd-card-foot{ display:flex; align-items:center; justify-content:space-between; }
+.fd-card-foot span{ font-weight:800; font-size:12.5px; color:#B45309; }
+.fd-add-btn{
+  background:#F59E0B; color:#1C1917; border:none; padding:7px 12px; border-radius:20px; font-size:11px; font-weight:800;
+  font-family:inherit; cursor:default;
+}
+
+.fd-drawer-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50; }
+.fd-drawer-overlay.open{ opacity:1; pointer-events:auto; }
+.fd-drawer{
+  position:absolute; top:0; right:0; height:100%; width:min(320px,88%); background:#fff;
+  transform:translateX(100%); transition:transform .35s; padding:22px; display:flex; flex-direction:column;
+}
+.fd-drawer-overlay.open .fd-drawer{ transform:translateX(0); }
+.fd-drawer h3{ margin:0 0 16px; font-size:16px; }
+.fd-drawer-item{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px dashed #eee; font-size:12.5px; }
+.fd-subtotal{ margin-top:auto; padding-top:14px; display:flex; justify-content:space-between; font-weight:800; font-size:14px; }
+.fd-checkout-btn{
+  margin-top:12px; width:100%; padding:12px; border:none; border-radius:10px; background:#DC2626; color:#fff;
+  font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+}
+
+.fd-modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:60; }
+.fd-modal-overlay.open{ opacity:1; pointer-events:auto; }
+.fd-modal{ background:#fff; border-radius:16px; padding:24px; width:min(370px,88%); transform:scale(.96); transition:transform .3s; }
+.fd-modal-overlay.open .fd-modal{ transform:scale(1); }
+.fd-modal h3{ margin:0 0 16px; font-size:16px; }
+.fd-field{ margin-bottom:12px; }
+.fd-field label{ display:block; font-size:11px; color:#9a8f7a; margin-bottom:5px; font-weight:700; text-transform:uppercase; }
+.fd-field input, .fd-field textarea{
+  width:100%; border:1.5px solid #f0e4c8; border-radius:8px; padding:9px 11px; font-size:13px; font-family:inherit; outline:none; color:#1C1917;
+}
+.fd-geo-btn{
+  margin-top:8px; background:#FEF3C7; border:1.5px solid #FBBF24; color:#78350F; padding:8px 12px; border-radius:8px;
+  font-size:12px; font-weight:700; font-family:inherit; cursor:default; display:inline-flex; align-items:center; gap:6px;
+}
+.fd-confirm-btn{
+  width:100%; margin-top:6px; padding:12px; border:none; border-radius:10px; background:#1C1917; color:#fff;
+  font-weight:700; font-size:13px; font-family:inherit; cursor:default;
+}
+.fd-success{
+  position:fixed; inset:0; background:rgba(255,251,235,.98); display:flex; flex-direction:column; align-items:center;
+  justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
+}
+.fd-success.show{ opacity:1; pointer-events:auto; }
+.fd-success .ic{ font-size:44px; margin-bottom:14px; }
+.fd-success h3{ margin:0 0 8px; font-size:19px; }
+.fd-success p{ color:#78350F; font-size:13px; max-width:300px; }
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <div class="stage-header">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> JONLI NAMOYISH</div>
+      <h1>4 ta loyihaning mijoz ko'zi bilan namoyishi</h1>
+      <p>Har bir saytda xuddi haqiqiy mijoz kabi — ko'rib chiqadi, bosadi, buyurtma beradi. Kuzatib turing.</p>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="player">
+    <div class="browser-chrome">
+      <div class="chrome-dots"><span></span><span></span><span></span></div>
+      <div class="chrome-url"><span class="lock">🔒</span><span id="urlText">elegancebeauty.uz</span></div>
+      <div class="chrome-live">● LIVE DEMO</div>
+      <button class="chrome-fs-btn" id="fsBtn" type="button" title="To'liq ekran">⛶</button>
+    </div>
+
+    <div class="screen-outer" id="screenOuter" data-theme="elegance">
+      <div class="screen-scroll" id="screenScroll">
+        <!-- ============== SCENE 1: ELEGANCE BEAUTY ============== -->
+        <div class="scene elegance active" id="scene-elegance">
+          <header class="eb-nav">
+            <div class="eb-logo">ELEGANCE <span>BEAUTY</span></div>
+            <nav class="eb-links">
+              <a id="eb-nav-services">Xizmatlar</a>
+              <a id="eb-nav-masters">Ustalar</a>
+              <a>Kontakt</a>
+            </nav>
+            <button class="eb-btn-nav">Bron qilish</button>
+          </header>
+          <section class="eb-hero">
+            <h1>Go'zalligingiz — <em>bizning san'atimiz</em></h1>
+            <p>Toshkentdagi eng nafis go'zallik saloni. Professional ustalar, premium mahsulotlar, onlayn bron.</p>
+            <button class="eb-btn-primary">Hoziroq bron qiling</button>
+          </section>
+          <section class="eb-services" id="eb-services">
+            <h2>Xizmatlarimiz</h2>
+            <div class="eb-grid">
+              <div class="eb-card" id="card-haircut">
+                <div class="eb-card-icon">✂️</div>
+                <h3>Ayollar soch kesish</h3>
+                <p>Konsultatsiya + yuvish + kesish + ukladka</p>
+                <div class="eb-card-foot"><span>120 000 so'm</span><button class="eb-card-btn" id="eb-book-haircut">Bron qilish</button></div>
+              </div>
+              <div class="eb-card" id="card-color">
+                <div class="eb-card-icon">🎨</div>
+                <h3>Soch bo'yash</h3>
+                <p>To'liq bo'yash, professional bo'yoqlar bilan</p>
+                <div class="eb-card-foot"><span>350 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+              </div>
+              <div class="eb-card" id="card-manicure">
+                <div class="eb-card-icon">💅</div>
+                <h3>Manikur</h3>
+                <p>Gigienik manikur + gel lak qoplash</p>
+                <div class="eb-card-foot"><span>100 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+              </div>
+              <div class="eb-card" id="card-makeup">
+                <div class="eb-card-icon">💄</div>
+                <h3>Kechki makiyaj</h3>
+                <p>Tadbirlar uchun murakkab kechki makiyaj</p>
+                <div class="eb-card-foot"><span>220 000 so'm</span><button class="eb-card-btn">Bron qilish</button></div>
+              </div>
+            </div>
+          </section>
+          <section class="eb-masters" id="eb-masters">
+            <h2>Bizning ustalarimiz</h2>
+            <div class="eb-masters-grid">
+              <div class="eb-master" id="master-madina">
+                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h4>Madina Yusupova</h4><span>Bosh usta / Soch • 12 yil</span>
+              </div>
+              <div class="eb-master" id="master-dilnoza">
+                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h4>Dilnoza Karimova</h4><span>Manikur ustasi • 8 yil</span>
+              </div>
+              <div class="eb-master" id="master-zarina">
+                <img src="https://images.unsplash.com/photo-1521146764736-56c929d59c83?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h4>Zarina Aliyeva</h4><span>Vizajist • 6 yil</span>
+              </div>
+              <div class="eb-master" id="master-jasur">
+                <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=400&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h4>Jasur Rahimov</h4><span>Barber • 10 yil</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="eb-modal-overlay" id="eb-modal-overlay">
+            <div class="eb-modal">
+              <button class="eb-modal-close">✕</button>
+              <h3>Bronni tasdiqlash</h3>
+              <div class="eb-modal-step">
+                <label>Tanlangan xizmat</label>
+                <div class="eb-selected-chip">Ayollar soch kesish — 120 000 so'm</div>
+              </div>
+              <div class="eb-modal-step">
+                <label>Ustani tanlang</label>
+                <div class="eb-master-picker">
+                  <div class="eb-picker-item" id="pick-madina">Madina</div>
+                  <div class="eb-picker-item" id="pick-dilnoza">Dilnoza</div>
+                  <div class="eb-picker-item" id="pick-zarina">Zarina</div>
+                </div>
+              </div>
+              <div class="eb-modal-step">
+                <label>Vaqtni tanlang — 24-iyul, Payshanba</label>
+                <div class="eb-time-slots">
+                  <div class="eb-slot">10:00</div>
+                  <div class="eb-slot" id="slot-1130">11:30</div>
+                  <div class="eb-slot">13:00</div>
+                  <div class="eb-slot">15:30</div>
+                </div>
+              </div>
+              <button class="eb-btn-primary eb-modal-confirm" id="eb-confirm-booking">Bronni tasdiqlash</button>
+            </div>
+          </div>
+          <div class="eb-toast" id="eb-toast">✅ Bron muvaffaqiyatli qabul qilindi!</div>
+        </div>
+
+        <!-- ============== SCENE 2: LUMEN STORE ============== -->
+        <div class="scene lumen" id="scene-lumen">
+          <header class="lu-nav">
+            <div class="lu-logo">LUMEN</div>
+            <nav class="lu-links"><span id="lu-nav-shoes">Poyabzal</span><span>Kiyim</span><span>Aksessuar</span></nav>
+            <div class="lu-actions">
+              <span>🔍</span>
+              <button class="lu-cart-btn" id="lu-cart-btn">🛍️<span class="lu-cart-badge" id="lu-cart-badge">0</span></button>
+            </div>
+          </header>
+          <section class="lu-hero">
+            <h1>Yangi kolleksiya — <span>30% gacha chegirma</span></h1>
+            <p>Minimalistik uslub. Sifatli material. Har kuni uchun.</p>
+          </section>
+          <section class="lu-section" id="lu-products">
+            <h2>Ommabop mahsulotlar</h2>
+            <div class="lu-grid">
+              <div class="lu-card" id="prod-201">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h3>Klassik oq krossovka</h3>
+                <div><span class="lu-price">399 000 so'm</span><span class="lu-old-price">520 000</span></div>
+                <div class="lu-sizes">
+                  <div class="lu-size-chip">S</div><div class="lu-size-chip" id="size-m-201">M</div>
+                  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
+                </div>
+                <button class="lu-add-btn" id="add-201">Savatga qo'shish</button>
+              </div>
+              <div class="lu-card" id="prod-202">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h3>Charm boot poyabzal</h3>
+                <div><span class="lu-price">459 000 so'm</span></div>
+                <div class="lu-sizes">
+                  <div class="lu-size-chip">S</div><div class="lu-size-chip">M</div>
+                  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
+                </div>
+                <button class="lu-add-btn" id="add-202">Savatga qo'shish</button>
+              </div>
+              <div class="lu-card" id="prod-101">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h3>Oversize xlopok futbolka</h3>
+                <div><span class="lu-price">129 000 so'm</span><span class="lu-old-price">189 000</span></div>
+                <div class="lu-sizes">
+                  <div class="lu-size-chip">S</div><div class="lu-size-chip">M</div>
+                  <div class="lu-size-chip">L</div><div class="lu-size-chip">XL</div>
+                </div>
+                <button class="lu-add-btn" id="add-101">Savatga qo'shish</button>
+              </div>
+              <div class="lu-card" id="prod-302">
+                <img class="lu-card-img" src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <h3>Klassik uniseks soat</h3>
+                <div><span class="lu-price">449 000 so'm</span><span class="lu-old-price">599 000</span></div>
+                <div class="lu-sizes">&nbsp;</div>
+                <button class="lu-add-btn" id="add-302">Savatga qo'shish</button>
+              </div>
+            </div>
+          </section>
+
+          <div class="lu-drawer-overlay" id="lu-drawer-overlay">
+            <div class="lu-drawer">
+              <h3>Savatcha</h3>
+              <div id="lu-drawer-items"></div>
+              <div class="lu-subtotal"><span>Jami</span><span id="lu-subtotal-val">0 so'm</span></div>
+              <button class="lu-checkout-btn" id="lu-checkout-btn">Buyurtma berish</button>
+            </div>
+          </div>
+
+          <div class="lu-modal-overlay" id="lu-modal-overlay">
+            <div class="lu-modal">
+              <h3>Yetkazib berish ma'lumotlari</h3>
+              <div class="lu-field"><label>Ism familiya</label><input type="text" id="lu-name" readonly></div>
+              <div class="lu-field"><label>Telefon raqam</label><input type="text" id="lu-phone" readonly></div>
+              <div class="lu-field"><label>Manzil</label><textarea id="lu-address" rows="2" readonly></textarea></div>
+              <button class="lu-confirm-btn" id="lu-confirm-order">Buyurtmani tasdiqlash</button>
+            </div>
+          </div>
+          <div class="lu-success" id="lu-success">
+            <div class="ic">✅</div>
+            <h3>Rahmat, buyurtma qabul qilindi!</h3>
+            <p>Tez orada operatorlarimiz siz bilan bog'lanadi va yetkazib berish vaqtini aniqlashtiradi.</p>
+          </div>
+        </div>
+
+        <!-- ============== SCENE 3: NEXT GEN ACADEMY ============== -->
+        <div class="scene academy" id="scene-academy">
+          <header class="ac-nav">
+            <div class="ac-logo">NEXT GEN <span>ACADEMY</span></div>
+            <nav class="ac-links"><span id="ac-nav-courses">Kurslar</span><span>Afzalliklar</span><span>FAQ</span></nav>
+            <button class="ac-cta-btn">Bepul sinov darsi</button>
+          </header>
+          <section class="ac-hero">
+            <h1>Kelajakdagi <span>kasbingizni</span> bugun tanlang</h1>
+            <p>IT, dizayn va chet tillari bo'yicha amaliy kurslar — tajribali mentorlar bilan.</p>
+            <button class="ac-cta-btn" style="padding:12px 24px;font-size:13px;">Kursni tanlash</button>
+          </section>
+          <section class="ac-section" id="ac-courses">
+            <h2>O'zingizga mos yo'nalishni tanlang</h2>
+            <div class="ac-grid">
+              <div class="ac-card" id="course-python">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <div class="ac-card-body">
+                  <h3>Python Backend Dasturlash</h3>
+                  <p>Django/FastAPI bilan real loyihalar</p>
+                  <div class="ac-card-foot"><span>450 000 so'm/oy</span><button class="ac-enroll-btn">Yozilish</button></div>
+                </div>
+              </div>
+              <div class="ac-card" id="course-frontend">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <div class="ac-card-body">
+                  <h3>Frontend Development</h3>
+                  <p>HTML, CSS, JS va React asosida</p>
+                  <div class="ac-card-foot"><span>400 000 so'm/oy</span><button class="ac-enroll-btn" id="enroll-frontend">Yozilish</button></div>
+                </div>
+              </div>
+              <div class="ac-card" id="course-design">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <div class="ac-card-body">
+                  <h3>Grafik Dizayn</h3>
+                  <p>Figma va Illustrator bilan brend dizayni</p>
+                  <div class="ac-card-foot"><span>350 000 so'm/oy</span><button class="ac-enroll-btn">Yozilish</button></div>
+                </div>
+              </div>
+              <div class="ac-card" id="course-ielts">
+                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=800&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);">
+                <div class="ac-card-body">
+                  <h3>Ingliz tili (IELTS)</h3>
+                  <p>A1 dan IELTS 7.0 darajasigacha</p>
+                  <div class="ac-card-foot"><span>280 000 so'm/oy</span><button class="ac-enroll-btn">Yozilish</button></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="ac-lead" id="ac-lead-form">
+            <div class="ac-lead-box">
+              <h3>Bepul sinov darsiga yoziling</h3>
+              <div class="ac-field"><label>F.I.Sh</label><input type="text" id="ac-name" readonly></div>
+              <div class="ac-field"><label>Telefon raqam</label><input type="text" id="ac-phone" readonly></div>
+              <div class="ac-field">
+                <label>Kursni tanlang</label>
+                <select id="ac-course-select">
+                  <option value="">— tanlanmagan —</option>
+                  <option value="Frontend Development">Frontend Development</option>
+                  <option value="Python Backend Dasturlash">Python Backend Dasturlash</option>
+                  <option value="Grafik Dizayn">Grafik Dizayn</option>
+                  <option value="Ingliz tili (IELTS)">Ingliz tili (IELTS)</option>
+                </select>
+              </div>
+              <button class="ac-submit-btn" id="ac-submit-lead">Yuborish</button>
+              <div class="ac-lead-success" id="ac-lead-success">
+                <div class="ic">🎓</div>
+                <h4>Rahmat, arizangiz qabul qilindi!</h4>
+                <p>Tez orada o'quv markazi operatorlari siz bilan bog'lanishadi.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ============== SCENE 4: OTABEKFOOD ============== -->
+        <div class="scene food" id="scene-food">
+          <header class="fd-nav">
+            <div class="fd-logo">🍕 OtabekFood</div>
+            <div class="fd-actions">
+              <button class="fd-cart-btn" id="fd-cart-btn">🛒<span class="fd-cart-badge" id="fd-cart-badge">0</span></button>
+            </div>
+          </header>
+          <div class="fd-cats">
+            <div class="fd-cat active" id="cat-pizza">🍕 Pitsa</div>
+            <div class="fd-cat" id="cat-burger">🍔 Burger</div>
+            <div class="fd-cat" id="cat-drinks">🥤 Ichimlik</div>
+            <div class="fd-cat" id="cat-sets">📦 Setlar</div>
+          </div>
+          <section class="fd-hero">
+            <h1>30 daqiqada yetkazib beramiz! 🛵</h1>
+            <p>Issiq, mazali va vaqtida — har safar.</p>
+          </section>
+          <section class="fd-section" id="fd-products">
+            <div class="fd-grid">
+              <div class="fd-card" id="prod-1">
+                <div class="ic">🍕</div><h3>Margarita Pitsa</h3><p>Pomidor sousi, mozarella, rayhon</p>
+                <div class="fd-card-foot"><span>45 000 so'm</span><button class="fd-add-btn" id="fd-add-1">+ Qo'shish</button></div>
+              </div>
+              <div class="fd-card" id="prod-3">
+                <div class="ic">🍕</div><h3>BBQ Tovuq Pitsa</h3><p>Grill tovuq, BBQ sous, qalampir</p>
+                <div class="fd-card-foot"><span>58 000 so'm</span><button class="fd-add-btn" id="fd-add-3">+ Qo'shish</button></div>
+              </div>
+              <div class="fd-card" id="prod-6">
+                <div class="ic">🍔</div><h3>Dubl Beef Burger</h3><p>Ikki qavat mol go'shti, maxsus sous</p>
+                <div class="fd-card-foot"><span>36 000 so'm</span><button class="fd-add-btn" id="fd-add-6">+ Qo'shish</button></div>
+              </div>
+              <div class="fd-card" id="prod-9">
+                <div class="ic">🥤</div><h3>Coca-Cola 0.5L</h3><p>Sovuq gazlangan ichimlik</p>
+                <div class="fd-card-foot"><span>10 000 so'm</span><button class="fd-add-btn" id="fd-add-9">+ Qo'shish</button></div>
+              </div>
+              <div class="fd-card" id="prod-13">
+                <div class="ic">📦</div><h3>Oilaviy Set</h3><p>2 pitsa + 2 burger + 4 ichimlik</p>
+                <div class="fd-card-foot"><span>145 000 so'm</span><button class="fd-add-btn" id="fd-add-13">+ Qo'shish</button></div>
+              </div>
+            </div>
+          </section>
+
+          <div class="fd-drawer-overlay" id="fd-drawer-overlay">
+            <div class="fd-drawer">
+              <h3>Savatchangiz</h3>
+              <div id="fd-drawer-items"></div>
+              <div class="fd-subtotal"><span>Jami</span><span id="fd-subtotal-val">0 so'm</span></div>
+              <button class="fd-checkout-btn" id="fd-checkout-btn">Buyurtma berish</button>
+            </div>
+          </div>
+
+          <div class="fd-modal-overlay" id="fd-modal-overlay">
+            <div class="fd-modal">
+              <h3>Yetkazib berish ma'lumotlari</h3>
+              <div class="fd-field"><label>Ism</label><input type="text" id="fd-name" readonly></div>
+              <div class="fd-field">
+                <label>Manzil</label>
+                <textarea id="fd-address" rows="2" readonly></textarea>
+                <button class="fd-geo-btn" id="fd-geo-btn">📍 Joylashuvni aniqlash</button>
+              </div>
+              <div class="fd-field"><label>Telefon raqam</label><input type="text" id="fd-phone" readonly></div>
+              <button class="fd-confirm-btn" id="fd-confirm">Buyurtmani tasdiqlash</button>
+            </div>
+          </div>
+          <div class="fd-success" id="fd-success">
+            <div class="ic">🎉</div>
+            <h3>Buyurtmangiz qabul qilindi!</h3>
+            <p>Taxminiy yetkazib berish vaqti: 35 daqiqa. Kuryer: Sardor (+998 90 111 22 33)</p>
+          </div>
+        </div>
+
+      </div>
+      <div id="cursor">
+        <svg width="26" height="26" viewBox="0 0 26 26">
+          <path d="M3 1 L3 20 L8 16 L11.5 23 L14.5 21.5 L11 14.5 L18 14.5 Z" fill="#ffffff" stroke="#111319" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="caption-bar">
+      <span class="cap-badge" id="stepIndicator">1/1</span>
+      <div id="caption">Boshlanyapti…</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ctrl-btn" id="prevBtn">⏮ Oldingi loyiha</button>
+    <button class="ctrl-btn primary" id="playBtn">⏸ Pauza</button>
+    <button class="ctrl-btn" id="restartBtn">↺ Qayta boshlash</button>
+    <button class="ctrl-btn" id="nextBtn">Keyingi loyiha ⏭</button>
+  </div>
+
+  <div class="footnote">Istalgan loyiha nomiga bosib, to'g'ridan-to'g'ri o'sha demoga o'tishingiz mumkin.</div>
+</div>
+
+<script>
+(function(){
+  const screenOuter = document.getElementById('screenOuter');
+  const screenScroll = document.getElementById('screenScroll');
+  const cursor = document.getElementById('cursor');
+  const captionEl = document.getElementById('caption');
+  const urlText = document.getElementById('urlText');
+  const stepIndicator = document.getElementById('stepIndicator');
+  const tabsEl = document.getElementById('tabs');
+  const playBtn = document.getElementById('playBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let playing = true;
+  let runToken = 0;
+  let currentProjectIdx = 0;
+
+  function sleep(ms){
+    return new Promise(res=>{
+      let waited = 0;
+      const iv = setInterval(()=>{
+        if(!playing) return;
+        waited += 40;
+        if(waited >= ms){ clearInterval(iv); res(); }
+      }, 40);
+    });
+  }
+
+  function q(scene, sel){ return scene.querySelector(sel); }
+  function id(name){ return document.getElementById(name); }
+
+  async function moveCursorTo(el, duration){
+    duration = duration || 650;
+    const outerRect = screenOuter.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    const x = r.left + r.width/2 - outerRect.left;
+    const y = r.top + r.height/2 - outerRect.top;
+    cursor.style.transitionDuration = duration + 'ms';
+    cursor.style.left = x + 'px';
+    cursor.style.top = y + 'px';
+    await sleep(duration + 60);
+  }
+
+  function ripple(accent){
+    const x = parseFloat(cursor.style.left);
+    const y = parseFloat(cursor.style.top);
+    const r = document.createElement('div');
+    r.className = 'click-ripple';
+    r.style.left = x + 'px';
+    r.style.top = y + 'px';
+    r.style.setProperty('--rc', accent || '#fff');
+    screenOuter.appendChild(r);
+    setTimeout(()=>r.remove(), 700);
+  }
+
+  async function clickOn(el, accent){
+    cursor.classList.add('clicking');
+    ripple(accent);
+    el.classList.add('press');
+    await sleep(200);
+    cursor.classList.remove('clicking');
+    el.classList.remove('press');
+  }
+
+  async function goAndClick(el, accent, duration){
+    await moveCursorTo(el, duration);
+    await clickOn(el, accent);
+  }
+
+  async function scrollSceneTo(scene, el, offset){
+    // Real scrollable container is #screenScroll (the parent of .scene),
+    // not the .scene element itself — it has no overflow set, so scrolling
+    // it directly did nothing and the cursor math drifted out of view.
+    // Use getBoundingClientRect() so this works regardless of sticky headers
+    // or offsetParent chains inside the scene.
+    const elRect = el.getBoundingClientRect();
+    const containerRect = screenScroll.getBoundingClientRect();
+    const delta = elRect.top - containerRect.top - (offset === undefined ? 40 : offset);
+    const targetTop = screenScroll.scrollTop + delta;
+    screenScroll.scrollTo({ top: Math.max(targetTop, 0), behavior:'smooth' });
+    await sleep(750);
+  }
+
+  async function typeInto(el, text, speed){
+    speed = speed || 42;
+    el.value = '';
+    for(let i=0;i<text.length;i++){
+      el.value += text[i];
+      await sleep(speed);
+    }
+    await sleep(150);
+  }
+
+  function setCaption(html, idx, total){
+    captionEl.innerHTML = html;
+    stepIndicator.textContent = idx + '/' + total;
+  }
+
+  /* ===================== PROJECT DEFINITIONS ===================== */
+  const projects = [];
+
+  // ---------- 1. ELEGANCE BEAUTY ----------
+  projects.push({
+    key:'elegance', name:'Elegance Beauty', sub:'Bron sayti', icon:'💅',
+    url:'elegancebeauty.uz', accent:'#C9A227',
+    reset(scene){
+      id('eb-modal-overlay').classList.remove('open');
+      id('eb-toast').classList.remove('show');
+      scene.querySelectorAll('.eb-picker-item, .eb-slot').forEach(e=>e.classList.remove('selected'));
+    },
+    steps:[
+      { caption:"Mijoz saytga birinchi marta kirmoqda va bosh sahifani ko'zdan kechirmoqda.",
+        run: async(scene)=>{ await moveCursorTo(id('eb-nav-services'), 500); } },
+      { caption:"<b>Xizmatlar</b> bo'limiga o'tmoqda.",
+        run: async(scene)=>{ await scrollSceneTo(scene, id('eb-services')); await moveCursorTo(q(scene,'.eb-services h2'),450); } },
+      { caption:"«Ayollar soch kesish» xizmatini tanlab, <b>Bron qilish</b> tugmasini bosadi.",
+        run: async(scene)=>{ await goAndClick(id('eb-book-haircut'), '#C9A227'); id('eb-modal-overlay').classList.add('open'); await sleep(250); } },
+      { caption:"Modal oynada ustani tanlaydi — <b>Madina Yusupova</b>.",
+        run: async(scene)=>{ await goAndClick(id('pick-madina'), '#C9A227'); id('pick-madina').classList.add('selected'); } },
+      { caption:"Qulay vaqtni tanlaydi — <b>11:30</b>.",
+        run: async(scene)=>{ await goAndClick(id('slot-1130'), '#C9A227'); id('slot-1130').classList.add('selected'); } },
+      { caption:"Bronni tasdiqlaydi.",
+        run: async(scene)=>{ await goAndClick(id('eb-confirm-booking'), '#C9A227'); id('eb-modal-overlay').classList.remove('open');
+          await sleep(200); id('eb-toast').classList.add('show'); } },
+      { caption:"Bron ma'lumotlari darhol salon administratoriga <b>Telegram</b> orqali yuboriladi 📩",
+        run: async(scene)=>{ await sleep(1400); id('eb-toast').classList.remove('show'); } },
+    ]
+  });
+
+  // ---------- 2. LUMEN STORE ----------
+  projects.push({
+    key:'lumen', name:'Lumen Store', sub:'Onlayn do\'kon', icon:'👟',
+    url:'lumenstore.uz', accent:'#4338CA',
+    reset(scene){
+      id('lu-drawer-overlay').classList.remove('open');
+      id('lu-modal-overlay').classList.remove('open');
+      id('lu-success').classList.remove('show');
+      id('lu-cart-badge').textContent = '0';
+      id('lu-drawer-items').innerHTML = '';
+      id('lu-subtotal-val').textContent = '0 so\'m';
+      id('lu-name').value=''; id('lu-phone').value=''; id('lu-address').value='';
+      scene.querySelectorAll('.lu-size-chip').forEach(e=>e.classList.remove('selected'));
+    },
+    steps:[
+      { caption:"Mijoz katalogni ko'rib chiqmoqda.",
+        run: async(scene)=>{ await moveCursorTo(id('lu-nav-shoes'), 500); } },
+      { caption:"Mahsulotlar bo'limiga o'tadi.",
+        run: async(scene)=>{ await scrollSceneTo(scene, id('lu-products')); } },
+      { caption:"«Klassik oq krossovka» mahsulotiga qiziqadi.",
+        run: async(scene)=>{ await moveCursorTo(q(scene,'#prod-201 h3'), 500); } },
+      { caption:"O'lchamni tanlaydi — <b>M</b>.",
+        run: async(scene)=>{ const el=id('size-m-201'); await goAndClick(el,'#4338CA'); el.classList.add('selected'); } },
+      { caption:"<b>Savatga qo'shish</b> tugmasini bosadi.",
+        run: async(scene)=>{
+          await goAndClick(id('add-201'), '#4338CA');
+          id('lu-cart-badge').textContent='1'; id('lu-cart-badge').classList.add('bump');
+          id('lu-drawer-items').innerHTML = `<div class="lu-drawer-item"><img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=200&auto=format&fit=crop" referrerpolicy="no-referrer" loading="eager" decoding="async" onerror="this.onerror=null;const d=document.createElement('div');d.className=this.className+' img-fallback';d.textContent='🖼';this.replaceWith(d);"><div class="info"><b>Klassik oq krossovka</b>O'lcham: M</div><div>399 000 so'm</div></div>`;
+          id('lu-subtotal-val').textContent = '399 000 so\'m';
+          await sleep(300); id('lu-cart-badge').classList.remove('bump');
+        } },
+      { caption:"Savatchani ochib ko'rib chiqadi.",
+        run: async(scene)=>{ await goAndClick(id('lu-cart-btn'), '#4338CA'); id('lu-drawer-overlay').classList.add('open'); await sleep(300); } },
+      { caption:"<b>Buyurtma berish</b> tugmasini bosadi.",
+        run: async(scene)=>{ await goAndClick(id('lu-checkout-btn'), '#4338CA'); id('lu-drawer-overlay').classList.remove('open');
+          await sleep(150); id('lu-modal-overlay').classList.add('open'); } },
+      { caption:"Ism-familiyasini kiritadi.",
+        run: async(scene)=>{ await moveCursorTo(id('lu-name'),450); await typeInto(id('lu-name'), 'Aziz Karimov'); } },
+      { caption:"Telefon raqamini kiritadi.",
+        run: async(scene)=>{ await moveCursorTo(id('lu-phone'),400); await typeInto(id('lu-phone'), '+998 90 123 45 67'); } },
+      { caption:"Yetkazib berish manzilini kiritadi.",
+        run: async(scene)=>{ await moveCursorTo(id('lu-address'),400); await typeInto(id('lu-address'), 'Toshkent sh., Yunusobod tumani, 14-uy', 30); } },
+      { caption:"Buyurtmani yakuniy tasdiqlaydi.",
+        run: async(scene)=>{ await goAndClick(id('lu-confirm-order'), '#4338CA'); id('lu-modal-overlay').classList.remove('open');
+          await sleep(200); id('lu-success').classList.add('show'); await sleep(1600); id('lu-success').classList.remove('show'); } },
+    ]
+  });
+
+  // ---------- 3. NEXT GEN ACADEMY ----------
+  projects.push({
+    key:'academy', name:'Next Gen Academy', sub:'Landing page', icon:'🎓',
+    url:'nextgenacademy.uz', accent:'#7c4dff',
+    reset(scene){
+      id('ac-name').value=''; id('ac-phone').value='';
+      id('ac-course-select').value=''; id('ac-course-select').classList.remove('highlight');
+      id('ac-lead-success').classList.remove('show');
+    },
+    steps:[
+      { caption:"O'quvchi nomzod bosh sahifani ko'rmoqda.",
+        run: async(scene)=>{ await moveCursorTo(id('ac-nav-courses'), 500); } },
+      { caption:"Kurslar katalogiga o'tadi.",
+        run: async(scene)=>{ await scrollSceneTo(scene, id('ac-courses')); } },
+      { caption:"«Frontend Development» kursi diqqatini tortadi.",
+        run: async(scene)=>{ await moveCursorTo(q(scene,'#course-frontend h3'), 500); } },
+      { caption:"<b>Yozilish</b> tugmasini bosadi.",
+        run: async(scene)=>{ await goAndClick(id('enroll-frontend'), '#7c4dff');
+          await scrollSceneTo(scene, id('ac-lead-form'), 10);
+          id('ac-course-select').value = 'Frontend Development';
+          id('ac-course-select').classList.add('highlight');
+          await sleep(400); id('ac-course-select').classList.remove('highlight');
+        } },
+      { caption:"F.I.Sh maydonini to'ldiradi.",
+        run: async(scene)=>{ await moveCursorTo(id('ac-name'),400); await typeInto(id('ac-name'), 'Kamola Yusupova'); } },
+      { caption:"Telefon raqamini kiritadi.",
+        run: async(scene)=>{ await moveCursorTo(id('ac-phone'),400); await typeInto(id('ac-phone'), '+998 91 234 56 78'); } },
+      { caption:"Arizani yuboradi.",
+        run: async(scene)=>{ await goAndClick(id('ac-submit-lead'), '#7c4dff'); id('ac-lead-success').classList.add('show'); } },
+      { caption:"Ma'lumotlar avtomatik ravishda <b>Supabase</b> bazasiga saqlanadi 💾",
+        run: async(scene)=>{ await sleep(1600); id('ac-lead-success').classList.remove('show'); } },
+    ]
+  });
+
+  // ---------- 4. OTABEKFOOD ----------
+  projects.push({
+    key:'food', name:'OtabekFood', sub:'Onlayn buyurtma', icon:'🍕',
+    url:'otabekfood.uz', accent:'#F59E0B',
+    reset(scene){
+      id('fd-drawer-overlay').classList.remove('open');
+      id('fd-modal-overlay').classList.remove('open');
+      id('fd-success').classList.remove('show');
+      id('fd-cart-badge').textContent='0';
+      id('fd-drawer-items').innerHTML='';
+      id('fd-subtotal-val').textContent = "0 so'm";
+      id('fd-name').value=''; id('fd-phone').value=''; id('fd-address').value='';
+      scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
+      id('cat-pizza').classList.add('active');
+    },
+    steps:[
+      { caption:"Mijoz och qolgan va tez ovqat izlamoqda 😄",
+        run: async(scene)=>{ await goAndClick(id('cat-pizza'), '#F59E0B'); } },
+      { caption:"«Margarita Pitsa»ni savatga qo'shadi.",
+        run: async(scene)=>{
+          await goAndClick(id('fd-add-1'), '#F59E0B');
+          id('fd-cart-badge').textContent='1'; id('fd-cart-badge').classList.add('bump');
+          id('fd-drawer-items').innerHTML = '<div class="fd-drawer-item"><span>Margarita Pitsa</span><span>45 000 so\'m</span></div>';
+          id('fd-subtotal-val').textContent = "45 000 so'm";
+          await sleep(300); id('fd-cart-badge').classList.remove('bump');
+        } },
+      { caption:"Ichimlik bo'limiga o'tib, <b>Coca-Cola</b> qo'shadi.",
+        run: async(scene)=>{
+          const catDrinks = id('cat-drinks');
+          await goAndClick(catDrinks, '#F59E0B');
+          scene.querySelectorAll('.fd-cat').forEach(e=>e.classList.remove('active'));
+          catDrinks.classList.add('active');
+          await goAndClick(id('fd-add-9'), '#F59E0B');
+          id('fd-cart-badge').textContent='2'; id('fd-cart-badge').classList.add('bump');
+          id('fd-drawer-items').innerHTML += '<div class="fd-drawer-item"><span>Coca-Cola 0.5L</span><span>10 000 so\'m</span></div>';
+          id('fd-subtotal-val').textContent = "55 000 so'm";
+          await sleep(300); id('fd-cart-badge').classList.remove('bump');
+        } },
+      { caption:"Savatchani ochib, buyurtma berishga o'tadi.",
+        run: async(scene)=>{
+          await goAndClick(id('fd-cart-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.add('open');
+          await sleep(300);
+          await goAndClick(id('fd-checkout-btn'), '#F59E0B'); id('fd-drawer-overlay').classList.remove('open');
+          await sleep(150); id('fd-modal-overlay').classList.add('open');
+        } },
+      { caption:"📍 tugmasi orqali joylashuvni avtomatik aniqlaydi.",
+        run: async(scene)=>{ await goAndClick(id('fd-geo-btn'), '#F59E0B'); await typeInto(id('fd-address'), 'Toshkent sh., Chilonzor tumani, 12-uy', 28); } },
+      { caption:"Ismi va telefon raqamini kiritadi.",
+        run: async(scene)=>{
+          await moveCursorTo(id('fd-name'),400); await typeInto(id('fd-name'), 'Sardor Aliyev');
+          await moveCursorTo(id('fd-phone'),400); await typeInto(id('fd-phone'), '+998 93 456 78 90');
+        } },
+      { caption:"Buyurtmani yakuniy tasdiqlaydi.",
+        run: async(scene)=>{ await goAndClick(id('fd-confirm'), '#F59E0B'); id('fd-modal-overlay').classList.remove('open');
+          await sleep(200); id('fd-success').classList.add('show'); } },
+      { caption:"Buyurtma tafsilotlari zudlik bilan oshxonaga <b>Telegram bot</b> orqali yuboriladi 🤖",
+        run: async(scene)=>{ await sleep(1700); id('fd-success').classList.remove('show'); } },
+    ]
+  });
+
+  /* ===================== TABS ===================== */
+  tabsEl.innerHTML = projects.map((p,i)=>`
+    <button class="tab-btn" data-idx="${i}" style="--tab-accent:${p.accent}">
+      <span class="tab-icon">${p.icon}</span>
+      <span>
+        <span class="tab-name">${p.name}</span><br>
+        <span class="tab-sub">${p.sub}</span>
+      </span>
+      <div class="tab-progress"><div class="tab-progress-fill" id="progress-${p.key}"></div></div>
+    </button>
+  `).join('');
+
+  tabsEl.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx = parseInt(btn.getAttribute('data-idx'),10);
+      playProject(idx);
+    });
+  });
+
+  function updateActiveTab(idx){
+    tabsEl.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', i===idx));
+  }
+  function updateProgress(idx, frac){
+    const p = projects[idx];
+    id('progress-'+p.key).style.width = Math.round(frac*100)+'%';
+  }
+  function resetOtherProgress(idx){
+    projects.forEach((p,i)=>{ if(i!==idx) id('progress-'+p.key).style.width='0%'; });
+  }
+
+  function showScene(key){
+    document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+    document.getElementById('scene-'+key).classList.add('active');
+  }
+
+  async function playProject(idx){
+    const myToken = ++runToken;
+    currentProjectIdx = idx;
+    const proj = projects[idx];
+    updateActiveTab(idx);
+    resetOtherProgress(idx);
+    updateProgress(idx, 0);
+    urlText.textContent = proj.url;
+    screenOuter.setAttribute('data-theme', proj.key);
+    showScene(proj.key);
+    const scene = document.getElementById('scene-'+proj.key);
+    screenScroll.scrollTop = 0;
+    proj.reset(scene);
+    cursor.style.transitionDuration = '0ms';
+    cursor.style.left = '50%';
+    cursor.style.top = '46%';
+    await sleep(50);
+
+    for(let i=0;i<proj.steps.length;i++){
+      if(myToken !== runToken) return;
+      const step = proj.steps[i];
+      setCaption(step.caption, i+1, proj.steps.length);
+      await step.run(scene);
+      if(myToken !== runToken) return;
+      updateProgress(idx, (i+1)/proj.steps.length);
+    }
+    await sleep(1300);
+    if(myToken !== runToken) return;
+    playProject((idx+1) % projects.length);
+  }
+
+  /* ===================== CONTROLS ===================== */
+  playBtn.addEventListener('click', ()=>{
+    playing = !playing;
+    playBtn.textContent = playing ? '⏸ Pauza' : '▶ Davom ettirish';
+  });
+  restartBtn.addEventListener('click', ()=>{ playProject(currentProjectIdx); });
+  prevBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx-1+projects.length)%projects.length); });
+  nextBtn.addEventListener('click', ()=>{ playProject((currentProjectIdx+1)%projects.length); });
+
+  /* ===================== FULLSCREEN (player only) ===================== */
+  const playerEl = document.querySelector('.player');
+  const fsBtn = document.getElementById('fsBtn');
+
+  function isFs(){
+    return document.fullscreenElement || document.webkitFullscreenElement;
+  }
+  async function enterFs(){
+    if(playerEl.requestFullscreen) await playerEl.requestFullscreen();
+    else if(playerEl.webkitRequestFullscreen) await playerEl.webkitRequestFullscreen();
+  }
+  async function exitFs(){
+    if(document.exitFullscreen) await document.exitFullscreen();
+    else if(document.webkitExitFullscreen) await document.webkitExitFullscreen();
+  }
+  fsBtn.addEventListener('click', ()=>{
+    if(isFs()) exitFs(); else enterFs();
+  });
+  document.addEventListener('fullscreenchange', ()=>{
+    fsBtn.textContent = isFs() ? '⤡' : '⛶';
+    fsBtn.title = isFs() ? "To'liq ekrandan chiqish" : "To'liq ekran";
+  });
+  document.addEventListener('webkitfullscreenchange', ()=>{
+    fsBtn.textContent = isFs() ? '⤡' : '⛶';
+  });
+
+  // kick off
+  playProject(0);
+})();
+</script>
+</body>
+</html>
