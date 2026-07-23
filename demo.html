@@ -186,39 +186,37 @@ body{
 }
 .chrome-fs-btn:hover{ background:rgba(255,255,255,.14); transform:translateY(-1px); }
 
-/* ---- Fullscreen mode: show only the player (browser chrome + screen + caption) ---- */
+/* ---- Fullscreen mode: hide chrome/URL bar & caption, show ONLY the scene, edge-to-edge ---- */
 .player:fullscreen{
   max-width:none;
   width:100vw;
   height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  background:var(--stage-bg-1);
-  padding:18px;
+  margin:0;
+  padding:0;
+  border-radius:0;
+  border:none;
+  background:#fff;
+}
+.player:fullscreen .browser-chrome,
+.player:fullscreen .caption-bar{
+  display:none;
 }
 .player:fullscreen .screen-outer{
-  flex:1 1 auto;
-  height:auto;
-  min-height:0;
-  max-width:min(1100px, 96vw);
-  margin:0 auto;
-  width:100%;
-}
-.player:fullscreen .browser-chrome{
-  max-width:min(1100px, 96vw);
-  margin:0 auto;
-  width:100%;
-}
-.player:fullscreen .caption-bar{
-  max-width:min(1100px, 96vw);
-  margin:0 auto;
-  width:100%;
+  width:100vw;
+  height:100vh;
+  max-width:none;
+  margin:0;
+  border-radius:0;
 }
 .player:-webkit-full-screen{
-  width:100vw; height:100vh;
-  display:flex; flex-direction:column; justify-content:center;
-  background:var(--stage-bg-1); padding:18px;
+  width:100vw; height:100vh; margin:0; padding:0; border-radius:0; border:none; background:#fff;
+}
+.player:-webkit-full-screen .browser-chrome,
+.player:-webkit-full-screen .caption-bar{
+  display:none;
+}
+.player:-webkit-full-screen .screen-outer{
+  width:100vw; height:100vh; max-width:none; margin:0; border-radius:0;
 }
 
 .screen-outer{
@@ -404,7 +402,7 @@ body{
 .eb-master span{ font-size:11px; color:#8a8474; }
 
 .eb-modal-overlay{
-  position:fixed; inset:0; background:rgba(11,59,46,.55);
+  position:absolute; inset:0; background:rgba(11,59,46,.55);
   display:flex; align-items:center; justify-content:center;
   opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
 }
@@ -435,7 +433,7 @@ body{
 .eb-slot.selected{ background:#0B3B2E; border-color:#0B3B2E; color:#E8D48A; }
 .eb-modal-confirm{ width:100%; margin-top:6px; }
 .eb-toast{
-  position:fixed; top:22px; left:50%; transform:translateX(-50%) translateY(-12px);
+  position:absolute; top:22px; left:50%; transform:translateX(-50%) translateY(-12px);
   background:#145C43; color:#fff; padding:12px 20px; border-radius:12px; font-size:13.5px; font-weight:700;
   opacity:0; transition:all .3s; z-index:60; box-shadow:0 12px 30px -8px rgba(0,0,0,.4);
 }
@@ -491,7 +489,7 @@ body{
 .lu-add-btn.press{ transform:scale(.96); }
 
 .lu-drawer-overlay{
-  position:fixed; inset:0; background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
+  position:absolute; inset:0; background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50;
 }
 .lu-drawer-overlay.open{ opacity:1; pointer-events:auto; }
 .lu-drawer{
@@ -512,7 +510,7 @@ body{
 }
 
 .lu-modal-overlay{
-  position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center;
+  position:absolute; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center;
   opacity:0; pointer-events:none; transition:opacity .3s; z-index:60;
 }
 .lu-modal-overlay.open{ opacity:1; pointer-events:auto; }
@@ -530,7 +528,7 @@ body{
   font-weight:700; font-size:13px; font-family:inherit; cursor:default;
 }
 .lu-success{
-  position:fixed; inset:0; background:rgba(255,255,255,.98); display:flex; flex-direction:column; align-items:center;
+  position:absolute; inset:0; background:rgba(255,255,255,.98); display:flex; flex-direction:column; align-items:center;
   justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
 }
 .lu-success.show{ opacity:1; pointer-events:auto; }
@@ -636,7 +634,7 @@ body{
   font-family:inherit; cursor:default;
 }
 
-.fd-drawer-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50; }
+.fd-drawer-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .3s; z-index:50; }
 .fd-drawer-overlay.open{ opacity:1; pointer-events:auto; }
 .fd-drawer{
   position:absolute; top:0; right:0; height:100%; width:min(320px,88%); background:#fff;
@@ -651,7 +649,7 @@ body{
   font-weight:700; font-size:13px; font-family:inherit; cursor:default;
 }
 
-.fd-modal-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:60; }
+.fd-modal-overlay{ position:absolute; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:60; }
 .fd-modal-overlay.open{ opacity:1; pointer-events:auto; }
 .fd-modal{ background:#fff; border-radius:16px; padding:24px; width:min(370px,88%); transform:scale(.96); transition:transform .3s; }
 .fd-modal-overlay.open .fd-modal{ transform:scale(1); }
@@ -670,7 +668,7 @@ body{
   font-weight:700; font-size:13px; font-family:inherit; cursor:default;
 }
 .fd-success{
-  position:fixed; inset:0; background:rgba(255,251,235,.98); display:flex; flex-direction:column; align-items:center;
+  position:absolute; inset:0; background:rgba(255,251,235,.98); display:flex; flex-direction:column; align-items:center;
   justify-content:center; text-align:center; opacity:0; pointer-events:none; transition:opacity .3s; z-index:70; padding:20px;
 }
 .fd-success.show{ opacity:1; pointer-events:auto; }
@@ -1069,6 +1067,18 @@ body{
   let playing = true;
   let runToken = 0;
   let currentProjectIdx = 0;
+
+  // These are overlays (modals, drawers, toasts, success screens) that must
+  // always appear positioned relative to the fixed-size demo frame
+  // (#screenOuter), never relative to the scrollable scene content —
+  // otherwise they get pushed around by scroll or escape the frame.
+  // Moving them to be direct children of #screenOuter with position:absolute
+  // keeps them anchored correctly no matter where the scene is scrolled to.
+  ['eb-modal-overlay','eb-toast','lu-drawer-overlay','lu-modal-overlay','lu-success',
+   'fd-drawer-overlay','fd-modal-overlay','fd-success'].forEach(elId=>{
+    const el = document.getElementById(elId);
+    if(el) screenOuter.appendChild(el);
+  });
 
   function sleep(ms){
     return new Promise(res=>{
