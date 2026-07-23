@@ -17,6 +17,7 @@ import { closeCart } from './cart.js';
 import { showToast } from './toast.js';
 import { saveOrder } from '../services/ordersService.js';
 import { sendTelegramNotification } from '../services/telegramService.js';
+import { formatSom } from '../utils/format.js';
 
 const checkoutOverlay = document.getElementById('checkoutOverlay');
 const checkoutModal = document.getElementById('checkoutModal');
@@ -56,13 +57,16 @@ function showSuccessCard(order) {
   document.getElementById('scPhone').textContent = order.customer_phone;
   document.getElementById('scAddress').textContent = order.address;
 
-  document.getElementById('scItems').innerHTML = order.items.map(i =>
-    `<div class="flex justify-between"><span class="text-char-900/80">${i.name} <span class="text-char-900/40">×${i.qty}</span></span><span class="font-semibold text-char-900">${Number(i.line_total).toLocaleString('uz-UZ')} so'm</span></div>`
-  ).join('');
+  document.getElementById('scItems').innerHTML = order.items.map(i => {
+    // Faqat 1 tadan ko'p sotib olinganda soni ko'rsatiladi — bitta mahsulot
+    // uchun "×1" degan ortiqcha yozuvni chiqarmaymiz (chek toza ko'rinadi).
+    const qtyLabel = i.qty > 1 ? ` <span class="text-char-900/40">×${i.qty}</span>` : '';
+    return `<div class="flex justify-between"><span class="text-char-900/80">${i.name}${qtyLabel}</span><span class="font-semibold text-char-900">${formatSom(i.line_total)}</span></div>`;
+  }).join('');
 
-  document.getElementById('scSubtotal').textContent = `${Number(order.subtotal).toLocaleString('uz-UZ')} so'm`;
-  document.getElementById('scDelivery').textContent = `${Number(order.delivery_fee).toLocaleString('uz-UZ')} so'm`;
-  document.getElementById('scTotal').textContent = `${Number(order.total).toLocaleString('uz-UZ')} so'm`;
+  document.getElementById('scSubtotal').textContent = formatSom(order.subtotal);
+  document.getElementById('scDelivery').textContent = formatSom(order.delivery_fee);
+  document.getElementById('scTotal').textContent = formatSom(order.total);
 
   orderForm.classList.add('hidden');
   successCard.classList.remove('hidden');

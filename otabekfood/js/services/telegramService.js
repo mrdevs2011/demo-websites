@@ -24,29 +24,39 @@
 // ===========================================================================
 
 import { TELEGRAM_CONFIG } from '../config/app.config.js';
+import { formatSom } from '../utils/format.js';
 
 /**
  * Buyurtma tafsilotlarini o'qish uchun qulay HTML-formatdagi matnga aylantiradi.
+ *
+ * ESLATMA: Format qat'iy ravishda marketing/video-demo (demo.html, Scene 4)
+ * bilan bir xil bo'lishi kerak — chunki mijozlarga aynan shu ko'rinishdagi
+ * xabar ko'rsatiladi. Shuning uchun yorliqlar, qator tartibi va uslub
+ * demo bilan so'zma-so'z moslashtirilgan; emoji-og'ir eski format olib
+ * tashlandi.
  */
 function buildOrderMessage(order) {
-  const itemsText = order.items
-    .map(i => `• ${i.name} x${i.qty} — ${i.line_total.toLocaleString('uz-UZ')} so'm`)
-    .join('\n');
+  const itemNames = order.items.map(i => i.name).join(', ');
 
-  return (
-`🔥 <b>YANGI BUYURTMA!</b>
+  let msg =
+    '<b>Yangi buyurtma — OtabekFood</b>\n' +
+    `Mahsulotlar: ${itemNames}\n` +
+    `Mahsulotlar summasi: ${formatSom(order.subtotal)}\n` +
+    `Yetkazib berish: ${formatSom(order.delivery_fee)}\n` +
+    `Jami: ${formatSom(order.total)}\n` +
+    `Mijoz: ${order.customer_name}\n` +
+    `Telefon: ${order.customer_phone}\n` +
+    `Manzil: ${order.address}\n`;
 
-👤 <b>Mijoz:</b> ${order.customer_name}
-📞 <b>Telefon:</b> ${order.customer_phone}
-📍 <b>Manzil:</b> ${order.address}
-${order.comment ? `📝 <b>Izoh:</b> ${order.comment}\n` : ''}
-🧾 <b>Buyurtma tarkibi:</b>
-${itemsText}
+  // Demo ssenariysida izoh maydoni bo'sh qoldirilgan edi, shuning uchun
+  // bu qator faqat izoh haqiqatan kiritilganda qo'shiladi — bo'sh bo'lsa
+  // xabar demo bilan bayt-baytiga bir xil bo'lib qoladi.
+  if (order.comment) {
+    msg += `Izoh: ${order.comment}\n`;
+  }
 
-💰 <b>Mahsulotlar:</b> ${order.subtotal.toLocaleString('uz-UZ')} so'm
-🚚 <b>Yetkazib berish:</b> ${order.delivery_fee.toLocaleString('uz-UZ')} so'm
-💵 <b>Jami:</b> ${order.total.toLocaleString('uz-UZ')} so'm`
-  );
+  msg += 'Manba: Veb-sayt';
+  return msg;
 }
 
 /**
